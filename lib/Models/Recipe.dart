@@ -1,22 +1,22 @@
-import 'Ingredient.dart';
+import 'Section.dart';
 
 class Recipe {
   String uid;
   String title;
-  String instructions;
-  List<Ingredient> ingredients;
+  String? instructions;
+  List<Section> sections;
 
   Recipe(
       {required this.uid,
       required this.title,
-      required this.instructions,
-      required this.ingredients});
+      this.instructions,
+      required this.sections});
 
   Recipe.fromJSON(Map<String, dynamic> recipe)
       : uid = recipe['uid'],
         title = recipe['title'],
         instructions = recipe['instructions'],
-        ingredients = recipe['ingredients']
-            .map<Ingredient>((recipe) => Ingredient.fromJSON(recipe))
+        sections = recipe['sections']
+            .map<Section>((recipe) => Section.fromJSON(recipe))
             .toList();
 }

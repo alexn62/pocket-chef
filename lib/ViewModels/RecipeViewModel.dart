@@ -1,7 +1,21 @@
+import 'package:personal_recipes/Models/Ingredient.dart';
+import 'package:personal_recipes/Models/Recipe.dart';
+import 'package:personal_recipes/Models/Section.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:personal_recipes/enums/enums.dart';
 
 class RecipeViewModel extends BaseViewModel {
+  final Recipe? _recipe;
+  RecipeViewModel(this._recipe);
+  Recipe get recipe => _recipe!;
+
+  late List<Section> _sections;
+  List<Section> get sections => _sections;
+
+  void initialize() {
+    _sections = recipe.sections.map((section) => section).toList();
+  }
+
   ServingSize _size = ServingSize.Regular;
   ServingSize get size => _size;
   void setSize(ServingSize newSize) {
@@ -27,7 +41,7 @@ class RecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  double get sizeConversion {
+  double get getSize {
     switch (size) {
       case ServingSize.Regular:
         {

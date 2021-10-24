@@ -26,6 +26,8 @@ class RecipesScreen extends StatelessWidget {
                     itemCount: model.recipes.length,
                     itemBuilder: (context, index) => Card(
                           child: ListTile(
+                            onTap: () =>
+                                model.navigateToRecipe(model.recipes[index]),
                             title: Text(model.recipes[index].title),
                           ),
                         )),

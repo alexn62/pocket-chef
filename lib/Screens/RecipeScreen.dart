@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/RecipeViewModel.dart';
+import 'package:personal_recipes/widgets/SectionComponent.dart';
+import 'package:personal_recipes/widgets/divider_with_title.dart';
+import 'package:personal_recipes/widgets/ingredient_component.dart';
 import 'package:personal_recipes/constants/spacing.dart';
 import 'package:personal_recipes/enums/enums.dart';
 import 'package:personal_recipes/widgets/amount_counter.dart';
-import 'package:personal_recipes/widgets/divider_with_title.dart';
 import 'package:personal_recipes/widgets/generic_button.dart';
-import 'package:personal_recipes/widgets/ingredient_component.dart';
 
 class RecipeScreen extends StatelessWidget {
-  String recipeId;
-  RecipeScreen({
-    required this.recipeId,
+  final Recipe recipe;
+  const RecipeScreen({
+    required this.recipe,
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BaseView<RecipeViewModel>(
+      viewModelBuilder: () => RecipeViewModel(recipe),
+      onModelReady: (model) => model.initialize(),
       builder: (context, model, child) => Scaffold(
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
             elevation: 0,
-            title: Text('Pizza',
+            title: Text(recipe.title,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                 )),
@@ -61,20 +64,55 @@ class RecipeScreen extends StatelessWidget {
                 ),
               ),
               vRegularSpace,
-              const DividerWithTitle(title: 'Servings'),
-              vRegularSpace,
+              // const DividerWithTitle(title: 'Servings'),
+              // vRegularSpace,
               AmountCounter(
                 amount: model.amount,
                 increase: model.increaseAmount,
                 decrease: model.decreaseAmount,
               ),
               vRegularSpace,
-              const DividerWithTitle(title: 'Dough'),
-              vRegularSpace,
-              const IngredientComponent(title: 'Flour', value: ''),
-              vBigSpace,
+              // const DividerWithTitle(title: 'Dough'),
+              // vRegularSpace,
+              ...model.sections
+                  .map<SectionComponent>(
+                    (section) => SectionComponent(
+                        sizeValue: model.getSize,
+                        totalAmount: model.amount,
+                        sectionTitle: section.title,
+                        ingredients: section.ingredients),
+                  )
+                  .toList(),
+              InstructionsComponent(instructions: model.recipe.instructions),
             ],
           )),
     );
+  }
+}
+
+class InstructionsComponent extends StatelessWidget {
+  final String? instructions;
+  const InstructionsComponent({
+    Key? key,
+    required this.instructions,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return instructions == null
+        ? Container()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const DividerWithTitle(title: 'Instructions'),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                  instructions!,
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor, fontSize: 18),
+                ),
+              )
+            ],
+          );
   }
 }
