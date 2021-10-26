@@ -1,5 +1,3 @@
-import 'package:personal_recipes/Enums/enums.dart';
-
 class Ingredient {
   String title;
   String unit;

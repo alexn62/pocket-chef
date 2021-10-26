@@ -11,6 +11,7 @@ class RecipesViewModel extends BaseViewModel {
   final RecipesService _recipesService = locator<RecipesService>();
   final NavigationService _navigationService = locator<NavigationService>();
 //----------------------------//
+
   List<Recipe> _recipes = [];
   List<Recipe> get recipes => _recipes;
   void setRecipes(List<Recipe> newRecipes) {

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "772378025357",
+    "project_id": "personal-recipes-32826",
+    "storage_bucket": "personal-recipes-32826.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772378025357:android:0ec55692940794a1eb31c4",
+        "android_client_info": {
+          "package_name": "com.example.personal_recipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772378025357-4tmkaotnndq881gunr9sm19pappdhd27.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9g0beePU9WNRdyAi-AFQQm4osqy-ce0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772378025357-4tmkaotnndq881gunr9sm19pappdhd27.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "772378025357-08fle68ea67v64e0fr4chbmnoedcca9a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.personalRecipes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

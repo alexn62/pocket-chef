@@ -1,3 +1,6 @@
+
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +12,7 @@ class BaseView<T extends BaseViewModel> extends StatefulWidget {
   final Widget Function(BuildContext context, T value, Widget? child) builder;
   final Function(T)? onModelReady;
 
-  BaseView({
+ const BaseView({
     required this.builder,
     this.onModelReady,
     this.viewModelBuilder,

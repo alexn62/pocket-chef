@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/services/general_services.dart';
 
 class AmountCounter extends StatelessWidget {
   final Function() increase;

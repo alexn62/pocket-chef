@@ -23,6 +23,7 @@ class RecipeScreen extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
           backgroundColor: Theme.of(context).backgroundColor,
           appBar: AppBar(
+            iconTheme: Theme.of(context).iconTheme,
             elevation: 0,
             title: Text(recipe.title,
                 style: TextStyle(

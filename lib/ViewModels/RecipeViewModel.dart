@@ -1,4 +1,3 @@
-import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';

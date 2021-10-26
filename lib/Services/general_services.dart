@@ -1,27 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Screens/AddRecipeScreen.dart';
-import 'package:personal_recipes/Screens/RecipeScreen.dart';
 import 'package:personal_recipes/Screens/RecipesScreen.dart';
+import 'package:personal_recipes/Services/SharedPrefs.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../locator.dart';
 
 class GeneralServices extends ChangeNotifier {
-  static SharedPreferences? _preferences;
-  static const _keyDarkMode = 'darkmode';
+   //----------SERVICES----------//
+  final SharedPrefs _sharedPreferences =
+      locator<SharedPrefs>();
+  //----------------------------//
 
-  static Future init() async =>
-      _preferences = await SharedPreferences.getInstance();
-
-  ThemeMode get themeMode =>
-      getDarkMode == true ? ThemeMode.dark : ThemeMode.light;
-
-  Future setDarkMode(bool value) async {
-    await _preferences!.setBool(_keyDarkMode, value);
+  ThemeMode get themeMode => _sharedPreferences.themeMode;
+  bool? get darkMode => _sharedPreferences.getDarkMode() ?? false;
+  Future<void> setDarkMode(bool value) async {
+    await _sharedPreferences.setDarkMode(value);
     notifyListeners();
   }
-
-  bool get getDarkMode => _preferences!.getBool(_keyDarkMode) ?? false;
 
   int _index = 0;
   int get index => _index;
@@ -30,7 +26,7 @@ class GeneralServices extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Widget> screens = [
+  List<Widget> screens = const [
     RecipesScreen(),
     AddRecipeScreen(),
   ];
