@@ -1,6 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:personal_recipes/Screens/AddRecipeScreen.dart';
 import 'package:personal_recipes/Services/NavigationService.dart';
 import 'package:personal_recipes/Services/RecipesService.dart';
+import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'Services/Api.dart';
 import 'ViewModels/RecipeViewModel.dart';
 import 'ViewModels/RecipesViewModel.dart';
@@ -15,4 +17,5 @@ setupLocator() {
   // ViewModels
   locator.registerFactory(() => RecipeViewModel(null));
   locator.registerFactory(() => RecipesViewModel());
+  locator.registerFactory(() => AddRecipeViewModel());
 }

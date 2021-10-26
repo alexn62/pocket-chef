@@ -11,4 +11,10 @@ class Ingredient {
       : title = ingredient['title'],
         unit = ingredient['unit'],
         amount = ingredient['amount'].toDouble();
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'unit': unit,
+        'amount': amount,
+      };
 }

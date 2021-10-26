@@ -4,7 +4,6 @@ import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/RecipeViewModel.dart';
 import 'package:personal_recipes/widgets/SectionComponent.dart';
 import 'package:personal_recipes/widgets/divider_with_title.dart';
-import 'package:personal_recipes/widgets/ingredient_component.dart';
 import 'package:personal_recipes/constants/spacing.dart';
 import 'package:personal_recipes/enums/enums.dart';
 import 'package:personal_recipes/widgets/amount_counter.dart';
@@ -29,6 +28,12 @@ class RecipeScreen extends StatelessWidget {
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                 )),
+            actions: [
+              IconButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {},
+                  icon: const Icon(Icons.edit))
+            ],
             backgroundColor: Theme.of(context).backgroundColor,
             bottom: PreferredSize(
               child: Container(
