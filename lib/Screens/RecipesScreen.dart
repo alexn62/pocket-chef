@@ -20,11 +20,9 @@ class RecipesScreen extends StatelessWidget {
             backgroundColor: Theme.of(context).backgroundColor,
             appBar: AppBar(
               backgroundColor: Theme.of(context).backgroundColor,
-              title: Text(
+              title: const Text(
                 'Recipes',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                ),
+                
               ),
               actions: [
                 Switch.adaptive(
@@ -34,6 +32,12 @@ class RecipesScreen extends StatelessWidget {
                   value: _generalServices.darkMode!,
                 )
               ],
+               bottom: PreferredSize(
+                  child: Container(
+                    color: Theme.of(context).primaryColor,
+                    height: 1.0,
+                  ),
+                  preferredSize: const Size.fromHeight(1.0)),
             ),
             body: model.loadingStatus != LoadingStatus.Idle
                 ? const Center(

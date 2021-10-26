@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/RecipeViewModel.dart';
+import 'package:personal_recipes/Widgets/GenericButton.dart';
 import 'package:personal_recipes/widgets/SectionComponent.dart';
 import 'package:personal_recipes/widgets/divider_with_title.dart';
 import 'package:personal_recipes/constants/spacing.dart';
 import 'package:personal_recipes/enums/enums.dart';
 import 'package:personal_recipes/widgets/amount_counter.dart';
-import 'package:personal_recipes/widgets/generic_button.dart';
 
 class RecipeScreen extends StatelessWidget {
   final Recipe recipe;
@@ -26,9 +26,7 @@ class RecipeScreen extends StatelessWidget {
             iconTheme: Theme.of(context).iconTheme,
             elevation: 0,
             title: Text(recipe.title,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                )),
+                ),
             actions: [
               IconButton(
                   padding: const EdgeInsets.all(0),
@@ -36,11 +34,12 @@ class RecipeScreen extends StatelessWidget {
                   icon: const Icon(Icons.edit))
             ],
             backgroundColor: Theme.of(context).backgroundColor,
-            bottom: PreferredSize(
-              child: Container(
-                  height: 0.5, color: Theme.of(context).backgroundColor),
-              preferredSize: const Size.fromHeight(1.0),
-            ),
+            bottom:  PreferredSize(
+                  child: Container(
+                    color: Theme.of(context).primaryColor,
+                    height: 1.0,
+                  ),
+                  preferredSize: const Size.fromHeight(1.0)),
           ),
           body: ListView(
             physics: const BouncingScrollPhysics(),
@@ -53,18 +52,18 @@ class RecipeScreen extends StatelessWidget {
                   children: [
                     GenericButton(
                         title: 'Small',
-                        active: model.size == ServingSize.Small ? true : false,
+                        invertColors: model.size == ServingSize.Small ? true : false,
                         onTap: () => model.setSize(ServingSize.Small)),
                     hTinySpace,
                     GenericButton(
                         title: 'Regular',
-                        active:
+                        invertColors:
                             model.size == ServingSize.Regular ? true : false,
                         onTap: () => model.setSize(ServingSize.Regular)),
                     hTinySpace,
                     GenericButton(
                         title: 'Large',
-                        active: model.size == ServingSize.Large ? true : false,
+                        invertColors: model.size == ServingSize.Large ? true : false,
                         onTap: () => model.setSize(ServingSize.Large)),
                   ],
                 ),

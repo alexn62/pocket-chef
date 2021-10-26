@@ -79,6 +79,5 @@ class Api {
   Future<void> addRecipe() async {
     Recipe recipe = Recipe.fromJSON(mockRecipe);
     DocumentReference ref = await recipeReference.add(recipe.toJson());
-    print(ref);
   }
 }

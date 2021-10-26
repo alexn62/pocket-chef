@@ -1,11 +1,12 @@
 import 'Ingredient.dart';
 
 class Section {
+  String? uid;
   String title;
 
   List<Ingredient> ingredients;
 
-  Section({required this.title, required this.ingredients});
+  Section({required this.title, required this.ingredients, this.uid});
 
   Section.fromJSON(Map<String, dynamic> section)
       : title = section['title'],
@@ -14,6 +15,7 @@ class Section {
             .toList();
 
   Map<String, dynamic> toJson() => {
+    'uid': uid,
         'title': title,
         'ingredients': ingredients
             .map<Map<String, dynamic>>((ingredient) => ingredient.toJson())
