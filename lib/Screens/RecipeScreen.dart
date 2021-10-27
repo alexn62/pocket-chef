@@ -25,8 +25,9 @@ class RecipeScreen extends StatelessWidget {
           appBar: AppBar(
             iconTheme: Theme.of(context).iconTheme,
             elevation: 0,
-            title: Text(recipe.title,
-                ),
+            title: Text(
+              recipe.title,
+            ),
             actions: [
               IconButton(
                   padding: const EdgeInsets.all(0),
@@ -34,12 +35,12 @@ class RecipeScreen extends StatelessWidget {
                   icon: const Icon(Icons.edit))
             ],
             backgroundColor: Theme.of(context).backgroundColor,
-            bottom:  PreferredSize(
-                  child: Container(
-                    color: Theme.of(context).primaryColor,
-                    height: 1.0,
-                  ),
-                  preferredSize: const Size.fromHeight(1.0)),
+            bottom: PreferredSize(
+                child: Container(
+                  color: Theme.of(context).primaryColor,
+                  height: 1.0,
+                ),
+                preferredSize: const Size.fromHeight(1.0)),
           ),
           body: ListView(
             physics: const BouncingScrollPhysics(),
@@ -50,35 +51,39 @@ class RecipeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   children: [
-                    GenericButton(
-                        title: 'Small',
-                        invertColors: model.size == ServingSize.Small ? true : false,
-                        onTap: () => model.setSize(ServingSize.Small)),
+                    Expanded(
+                      child: GenericButton(
+                          title: 'Small',
+                          invertColors:
+                              model.size == ServingSize.Small ? true : false,
+                          onTap: () => model.setSize(ServingSize.Small)),
+                    ),
                     hTinySpace,
-                    GenericButton(
-                        title: 'Regular',
-                        invertColors:
-                            model.size == ServingSize.Regular ? true : false,
-                        onTap: () => model.setSize(ServingSize.Regular)),
+                    Expanded(
+                      child: GenericButton(
+                          title: 'Regular',
+                          invertColors:
+                              model.size == ServingSize.Regular ? true : false,
+                          onTap: () => model.setSize(ServingSize.Regular)),
+                    ),
                     hTinySpace,
-                    GenericButton(
-                        title: 'Large',
-                        invertColors: model.size == ServingSize.Large ? true : false,
-                        onTap: () => model.setSize(ServingSize.Large)),
+                    Expanded(
+                      child: GenericButton(
+                          title: 'Large',
+                          invertColors:
+                              model.size == ServingSize.Large ? true : false,
+                          onTap: () => model.setSize(ServingSize.Large)),
+                    ),
                   ],
                 ),
               ),
               vRegularSpace,
-              // const DividerWithTitle(title: 'Servings'),
-              // vRegularSpace,
               AmountCounter(
                 amount: model.amount,
                 increase: model.increaseAmount,
                 decrease: model.decreaseAmount,
               ),
               vRegularSpace,
-              // const DividerWithTitle(title: 'Dough'),
-              // vRegularSpace,
               ...model.sections
                   .map<SectionComponent>(
                     (section) => SectionComponent(

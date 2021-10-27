@@ -32,7 +32,7 @@ class SectionComponent extends StatelessWidget {
                       sizeValue: sizeValue,
                       title: ingredient.title,
                       amount: (ingredient.amount).toDouble(),
-                      unit: ingredient.unit),
+                      unit: ingredient.unit!),
                   vRegularSpace
                 ],
               ),

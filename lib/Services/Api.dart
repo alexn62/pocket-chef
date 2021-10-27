@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 
@@ -71,13 +70,12 @@ class Api {
 
   Future<QuerySnapshot> getRecipesByUserId(String userId) async {
     QuerySnapshot result =
-        await recipeReference.where('authorId', isEqualTo: 'abcdef').get();
-
+        await recipeReference.where('authorId', isEqualTo: '123456').get();
+    print(result.docs.length);
     return result;
   }
 
-  Future<void> addRecipe() async {
-    Recipe recipe = Recipe.fromJSON(mockRecipe);
+  Future<void> addRecipe(Recipe recipe) async {
     DocumentReference ref = await recipeReference.add(recipe.toJson());
   }
 }

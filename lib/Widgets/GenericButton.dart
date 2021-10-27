@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 class GenericButton extends StatelessWidget {
   final bool shrink;
   final bool stretch;
-  final bool addMargin;
   final Function()? onTap;
   final String title;
   final bool invertColors;
+  final EdgeInsets margin;
   final double customWidth;
   final bool danger;
   final bool positive;
   const GenericButton(
       {Key? key,
       this.stretch = false,
-      this.addMargin = false,
+      this.margin = const EdgeInsets.all(0),
       required this.onTap,
       this.shrink = false,
       required this.title,
@@ -26,7 +26,7 @@ class GenericButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: addMargin ? 15 : 0),
+      margin: margin,
       height: 32,
       width: shrink
           ? null
@@ -36,18 +36,19 @@ class GenericButton extends StatelessWidget {
                   ? 100
                   : customWidth,
       decoration: BoxDecoration(
-        color: positive ? Theme.of(context).colorScheme.primaryVariant : danger
-            ? Theme.of(context).colorScheme.error
-            : invertColors
-                ? Theme.of(context).primaryColorLight
-                : Theme.of(context).primaryColorDark,
+        color: positive
+            ? Theme.of(context).colorScheme.primaryVariant
+            : danger
+                ? Theme.of(context).colorScheme.error
+                : invertColors
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).backgroundColor,
         border: Border.all(
-          color: positive ? Theme.of(context).colorScheme.primaryVariant :danger
-              ? Theme.of(context).colorScheme.error
-              : invertColors
-                  ? Theme.of(context).primaryColor
-                  : Theme.of(context).primaryColorDark,
-        ),
+            color: positive
+                ? Theme.of(context).colorScheme.primaryVariant
+                : danger
+                    ? Theme.of(context).colorScheme.error
+                    : Theme.of(context).primaryColor),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Material(
@@ -60,9 +61,11 @@ class GenericButton extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                    color: positive || danger ? Colors.white : invertColors
-                        ? Theme.of(context).primaryColorDark
-                        : Theme.of(context).primaryColorLight,
+                    color: positive || danger
+                        ? Colors.white
+                        : !invertColors
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).backgroundColor,
                     fontSize: 14),
               ),
             ),
