@@ -5,7 +5,6 @@ import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/enums/enums.dart';
-import 'package:personal_recipes/widgets/GenericButton.dart';
 
 class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({Key? key}) : super(key: key);
@@ -27,7 +26,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   Widget build(BuildContext context) {
     return BaseView<AddRecipeViewModel>(
       builder: (context, model, child) => Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           backgroundColor: Theme.of(context).backgroundColor,
@@ -38,6 +36,14 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                 height: 1.0,
               ),
               preferredSize: const Size.fromHeight(1.0)),
+          actions: [
+            IconButton(
+                onPressed: () => model.addRecipe(model.recipe),
+                icon: Icon(
+                  Icons.check,
+                  color: Theme.of(context).colorScheme.primaryVariant,
+                ))
+          ],
         ),
         body: model.loadingStatus != LoadingStatus.Idle
             ? const Center(
@@ -63,7 +69,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                         CustomTextFormField(
                           onChanged: model.setRecipeTitle,
                         ),
-                        vRegularSpace,
+                        // vRegularSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -103,15 +109,18 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                   IconButton(
                                       onPressed: () {
                                         model.addIngredient(i);
-                                        SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-                                          _controller.animateTo(
-                                              _controller.position.maxScrollExtent -
-                                                  (i == model.recipe.sections.length - 1
-                                                      ? 0
-                                                      : model.recipe.sections.sublist(i + 1).map((section) => section.ingredients.length * 48 + 96).reduce((value, element) => value + element)),
-                                              duration: const Duration(milliseconds: 200),
-                                              curve: Curves.fastOutSlowIn);
-                                        });
+                                         SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+                                                      _controller.animateTo(
+                                                          _controller.position.maxScrollExtent -
+                                                              (i == model.recipe.sections.length - 1
+                                                                  ? 0
+                                                                  : model.recipe.sections
+                                                                      .sublist(i + 1)
+                                                                      .map((section) => section.ingredients.length * 48 + 96)
+                                                                      .reduce((value, element) => value + element)),
+                                                          duration: const Duration(milliseconds: 200),
+                                                          curve: Curves.fastOutSlowIn);
+                                                    });
                                       },
                                       padding: const EdgeInsets.all(0),
                                       icon: const Icon(Icons.add)),
@@ -192,8 +201,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                   ],
                 ),
               ),
-        bottomNavigationBar:
-            GenericButton(margin: const EdgeInsets.only(top: 0, left: 15, right: 15, bottom: 15), onTap: () => model.addRecipe(model.recipe), title: 'Add Recipe', stretch: true, positive: true),
       ),
     );
   }

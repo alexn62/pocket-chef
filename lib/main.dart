@@ -6,7 +6,8 @@ import 'package:personal_recipes/Services/NavigationService.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:provider/provider.dart';
 import 'Router.dart' as router;
-import 'Screens/MainScreen.dart';
+import 'Screens/LoginScreen.dart';
+// import 'Screens/MainScreen.dart';
 import 'Services/GeneralServices.dart';
 import 'Services/SharedPrefs.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
               themeMode: model.themeMode,
               darkTheme: darkTheme,
               theme: lightTheme,
-              home: const MainScreen());
+              home: const LoginScreen());
         }));
   }
 }

@@ -5,6 +5,7 @@ import 'package:personal_recipes/Services/SharedPrefs.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'Services/Api.dart';
 import 'Services/GeneralServices.dart';
+import 'ViewModels/LoginViewModel.dart';
 import 'ViewModels/RecipeViewModel.dart';
 import 'ViewModels/RecipesViewModel.dart';
 
@@ -18,6 +19,7 @@ setupLocator() {
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => RecipesService());
   // ViewModels
+  locator.registerFactory(() => LoginViewModel());
   locator.registerFactory(() => RecipeViewModel(null));
   locator.registerFactory(() => RecipesViewModel());
   locator.registerFactory(() => AddRecipeViewModel());

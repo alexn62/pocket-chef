@@ -12,15 +12,18 @@ class RecipesService {
   Future<List<Recipe>> getRecipesByUserId(String userId) async {
     QuerySnapshot data = await _api.getRecipesByUserId(userId);
 
-    return data.docs
-        .map<Recipe>((recipe) => Recipe.fromFirestore(recipe))
-        .toList();
+    return data.docs.map<Recipe>((recipe) => Recipe.fromFirestore(recipe)).toList();
   }
 
   addRecipe(Recipe recipe) async {
-    _validateRecipe(recipe);
-    recipe.authorId = 'abc';
-    await _api.addRecipe(recipe);
+    bool valid = _validateRecipe(recipe);
+    if (valid) {
+      recipe.authorId = 'abc';
+      await _api.addRecipe(recipe);
+    } else {
+      // print('Invalid Input');
+      
+    }
   }
 
   bool _validateRecipe(Recipe recipe) {
@@ -42,7 +45,10 @@ class RecipesService {
         if (ingredient.title.trim().isEmpty) {
           return false;
         }
-        if (ingredient.amount < 0) {
+        if (ingredient.amount <= 0) {
+          return false;
+        }
+        if (ingredient.unit == null || ingredient.unit!.isEmpty) {
           return false;
         }
       }
