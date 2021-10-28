@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:personal_recipes/Constants/spacing.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
@@ -6,8 +7,21 @@ import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/enums/enums.dart';
 import 'package:personal_recipes/widgets/GenericButton.dart';
 
-class AddRecipeScreen extends StatelessWidget {
+class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AddRecipeScreen> createState() => _AddRecipeScreenState();
+}
+
+class _AddRecipeScreenState extends State<AddRecipeScreen> {
+  final ScrollController _controller = ScrollController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +46,7 @@ class AddRecipeScreen extends StatelessWidget {
             : Padding(
                 padding: const EdgeInsets.all(15),
                 child: ListView(
+                  controller: _controller,
                   shrinkWrap: true,
                   children: [
                     Column(
@@ -52,12 +67,14 @@ class AddRecipeScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Sections',
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16)),
+                            Text('Sections', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16)),
                             IconButton(
-                                onPressed: model.addSection,
+                                onPressed: () {
+                                  model.addSection();
+                                  SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+                                    _controller.animateTo(_controller.position.maxScrollExtent, duration: const Duration(milliseconds: 200), curve: Curves.fastOutSlowIn);
+                                  });
+                                },
                                 padding: const EdgeInsets.all(0),
                                 icon: const Icon(Icons.add)),
                           ],
@@ -67,8 +84,7 @@ class AddRecipeScreen extends StatelessWidget {
                             key: ValueKey(model.recipe.sections[i].uid),
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: CustomTextFormField(
@@ -76,41 +92,65 @@ class AddRecipeScreen extends StatelessWidget {
                                       sectionIndex: i,
                                     ),
                                   ),
-                                  IconButton(
-                                      onPressed: () => model.removeSection(i),
-                                      padding: const EdgeInsets.all(0),
-                                      icon: const Icon(Icons.delete_outline)),
+                                  IconButton(onPressed: () => model.removeSection(i), padding: const EdgeInsets.all(0), icon: const Icon(Icons.delete_outline)),
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   hBigSpace,
-                                  Expanded(
-                                      child: Text('Ingredients',
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 16))),
+                                  Expanded(child: Text('Ingredients', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16))),
                                   IconButton(
-                                      onPressed: () => model.addIngredient(i),
+                                      onPressed: () {
+                                        model.addIngredient(i);
+                                        SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+                                          _controller.animateTo(
+                                              _controller.position.maxScrollExtent -
+                                                  (i == model.recipe.sections.length - 1
+                                                      ? 0
+                                                      : model.recipe.sections.sublist(i + 1).map((section) => section.ingredients.length * 48 + 96).reduce((value, element) => value + element)),
+                                              duration: const Duration(milliseconds: 200),
+                                              curve: Curves.fastOutSlowIn);
+                                        });
+                                      },
                                       padding: const EdgeInsets.all(0),
                                       icon: const Icon(Icons.add)),
                                 ],
                               ),
-                              for (int j = 0;
-                                  j <
-                                      model.recipe.sections[i].ingredients
-                                          .length;
-                                  j++)
+                              for (int j = 0; j < model.recipe.sections[i].ingredients.length; j++)
                                 Row(
-                                  key: ValueKey(model
-                                      .recipe.sections[i].ingredients[j].uid),
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  key: ValueKey(model.recipe.sections[i].ingredients[j].uid),
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    hBigSpace,
+                                    j + 1 == model.recipe.sections[i].ingredients.length
+                                        ? SizedBox(
+                                            height: 40,
+                                            width: 30,
+                                            child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: IconButton(
+                                                  onPressed: () {
+                                                    model.addIngredient(i);
+                                                    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+                                                      _controller.animateTo(
+                                                          _controller.position.maxScrollExtent -
+                                                              (i == model.recipe.sections.length - 1
+                                                                  ? 0
+                                                                  : model.recipe.sections
+                                                                      .sublist(i + 1)
+                                                                      .map((section) => section.ingredients.length * 48 + 96)
+                                                                      .reduce((value, element) => value + element)),
+                                                          duration: const Duration(milliseconds: 200),
+                                                          curve: Curves.fastOutSlowIn);
+                                                    });
+                                                  },
+                                                  padding: const EdgeInsets.all(0),
+                                                  icon: const Icon(
+                                                    Icons.add,
+                                                  )),
+                                            ),
+                                          )
+                                        : hBigSpace,
                                     Flexible(
                                       flex: 3,
                                       child: CustomTextFormField(
@@ -131,48 +171,29 @@ class AddRecipeScreen extends StatelessWidget {
                                     hSmallSpace,
                                     PopupMenuButton(
                                       child: Text(
-                                        model.recipe.sections[i].ingredients[j]
-                                                .unit ??
-                                            'Unit',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Theme.of(context).primaryColor),
+                                        model.recipe.sections[i].ingredients[j].unit ?? 'Unit',
+                                        style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
                                       ),
-                                      itemBuilder: (context) =>
-                                          model.possibleUnits
-                                              .map((item) => PopupMenuItem(
-                                                    value: item,
-                                                    child: Text(item),
-                                                  ))
-                                              .toList(),
-                                      onSelected: (value) =>
-                                          model.setIngredientUnit(
-                                              sectionIndex: i,
-                                              ingredientIndex: j,
-                                              ingredientUnit: value.toString()),
+                                      itemBuilder: (context) => model.possibleUnits
+                                          .map((item) => PopupMenuItem(
+                                                value: item,
+                                                child: Text(item),
+                                              ))
+                                          .toList(),
+                                      onSelected: (value) => model.setIngredientUnit(sectionIndex: i, ingredientIndex: j, ingredientUnit: value.toString()),
                                     ),
-                                    IconButton(
-                                        onPressed: () =>
-                                            model.removeIngredient(i, j),
-                                        padding: const EdgeInsets.all(0),
-                                        icon: const Icon(Icons.delete_outline)),
+                                    IconButton(onPressed: () => model.removeIngredient(i, j), padding: const EdgeInsets.all(0), icon: const Icon(Icons.delete_outline)),
                                   ],
                                 ),
                             ],
                           ),
-                        vRegularSpace,
                       ],
                     ),
                   ],
                 ),
               ),
-        bottomNavigationBar: GenericButton(
-            margin: const EdgeInsets.all(15),
-            onTap: () => model.addRecipe(model.recipe),
-            title: 'Add Recipe',
-            stretch: true,
-            positive: true),
+        bottomNavigationBar:
+            GenericButton(margin: const EdgeInsets.only(top: 0, left: 15, right: 15, bottom: 15), onTap: () => model.addRecipe(model.recipe), title: 'Add Recipe', stretch: true, positive: true),
       ),
     );
   }

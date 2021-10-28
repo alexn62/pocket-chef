@@ -33,7 +33,7 @@ class RecipeViewModel extends BaseViewModel {
   }
 
   void decreaseAmount() {
-    if (amount < 1) {
+    if (amount < 2) {
       return;
     }
     _amount--;

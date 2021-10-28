@@ -4,7 +4,7 @@ import 'package:personal_recipes/Services/RecipesService.dart';
 import 'package:personal_recipes/Services/SharedPrefs.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'Services/Api.dart';
-import 'Services/general_services.dart';
+import 'Services/GeneralServices.dart';
 import 'ViewModels/RecipeViewModel.dart';
 import 'ViewModels/RecipesViewModel.dart';
 

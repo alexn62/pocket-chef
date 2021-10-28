@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:personal_recipes/Constants/Themes.dart';
 import 'package:personal_recipes/Services/NavigationService.dart';
-import 'package:personal_recipes/Services/general_services.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:provider/provider.dart';
 import 'Router.dart' as router;
 import 'Screens/MainScreen.dart';
+import 'Services/GeneralServices.dart';
 import 'Services/SharedPrefs.dart';
 
 Future main() async {

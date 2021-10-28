@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/spacing.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
-import 'package:personal_recipes/widgets/divider_with_title.dart';
 
-import 'ingredient_component.dart';
+import 'DividerWithTitle.dart';
+import 'IngredientComponent.dart';
 
 class SectionComponent extends StatelessWidget {
   final int totalAmount;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/Services/general_services.dart';
+import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/RecipesViewModel.dart';
 import 'package:personal_recipes/enums/enums.dart';
 import 'package:provider/provider.dart';

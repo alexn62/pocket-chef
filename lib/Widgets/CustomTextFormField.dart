@@ -14,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       onChanged: (text) => sectionIndex == null && ingredientIndex == null
           ? onChanged(text)
           : ingredientIndex == null

@@ -70,7 +70,9 @@ class Api {
 
   Future<QuerySnapshot> getRecipesByUserId(String userId) async {
     QuerySnapshot result =
-        await recipeReference.where('authorId', isEqualTo: '123456').get();
+        await recipeReference
+        // .where('authorId', isEqualTo: 'abc')
+        .get();
     print(result.docs.length);
     return result;
   }
