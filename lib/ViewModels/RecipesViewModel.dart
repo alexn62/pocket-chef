@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Services/AuthService.dart';
-import 'package:personal_recipes/Services/NavigationService.dart';
 import 'package:personal_recipes/Services/RecipesService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:personal_recipes/Constants/Routes.dart' as routes;
+import 'package:stacked_services/stacked_services.dart';
 
 class RecipesViewModel extends BaseViewModel {
 //----------SERVICES----------//
@@ -35,7 +35,7 @@ class RecipesViewModel extends BaseViewModel {
 
   Future<void> navigateToRecipe(Recipe recipe) async {
     _navigationService.navigateTo(routes.RecipeRoute,
-        arguments: recipe, replace: false);
+        arguments: recipe,);
   }
   void logout(){
     _authService.firebaseAuth.signOut();

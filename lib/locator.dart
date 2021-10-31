@@ -1,11 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:personal_recipes/Services/AuthService.dart';
-import 'package:personal_recipes/Services/NavigationService.dart';
 import 'package:personal_recipes/Services/RecipesService.dart';
 import 'package:personal_recipes/Services/SharedPrefs.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:personal_recipes/ViewModels/LandingScreenViewModel.dart';
 import 'package:personal_recipes/ViewModels/SignUpViewModel.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'Services/Api.dart';
 import 'Services/GeneralServices.dart';
 import 'ViewModels/LoginViewModel.dart';
@@ -17,12 +17,14 @@ setupLocator() {
   // Apis
   locator.registerLazySingleton(() => Api());
   // Services
+  locator.registerLazySingleton(() => DialogService());
+  locator.registerLazySingleton(() => NavigationService());
   locator.registerSingleton(SharedPrefs());
   locator.registerSingleton(GeneralServices());
   locator.registerLazySingleton(() => AuthService());
-  locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => RecipesService());
   // ViewModels
+  
   locator.registerFactory(() => LandingScreenViewModel());
   locator.registerFactory(() => LoginViewModel());
   locator.registerFactory(() => SignUpViewModel());

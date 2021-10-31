@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/RecipeViewModel.dart';
@@ -7,7 +8,6 @@ import 'package:personal_recipes/Widgets/DividerWithTitle.dart';
 import 'package:personal_recipes/Widgets/GenericButton.dart';
 import 'package:personal_recipes/widgets/SectionComponent.dart';
 import 'package:personal_recipes/constants/spacing.dart';
-import 'package:personal_recipes/enums/enums.dart';
 
 class RecipeScreen extends StatelessWidget {
   final Recipe recipe;

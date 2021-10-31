@@ -1,7 +1,7 @@
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
-import 'package:personal_recipes/enums/enums.dart';
 
 class RecipeViewModel extends BaseViewModel {
   final Recipe? _recipe;

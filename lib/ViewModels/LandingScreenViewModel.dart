@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Services/AuthService.dart';
-import 'package:personal_recipes/Services/NavigationService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:personal_recipes/Constants/Routes.dart' as routes;
+import 'package:stacked_services/stacked_services.dart';
 
 class LandingScreenViewModel extends BaseViewModel {
   //----------SERVICES----------//
@@ -28,9 +28,9 @@ class LandingScreenViewModel extends BaseViewModel {
   }
 
   void navigateToMainScreen(){
-    _navigationService.navigateTo(routes.MainScreenRoute, replace: true);
+    _navigationService.replaceWith(routes.MainScreenRoute,);
   }
   void navigateToLoginScreen(){
-    _navigationService.navigateTo(routes.LoginRoute, replace: true);
+    _navigationService.replaceWith(routes.LoginRoute,);
   }
 }

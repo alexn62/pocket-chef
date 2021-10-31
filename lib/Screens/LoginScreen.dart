@@ -55,7 +55,6 @@ class LoginScreen extends StatelessWidget {
                     CustomTextFormField(onChanged: model.setPassword, password: true,),
                     vRegularSpace,
                     GenericButton(
-                      
                       onTap: () => model.loginEmailPassword(email: model.email, password: model.password),
                       title: 'Login',
                       positive: true,

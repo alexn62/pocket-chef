@@ -1,9 +1,9 @@
 import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Services/AuthService.dart';
-import 'package:personal_recipes/Services/NavigationService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:personal_recipes/Constants/Routes.dart' as routes;
+import 'package:stacked_services/stacked_services.dart';
 class SignUpViewModel extends BaseViewModel{
   //----------SERVICES----------//
   final NavigationService _navigationService = locator<NavigationService>();
@@ -39,9 +39,9 @@ class SignUpViewModel extends BaseViewModel{
 
 
   void navigateToMainScreen() {
-    _navigationService.navigateTo(routes.MainScreenRoute, replace: true);
+    _navigationService.replaceWith(routes.MainScreenRoute, );
   }
   void navigateToLoginScreen() {
-    _navigationService.navigateTo(routes.LoginRoute, replace: true);
+    _navigationService.replaceWith(routes.LoginRoute, );
   }
 }

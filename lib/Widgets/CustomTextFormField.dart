@@ -24,7 +24,6 @@ class CustomTextFormField extends StatelessWidget {
               : onChanged(text, sectionIndex, ingredientIndex),
       cursorColor: Theme.of(context).colorScheme.secondary,
       decoration: InputDecoration(
-
         contentPadding: const EdgeInsets.all(10),
         isDense: true,
         focusedBorder: OutlineInputBorder(
