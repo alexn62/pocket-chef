@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
+import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:personal_recipes/Services/NavigationService.dart';
 import 'package:personal_recipes/Services/RecipesService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
-import 'package:personal_recipes/enums/enums.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:personal_recipes/Constants/Routes.dart' as routes;
 
@@ -10,8 +12,10 @@ class RecipesViewModel extends BaseViewModel {
 //----------SERVICES----------//
   final RecipesService _recipesService = locator<RecipesService>();
   final NavigationService _navigationService = locator<NavigationService>();
+  final AuthService _authService = locator<AuthService>();
 //----------------------------//
-
+  User get currentUser => _authService.firebaseAuth.currentUser!; 
+  
   List<Recipe> _recipes = [];
   List<Recipe> get recipes => _recipes;
   void setRecipes(List<Recipe> newRecipes) {
@@ -32,5 +36,8 @@ class RecipesViewModel extends BaseViewModel {
   Future<void> navigateToRecipe(Recipe recipe) async {
     _navigationService.navigateTo(routes.RecipeRoute,
         arguments: recipe, replace: false);
+  }
+  void logout(){
+    _authService.firebaseAuth.signOut();
   }
 }

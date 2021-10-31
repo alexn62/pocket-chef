@@ -18,11 +18,9 @@ class RecipesService {
   addRecipe(Recipe recipe) async {
     bool valid = _validateRecipe(recipe);
     if (valid) {
-      recipe.authorId = 'abc';
       await _api.addRecipe(recipe);
     } else {
-      // print('Invalid Input');
-      
+      print('Invalid Input');
     }
   }
 

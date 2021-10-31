@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:personal_recipes/Constants/spacing.dart';
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
-import 'package:personal_recipes/enums/enums.dart';
 
 class AddRecipeScreen extends StatefulWidget {
   const AddRecipeScreen({Key? key}) : super(key: key);
@@ -25,6 +25,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseView<AddRecipeViewModel>(
+      onModelReady: (model)=> model.initialize(model.currentUser.uid),
       builder: (context, model, child) => Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(

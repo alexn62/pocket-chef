@@ -1,16 +1,28 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
+import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:personal_recipes/Services/RecipesService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
-import 'package:personal_recipes/enums/enums.dart';
 import 'package:personal_recipes/locator.dart';
 import 'dart:math' as math;
 
 class AddRecipeViewModel extends BaseViewModel {
   final RecipesService _recipesService = locator<RecipesService>();
+  final AuthService _authService = locator<AuthService>();
 
+  User get currentUser => _authService.firebaseAuth.currentUser!;
   List<String> possibleUnits = 'ml kg cups tsp tbsp oz g count mg'.split(' ');
+
+  void initialize(String currentUserUid) {
+    _recipe = Recipe(
+      authorId: currentUserUid,
+      title: '',
+      sections: [],
+    );
+  }
 
   void addRecipe(Recipe recipe) async {
     setLoadingStatus(LoadingStatus.Busy);
@@ -18,7 +30,7 @@ class AddRecipeViewModel extends BaseViewModel {
     setLoadingStatus(LoadingStatus.Idle);
   }
 
-  final Recipe _recipe = Recipe(authorId: '123456', title: '', sections: []);
+  late Recipe _recipe;
   Recipe get recipe => _recipe;
 
   void addSection() {
@@ -55,7 +67,7 @@ class AddRecipeViewModel extends BaseViewModel {
 
   void setIngredientAmount(String ingredientAmount, int sectionIndex, int ingredientIndex) {
     double? amount = double.tryParse(ingredientAmount) ?? 0.0;
-    
+
     _recipe.sections[sectionIndex].ingredients[ingredientIndex].amount = amount;
   }
 

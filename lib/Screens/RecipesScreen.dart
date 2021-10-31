@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/RecipesViewModel.dart';
-import 'package:personal_recipes/enums/enums.dart';
+import 'package:personal_recipes/Widgets/GenericButton.dart';
 import 'package:provider/provider.dart';
 
 import 'BaseView.dart';
@@ -14,7 +15,7 @@ class RecipesScreen extends StatelessWidget {
     
     final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
     return BaseView<RecipesViewModel>(
-        onModelReady: (model) => model.initialize(''),
+        onModelReady: (model) => model.initialize(model.currentUser.uid),
         builder: (context, model, child) {
           return Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
@@ -25,6 +26,8 @@ class RecipesScreen extends StatelessWidget {
                 
               ),
               actions: [
+                    GenericButton(onTap: model.logout, title: 'Logout',danger: true,),
+
                 Switch.adaptive(
                   onChanged: (value) async {
                     await _generalServices.setDarkMode(value);

@@ -4,17 +4,19 @@ class CustomTextFormField extends StatelessWidget {
   final Function onChanged;
   final int? sectionIndex;
   final int? ingredientIndex;
+  final bool password;
   const CustomTextFormField({
     required this.onChanged,
     this.sectionIndex,
     this.ingredientIndex,
+    this.password = false,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
+      obscureText: password,
       onChanged: (text) => sectionIndex == null && ingredientIndex == null
           ? onChanged(text)
           : ingredientIndex == null
@@ -22,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
               : onChanged(text, sectionIndex, ingredientIndex),
       cursorColor: Theme.of(context).colorScheme.secondary,
       decoration: InputDecoration(
+
         contentPadding: const EdgeInsets.all(10),
         isDense: true,
         focusedBorder: OutlineInputBorder(

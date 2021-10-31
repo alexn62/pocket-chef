@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Screens/LoginScreen.dart';
+import 'package:personal_recipes/Screens/MainScreen.dart';
+import 'package:personal_recipes/Screens/SignUpScreen.dart';
 import 'Constants/Routes.dart' as routes;
 import 'Models/Recipe.dart';
 import 'Screens/RecipeScreen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
+    case routes.MainScreenRoute:
+      return MaterialPageRoute(builder: (context) => const MainScreen());
+    case routes.LoginRoute:
+      return MaterialPageRoute(builder: (context) => const LoginScreen());
+    case routes.SignUpRoute:
+      return MaterialPageRoute(builder: (context) => const SignUpScreen());
     case routes.RecipeRoute:
       Recipe recipe = settings.arguments as Recipe;
       return MaterialPageRoute(

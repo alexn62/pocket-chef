@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/enums/enums.dart';
+import 'package:personal_recipes/Enums/Enum.dart';
 
 abstract class BaseViewModel extends ChangeNotifier {
   LoadingStatus _loadingStatus = LoadingStatus.Idle;

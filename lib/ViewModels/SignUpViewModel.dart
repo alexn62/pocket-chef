@@ -4,7 +4,7 @@ import 'package:personal_recipes/Services/NavigationService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:personal_recipes/Constants/Routes.dart' as routes;
-class LoginViewModel extends BaseViewModel{
+class SignUpViewModel extends BaseViewModel{
   //----------SERVICES----------//
   final NavigationService _navigationService = locator<NavigationService>();
   final AuthService _authService = locator<AuthService>();
@@ -22,10 +22,16 @@ class LoginViewModel extends BaseViewModel{
     _password = newPassword;
   }
 
-  Future<void> loginEmailPassword({required String email, required String password})async{
+  String _confirmPassword = '';
+  String get confirmPassword => _confirmPassword;
+  setConfirmPassword(String newConfirmPassword){
+    _confirmPassword = newConfirmPassword;
+  }
+
+  Future<void> signUpEmailPassword({required String email, required String password, required String confirmPassword})async{
    try{
 
-    await _authService.loginWithEmail(email: email, password: password);
+    await _authService.signUpWithEmail(email: email, password: password, confirmPassword: confirmPassword);
    }on CustomError catch(e){
      print(e.message);
    }
@@ -35,7 +41,7 @@ class LoginViewModel extends BaseViewModel{
   void navigateToMainScreen() {
     _navigationService.navigateTo(routes.MainScreenRoute, replace: true);
   }
-  void navigateToSignUpScreen() {
-    _navigationService.navigateTo(routes.SignUpRoute, replace: true);
+  void navigateToLoginScreen() {
+    _navigationService.navigateTo(routes.LoginRoute, replace: true);
   }
 }

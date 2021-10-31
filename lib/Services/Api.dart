@@ -71,13 +71,13 @@ class Api {
   Future<QuerySnapshot> getRecipesByUserId(String userId) async {
     QuerySnapshot result =
         await recipeReference
-        // .where('authorId', isEqualTo: 'abc')
+        .where('authorId', isEqualTo: userId)
         .get();
-    print(result.docs.length);
     return result;
   }
 
   Future<void> addRecipe(Recipe recipe) async {
+    print(recipe.toJson());
     DocumentReference ref = await recipeReference.add(recipe.toJson());
   }
 }

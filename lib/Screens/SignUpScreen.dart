@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
-import 'package:personal_recipes/ViewModels/LoginViewModel.dart';
+import 'package:personal_recipes/ViewModels/SignUpViewModel.dart';
 import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/Widgets/GenericButton.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<LoginViewModel>(
+    return BaseView<SignUpViewModel>(
         builder: (context, model, child) => Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
             body: Center(
@@ -32,39 +32,37 @@ class LoginScreen extends StatelessWidget {
                     vSmallSpace,
                     CustomTextFormField(onChanged: model.setEmail),
                     vSmallSpace,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Password',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          'Forgot password?',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'Password',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 16,
+                      ),
                     ),
                     vSmallSpace,
                     CustomTextFormField(onChanged: model.setPassword, password: true,),
+                    vSmallSpace,
+                    Text(
+                      'Confirm Password',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                    vSmallSpace,
+                    CustomTextFormField(onChanged: model.setConfirmPassword, password: true,),
                     vRegularSpace,
                     GenericButton(
                       
-                      onTap: () => model.loginEmailPassword(email: model.email, password: model.password),
-                      title: 'Login',
+                      onTap: () => model.signUpEmailPassword(email: model.email, password: model.password, confirmPassword: model.confirmPassword),
+                      title: 'Sign up',
                       positive: true,
                       stretch: true,
                     ),
                     const Expanded(child: SizedBox()),
-                    const Center(child:  Text('Don\'t have an account yet?')),
+                    const Center(child:  Text('Already have an account?')),
                     vSmallSpace,
-                    GenericButton(title: 'Sign up', onTap: model.navigateToSignUpScreen,invertColors: true, stretch: true,),
+                    GenericButton(title: 'Login', onTap: model.navigateToLoginScreen,invertColors: true, stretch: true,),
                     vRegularSpace,
                   ],
                 ),
