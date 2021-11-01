@@ -107,4 +107,9 @@ class AddRecipeViewModel extends BaseViewModel {
     _recipe.sections[sectionIndex].ingredients[ingredientIndex].unit = ingredientUnit.trim();
     notifyListeners();
   }
+
+  void setInstructions(String? newInstructions){
+    _recipe.instructions = newInstructions?.trim();
+    notifyListeners();
+  }
 }
