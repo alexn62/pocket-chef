@@ -10,27 +10,40 @@ class LandingScreenViewModel extends BaseViewModel {
   //----------SERVICES----------//
   final AuthService _authService = locator<AuthService>();
   final NavigationService _navigationService = locator<NavigationService>();
+  final DialogService _dialogService = locator<DialogService>();
   //----------------------------//
-
 
   void initialize() {
     setLoadingStatus(LoadingStatus.Busy);
-    _authService.firebaseAuth.authStateChanges().listen((User? user) {
+    _authService.firebaseAuth.userChanges().listen((User? user) async {
       if (user == null) {
         navigateToLoginScreen();
-        print('User is currently signed out');
       } else {
-        navigateToMainScreen();
-        print('User logged in: ${user.email}');
+        if (user.emailVerified) {
+          navigateToMainScreen();
+        } else {
+          navigateToLoginScreen();
+          DialogResponse<dynamic>? response = await _dialogService.showDialog(
+              title: 'Warning', description: 'Please verify your email to continue!', barrierDismissible: true, cancelTitle: 'Cancel', buttonTitle: 'Send verfification');
+          if (response == null || !response.confirmed) {
+          } else {
+            user.sendEmailVerification();
+          }
+        }
       }
     });
     setLoadingStatus(LoadingStatus.Idle);
   }
 
-  void navigateToMainScreen(){
-    _navigationService.replaceWith(routes.MainScreenRoute,);
+  void navigateToMainScreen() {
+    _navigationService.replaceWith(
+      routes.MainScreenRoute,
+    );
   }
-  void navigateToLoginScreen(){
-    _navigationService.replaceWith(routes.LoginRoute,);
+
+  void navigateToLoginScreen() {
+    _navigationService.replaceWith(
+      routes.LoginRoute,
+    );
   }
 }

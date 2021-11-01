@@ -29,17 +29,20 @@ class AuthService {
     required String password,
     required String confirmPassword,
   }) async {
+    if (password != confirmPassword){
+      throw const CustomError('The password and confirm password do not match.');
+    }
+    validateEmailAndPassword(email, password);
     try {
       UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
       if (user == null) {
-        throw const CustomError('No user found for the provided credential.');
+        throw const CustomError('Unable to register. Please try again later.');
       }
-      if (!user.emailVerified) {
+       if (!user.emailVerified) {
         throw const CustomError('Please verify your email!', code: 'email-not-verified');
       }
     } on FirebaseException catch (e) {
-      print(e.code);
       throw CustomError(handleLoginError(e));
     }
   }
@@ -54,7 +57,7 @@ class AuthService {
     if (!regex.hasMatch(email)) {
       throw const CustomError('Please use a valid email address.');
     }
-    ;
+    
   }
 
   void validatePassword(String password) {

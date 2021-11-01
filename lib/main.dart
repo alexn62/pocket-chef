@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:personal_recipes/Constants/Themes.dart';
 import 'package:personal_recipes/Screens/LandingScreen.dart';
 import 'package:personal_recipes/locator.dart';
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
         value: locator<GeneralServices>(),
         child: Consumer<GeneralServices>(builder: (context, model, child) {
           return GetMaterialApp(
-              navigatorKey: locator<NavigationService>().navigatorKey,
+              navigatorKey: StackedService.navigatorKey,
               debugShowCheckedModeBanner: false,
               onGenerateRoute: router.generateRoute,
               themeMode: model.themeMode,
