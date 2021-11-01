@@ -16,7 +16,7 @@ ThemeData darkTheme = ThemeData(
   colorScheme: ThemeData.dark().colorScheme.copyWith(secondary: accentColor, primaryVariant: goodColor),
   iconTheme: const IconThemeData(color: primaryColorDark),
   switchTheme: SwitchThemeData(thumbColor: MaterialStateProperty.all(primaryColorDark), trackColor: MaterialStateProperty.all(primaryColorDark.withOpacity(.4))),
-  appBarTheme: const AppBarTheme(elevation: 0, titleTextStyle: TextStyle(color: primaryColorDark, fontSize: 20)),
+  appBarTheme: const AppBarTheme(elevation: 0, titleTextStyle: TextStyle(color: primaryColorDark, fontSize: 20,), iconTheme:   IconThemeData(color: primaryColorDark)),
 );
 
 ThemeData lightTheme = ThemeData(
@@ -25,5 +25,5 @@ ThemeData lightTheme = ThemeData(
   backgroundColor: backgroundColorLight,
   colorScheme: ThemeData.light().colorScheme.copyWith(secondary: accentColor, primaryVariant: goodColor),
   iconTheme: const IconThemeData(color: primaryColorLight),
-  appBarTheme: const AppBarTheme(elevation: 0, titleTextStyle: TextStyle(color: primaryColorLight, fontSize: 20)),
+  appBarTheme: const AppBarTheme(elevation: 0, titleTextStyle: TextStyle(color: primaryColorLight, fontSize: 20), iconTheme:   IconThemeData(color: primaryColorLight)),
 );

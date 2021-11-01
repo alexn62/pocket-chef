@@ -27,11 +27,16 @@ class AddRecipeViewModel extends BaseViewModel {
   void addRecipe(Recipe recipe) async {
     setLoadingStatus(LoadingStatus.Busy);
     await _recipesService.addRecipe(recipe);
+    setRecipe(Recipe(title: '', sections: []));
     setLoadingStatus(LoadingStatus.Idle);
   }
 
   late Recipe _recipe;
   Recipe get recipe => _recipe;
+  void setRecipe(Recipe recipe){
+    _recipe = recipe;
+    notifyListeners();
+  }
 
   void addSection() {
     _recipe.sections.add(Section(uid: math.Random().nextInt(99999).toString(), ingredients: [], title: ''));
@@ -54,15 +59,15 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void setRecipeTitle(String newRecipeTitle) {
-    _recipe.title = newRecipeTitle;
+    _recipe.title = newRecipeTitle.trim();
   }
 
   void setSectionTitle(String newSectionTitle, int index) {
-    _recipe.sections[index].title = newSectionTitle;
+    _recipe.sections[index].title = newSectionTitle.trim();
   }
 
   void setIngredientTitle(String ingredientTitle, int sectionIndex, int ingredientIndex) {
-    _recipe.sections[sectionIndex].ingredients[ingredientIndex].title = ingredientTitle;
+    _recipe.sections[sectionIndex].ingredients[ingredientIndex].title = ingredientTitle.trim();
   }
 
   void setIngredientAmount(String ingredientAmount, int sectionIndex, int ingredientIndex) {
@@ -72,7 +77,7 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void setIngredientUnit({required int sectionIndex, required int ingredientIndex, required String ingredientUnit}) {
-    _recipe.sections[sectionIndex].ingredients[ingredientIndex].unit = ingredientUnit;
+    _recipe.sections[sectionIndex].ingredients[ingredientIndex].unit = ingredientUnit.trim();
     notifyListeners();
   }
 }

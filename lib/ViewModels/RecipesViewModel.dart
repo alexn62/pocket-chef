@@ -14,8 +14,8 @@ class RecipesViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final AuthService _authService = locator<AuthService>();
 //----------------------------//
-  User get currentUser => _authService.firebaseAuth.currentUser!; 
-  
+  User get currentUser => _authService.firebaseAuth.currentUser!;
+
   List<Recipe> _recipes = [];
   List<Recipe> get recipes => _recipes;
   void setRecipes(List<Recipe> newRecipes) {
@@ -34,10 +34,19 @@ class RecipesViewModel extends BaseViewModel {
   }
 
   Future<void> navigateToRecipe(Recipe recipe) async {
-    _navigationService.navigateTo(routes.RecipeRoute,
-        arguments: recipe,);
+    _navigationService.navigateTo(
+      routes.RecipeRoute,
+      arguments: recipe,
+    );
   }
-  void logout(){
+
+  void navigateToSettings() {
+    _navigationService.navigateTo(
+      routes.SettingsRoute,
+    );
+  }
+
+  void logout() {
     _authService.firebaseAuth.signOut();
   }
 }

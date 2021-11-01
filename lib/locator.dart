@@ -11,6 +11,7 @@ import 'Services/GeneralServices.dart';
 import 'ViewModels/LoginViewModel.dart';
 import 'ViewModels/RecipeViewModel.dart';
 import 'ViewModels/RecipesViewModel.dart';
+import 'ViewModels/SettingsVIewModel.dart';
 
 GetIt locator = GetIt.instance;
 setupLocator() {
@@ -31,4 +32,5 @@ setupLocator() {
   locator.registerFactory(() => RecipeViewModel(null));
   locator.registerFactory(() => RecipesViewModel());
   locator.registerFactory(() => AddRecipeViewModel());
+  locator.registerFactory(() => SettingsViewModel());
 }

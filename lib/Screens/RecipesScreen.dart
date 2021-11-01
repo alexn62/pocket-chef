@@ -12,8 +12,6 @@ class RecipesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
     return BaseView<RecipesViewModel>(
         onModelReady: (model) => model.initialize(model.currentUser.uid),
         builder: (context, model, child) {
@@ -23,19 +21,11 @@ class RecipesScreen extends StatelessWidget {
               backgroundColor: Theme.of(context).backgroundColor,
               title: const Text(
                 'Recipes',
-                
               ),
               actions: [
-                    GenericButton(onTap: model.logout, title: 'Logout',danger: true,),
-
-                Switch.adaptive(
-                  onChanged: (value) async {
-                    await _generalServices.setDarkMode(value);
-                  },
-                  value: _generalServices.darkMode!,
-                )
+               IconButton(onPressed: model.navigateToSettings, icon:  Icon(Icons.settings, color: Theme.of(context).primaryColor,))
               ],
-               bottom: PreferredSize(
+              bottom: PreferredSize(
                   child: Container(
                     color: Theme.of(context).primaryColor,
                     height: 1.0,
@@ -46,14 +36,18 @@ class RecipesScreen extends StatelessWidget {
                 ? const Center(
                     child: CircularProgressIndicator.adaptive(),
                   )
-                : ListView.builder(
-                    itemCount: model.recipes.length,
-                    itemBuilder: (context, index) => Card(
-                          child: ListTile(
-                            onTap: () => model.navigateToRecipe(model.recipes[index]),
-                            title: Text(model.recipes[index].title),
-                          ),
-                        )),
+                : RefreshIndicator(
+                    onRefresh: () => model.getRecipesByUserId(model.currentUser.uid),
+                    child: ListView.builder(
+                        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                        itemCount: model.recipes.length,
+                        itemBuilder: (context, index) => Card(
+                              child: ListTile(
+                                onTap: () => model.navigateToRecipe(model.recipes[index]),
+                                title: Text(model.recipes[index].title),
+                              ),
+                            )),
+                  ),
           );
         });
   }
