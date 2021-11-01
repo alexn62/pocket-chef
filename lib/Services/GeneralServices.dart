@@ -1,19 +1,31 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Screens/AddRecipeScreen.dart';
 import 'package:personal_recipes/Screens/RecipesScreen.dart';
 import 'package:personal_recipes/Services/SharedPrefs.dart';
 
-
 import '../locator.dart';
 
 class GeneralServices extends ChangeNotifier {
-   //----------SERVICES----------//
-  final SharedPrefs _sharedPreferences =
-      locator<SharedPrefs>();
+  //----------SERVICES----------//
+  final SharedPrefs _sharedPreferences = locator<SharedPrefs>();
   //----------------------------//
 
   ThemeMode get themeMode => _sharedPreferences.themeMode;
   bool? get darkMode => _sharedPreferences.getDarkMode() ?? false;
+  
+  Timer? _timer;
+  Timer? get  timer => _timer;
+  setTimer(){
+    _timer = Timer(const Duration(minutes: 5), (){});
+    notifyListeners();
+  }
+ 
+    
+    
+  
+
   Future<void> setDarkMode(bool value) async {
     await _sharedPreferences.setDarkMode(value);
     notifyListeners();

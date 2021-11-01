@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
+import 'package:personal_recipes/Services/AdService.dart';
+import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../locator.dart';
@@ -22,20 +26,58 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   final ScrollController _controller = ScrollController();
   late GlobalKey<FormState> _formKey;
 
+  InterstitialAd? _interstitialAd;
+
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdService.interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          _interstitialAd = ad;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          _interstitialAd = null;
+          _createInterstitialAd();
+        },
+      ),
+    );
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+    }
+  }
+
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
+    _createInterstitialAd();
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _interstitialAd?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
+
     return BaseView<AddRecipeViewModel>(
       onModelReady: (model) => model.initialize(model.currentUser.uid, recipe: widget.recipe),
       builder: (context, model, child) => WillPopScope(
@@ -64,6 +106,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
               IconButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      if (_generalServices.timer == null || _generalServices.timer != null && !_generalServices.timer!.isActive) {
+                        _generalServices.setTimer();
+                        _showInterstitialAd();
+                      }
                       widget.recipe == null ? model.addRecipe(model.recipe) : model.updateRecipe(model.recipe);
                     }
                   },
@@ -296,8 +342,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                     ),
                                 ],
                               ),
-
-                            
                           ],
                         ),
                       ),
