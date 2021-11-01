@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
-import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/RecipesViewModel.dart';
-import 'package:personal_recipes/Widgets/GenericButton.dart';
-import 'package:provider/provider.dart';
 
 import 'BaseView.dart';
 
@@ -23,7 +20,12 @@ class RecipesScreen extends StatelessWidget {
                 'Recipes',
               ),
               actions: [
-               IconButton(onPressed: model.navigateToSettings, icon:  Icon(Icons.settings, color: Theme.of(context).primaryColor,))
+                IconButton(
+                    onPressed: model.navigateToSettings,
+                    icon: Icon(
+                      Icons.settings,
+                      color: Theme.of(context).primaryColor,
+                    ))
               ],
               bottom: PreferredSize(
                   child: Container(
@@ -43,9 +45,12 @@ class RecipesScreen extends StatelessWidget {
                         itemCount: model.recipes.length,
                         itemBuilder: (context, index) => Card(
                               child: ListTile(
-                                onTap: () => model.navigateToRecipe(model.recipes[index]),
-                                title: Text(model.recipes[index].title),
-                              ),
+                                  onTap: () => model.navigateToRecipe(model.recipes[index]),
+                                  onLongPress: ()=> model.deleteRecipe(model.recipes[index]),
+                                  title: Text(model.recipes[index].title),
+                                  trailing: IconButton(
+                                      onPressed: () => model.setFavoriteByRecipeId(model.recipes[index].uid!, !model.recipes[index].favorite),
+                                      icon: !model.recipes[index].favorite ? const Icon(Icons.star_outline_rounded) : const Icon(Icons.star_rounded))),
                             )),
                   ),
           );
