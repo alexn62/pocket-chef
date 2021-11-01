@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/ViewModels/RecipesViewModel.dart';
-
 import 'BaseView.dart';
 
 class RecipesScreen extends StatelessWidget {
@@ -40,18 +39,38 @@ class RecipesScreen extends StatelessWidget {
                   )
                 : RefreshIndicator(
                     onRefresh: () => model.getRecipesByUserId(model.currentUser.uid),
-                    child: ListView.builder(
-                        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                        itemCount: model.recipes.length,
-                        itemBuilder: (context, index) => Card(
-                              child: ListTile(
-                                  onTap: () => model.navigateToRecipe(model.recipes[index]),
-                                  onLongPress: ()=> model.deleteRecipe(model.recipes[index]),
-                                  title: Text(model.recipes[index].title),
-                                  trailing: IconButton(
-                                      onPressed: () => model.setFavoriteByRecipeId(model.recipes[index].uid!, !model.recipes[index].favorite),
-                                      icon: !model.recipes[index].favorite ? const Icon(Icons.star_outline_rounded) : const Icon(Icons.star_rounded))),
-                            )),
+                    child: model.recipes.isEmpty
+                        ? ListView(
+                            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                            children: [
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height / 2 - 60,
+                              ),
+                              Center(
+                                child: Text(
+                                  'Tap the + icon below to add your first recipe!',
+                                  style: TextStyle(color: Theme.of(context).primaryColor),
+                                ),
+                              )
+                            ],
+                          )
+                        : ListView.builder(
+                            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                            itemCount: model.recipes.length,
+                            itemBuilder: (context, index) => Card(
+                                  child: ListTile(
+                                      onTap: () => model.navigateToRecipe(model.recipes[index]),
+                                      onLongPress: () => model.deleteRecipe(model.recipes[index]),
+                                      title: Text(model.recipes[index].title, style: TextStyle(color: Theme.of(context).primaryColor),),
+                                      trailing: IconButton(
+                                          onPressed: () => model.setFavoriteByRecipeId(model.recipes[index].uid!, !model.recipes[index].favorite),
+                                          icon: !model.recipes[index].favorite
+                                              ? Icon(
+                                                  Icons.star_outline_rounded,
+                                                  color: Theme.of(context).primaryColor,
+                                                )
+                                              : Icon(Icons.star_rounded, color: Colors.amber[600]))),
+                                )),
                   ),
           );
         });

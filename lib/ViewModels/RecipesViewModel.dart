@@ -50,9 +50,7 @@ class RecipesViewModel extends BaseViewModel {
     );
   }
 
-  void logout() {
-    _authService.firebaseAuth.signOut();
-  }
+ 
 
   Future<void> setFavoriteByRecipeId(String uid, bool favorite) async {
     List<Recipe> recipes = _recipes.where((element) => element.uid == uid).toList();

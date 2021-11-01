@@ -13,7 +13,7 @@ class RecipeScreen extends StatelessWidget {
   final Recipe recipe;
   const RecipeScreen({
     required this.recipe,
-    Key? key,
+    Key? key ,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

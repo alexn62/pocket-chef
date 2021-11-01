@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:personal_recipes/Constants/spacing.dart';
+import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
@@ -20,7 +20,14 @@ class AddRecipeScreen extends StatefulWidget {
 
 class _AddRecipeScreenState extends State<AddRecipeScreen> {
   final ScrollController _controller = ScrollController();
-  final _formKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> _formKey;
+
+  @override
+  void initState() {
+    _formKey = GlobalKey<FormState>();
+    super.initState();
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -102,6 +109,40 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                               },
                               onChanged: model.setRecipeTitle,
                             ),
+                            vSmallSpace,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Instructions',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                model.recipe.instructions == null
+                                    ? IconButton(onPressed: () => model.setInstructions(''), icon: const Icon(Icons.add))
+                                    : IconButton(onPressed: () => model.setInstructions(null), icon: const Icon(Icons.delete_outline))
+                              ],
+                            ),
+                            model.recipe.instructions == null
+                                ? const SizedBox()
+                                : CustomTextFormField(
+                                    keyboardType: TextInputType.multiline,
+                                    minLines: 3,
+                                    maxLines: null,
+                                    initialValue: model.recipe.instructions,
+                                    validator: (text) {
+                                      if (text == null) {
+                                        return 'Value cannot be null';
+                                      }
+                                      if (text.length > 2000) {
+                                        return 'The instructions must not be longer than 2000 characters.';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: model.setInstructions,
+                                  ),
                             // vRegularSpace,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -256,40 +297,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                 ],
                               ),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Instructions',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                model.recipe.instructions == null
-                                    ? IconButton(onPressed: () => model.setInstructions(''), icon: const Icon(Icons.add))
-                                    : IconButton(onPressed: () => model.setInstructions(null), icon: const Icon(Icons.delete_outline))
-                              ],
-                            ),
-                            vSmallSpace,
-                            model.recipe.instructions == null
-                                ? const SizedBox()
-                                : CustomTextFormField(
-                                  keyboardType: TextInputType.multiline,
-                                    minLines: 3,
-                                    maxLines: null,
-                                    initialValue: model.recipe.instructions,
-                                    validator: (text) {
-                                      if (text == null) {
-                                        return 'Value cannot be null';
-                                      }
-                                      if (text.length > 2000) {
-                                        return 'The instructions must not be longer than 2000 characters.';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: model.setInstructions,
-                                  ),
+                            
                           ],
                         ),
                       ),

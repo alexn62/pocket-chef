@@ -16,16 +16,17 @@ class MainScreen extends StatelessWidget {
             showUnselectedLabels: false,
             currentIndex: model.index,
             onTap: model.setIndex,
-            items: const [
+            items:  [
                BottomNavigationBarItem(
                 label: '',
                 tooltip: '',
-                icon: Center(child: Icon(Icons.menu_book)),
+                icon: Center(child: Icon(Icons.menu_book, color: model.index == 0 ? Theme.of(context).primaryColor : Theme.of(context).primaryColor.withOpacity(0.5), size: model.index == 0 ? 24: 18)),
               ),
                BottomNavigationBarItem(
                 label: '',
                 tooltip: '',
-                icon: Icon(Icons.add_sharp),
+                icon: Icon(Icons.add_sharp, 
+                 color: model.index == 1 ? Theme.of(context).primaryColor : Theme.of(context).primaryColor.withOpacity(0.5), size: model.index == 1 ? 24: 18),
               ),
             ],
           ),
