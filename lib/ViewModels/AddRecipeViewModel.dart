@@ -37,6 +37,8 @@ class AddRecipeViewModel extends BaseViewModel {
     setLoadingStatus(LoadingStatus.Busy);
     try {
       await _recipesService.addRecipe(recipe);
+      _dialogService.showDialog(
+          title: 'Success', description: 'Recipe added successfully!');
     } on CustomError catch (e) {
       setLoadingStatus(LoadingStatus.Idle);
       _dialogService.showDialog(title: 'Error', description: e.message);
@@ -66,7 +68,10 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void addSection() {
-    _recipe.sections.add(Section(uid: math.Random().nextInt(99999).toString(), ingredients: [], title: ''));
+    _recipe.sections.add(Section(
+        uid: math.Random().nextInt(99999).toString(),
+        ingredients: [],
+        title: ''));
     notifyListeners();
   }
 
@@ -76,7 +81,8 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void addIngredient(int i) {
-    _recipe.sections[i].ingredients.add(Ingredient(uid: math.Random().nextInt(99999).toString(), title: '', amount: 0.0));
+    _recipe.sections[i].ingredients.add(Ingredient(
+        uid: math.Random().nextInt(99999).toString(), title: '', amount: 0.0));
     notifyListeners();
   }
 
@@ -93,22 +99,29 @@ class AddRecipeViewModel extends BaseViewModel {
     _recipe.sections[index].title = newSectionTitle.trim();
   }
 
-  void setIngredientTitle(String ingredientTitle, int sectionIndex, int ingredientIndex) {
-    _recipe.sections[sectionIndex].ingredients[ingredientIndex].title = ingredientTitle.trim();
+  void setIngredientTitle(
+      String ingredientTitle, int sectionIndex, int ingredientIndex) {
+    _recipe.sections[sectionIndex].ingredients[ingredientIndex].title =
+        ingredientTitle.trim();
   }
 
-  void setIngredientAmount(String ingredientAmount, int sectionIndex, int ingredientIndex) {
+  void setIngredientAmount(
+      String ingredientAmount, int sectionIndex, int ingredientIndex) {
     double? amount = double.tryParse(ingredientAmount) ?? 0.0;
 
     _recipe.sections[sectionIndex].ingredients[ingredientIndex].amount = amount;
   }
 
-  void setIngredientUnit({required int sectionIndex, required int ingredientIndex, required String ingredientUnit}) {
-    _recipe.sections[sectionIndex].ingredients[ingredientIndex].unit = ingredientUnit.trim();
+  void setIngredientUnit(
+      {required int sectionIndex,
+      required int ingredientIndex,
+      required String ingredientUnit}) {
+    _recipe.sections[sectionIndex].ingredients[ingredientIndex].unit =
+        ingredientUnit.trim();
     notifyListeners();
   }
 
-  void setInstructions(String? newInstructions){
+  void setInstructions(String? newInstructions) {
     _recipe.instructions = newInstructions?.trim();
     notifyListeners();
   }

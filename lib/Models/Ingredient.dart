@@ -7,7 +7,8 @@ class Ingredient {
   Ingredient({required this.title, this.unit, required this.amount, this.uid});
 
   Ingredient.fromJSON(Map<String, dynamic> ingredient)
-      : title = ingredient['title'],
+      : uid = ingredient['uid'],
+        title = ingredient['title'],
         unit = ingredient['unit'],
         amount = ingredient['amount'].toDouble();
 
