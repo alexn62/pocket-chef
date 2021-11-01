@@ -5,6 +5,7 @@ import 'package:personal_recipes/Screens/SettingsScreen.dart';
 import 'package:personal_recipes/Screens/SignUpScreen.dart';
 import 'Constants/Routes.dart' as routes;
 import 'Models/Recipe.dart';
+import 'Screens/AddRecipeScreen.dart';
 import 'Screens/RecipeScreen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -21,6 +22,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       Recipe recipe = settings.arguments as Recipe;
       return MaterialPageRoute(
           builder: (context) => RecipeScreen(
+                recipe: recipe,
+              ));
+    case routes.AddRecipeRoute:
+      Recipe? recipe = settings.arguments as Recipe?;
+      return MaterialPageRoute(
+          builder: (context) => AddRecipeScreen(
                 recipe: recipe,
               ));
     default:

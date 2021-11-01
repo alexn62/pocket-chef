@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final int? sectionIndex;
   final int? ingredientIndex;
   final bool password;
+  final String? initialValue;
   const CustomTextFormField({
     required this.onChanged,
     this.keyboardType = TextInputType.text,
@@ -14,12 +15,14 @@ class CustomTextFormField extends StatelessWidget {
     this.sectionIndex,
     this.ingredientIndex,
     this.password = false,
+    this.initialValue,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue ?? '',
       validator: validator,
       keyboardType: keyboardType,
       obscureText: password,

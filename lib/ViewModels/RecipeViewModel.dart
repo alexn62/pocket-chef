@@ -2,11 +2,21 @@ import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:personal_recipes/Constants/Routes.dart' as routes;
+import '../locator.dart';
 
 class RecipeViewModel extends BaseViewModel {
-  final Recipe? _recipe;
+  Recipe? _recipe;
   RecipeViewModel(this._recipe);
+
+  final NavigationService _navigationService = locator<NavigationService>();
+
   Recipe get recipe => _recipe!;
+  void setRecipe(Recipe newRecipe) {
+    _recipe = newRecipe;
+    notifyListeners();
+  }
 
   late List<Section> _sections;
   List<Section> get sections => _sections;
@@ -54,6 +64,13 @@ class RecipeViewModel extends BaseViewModel {
         {
           return 4 / 3;
         }
+    }
+  }
+
+  navigateToRecipe(Recipe recipe) async {
+    dynamic result = await _navigationService.navigateTo(routes.AddRecipeRoute, arguments: recipe);
+    if (result != null && result.runtimeType == Recipe) {
+      setRecipe(result as Recipe);
     }
   }
 }

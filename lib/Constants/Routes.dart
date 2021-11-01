@@ -5,3 +5,4 @@ const String SignUpRoute = 'SignUp';
 const String RecipeRoute = 'Recipe';
 const String MainScreenRoute = 'MainScreen';
 const String SettingsRoute = 'Settings';
+const String AddRecipeRoute = 'AddRecipe';

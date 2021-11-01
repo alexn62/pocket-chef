@@ -1,13 +1,19 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:personal_recipes/Constants/spacing.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
+import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+import '../locator.dart';
 
 class AddRecipeScreen extends StatefulWidget {
-  const AddRecipeScreen({Key? key}) : super(key: key);
+  final Recipe? recipe;
+  const AddRecipeScreen({Key? key, this.recipe}) : super(key: key);
 
   @override
   State<AddRecipeScreen> createState() => _AddRecipeScreenState();
@@ -25,12 +31,23 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseView<AddRecipeViewModel>(
-      onModelReady: (model) => model.initialize(model.currentUser.uid),
+      onModelReady: (model) => model.initialize(model.currentUser.uid, recipe: widget.recipe),
       builder: (context, model, child) => Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           backgroundColor: Theme.of(context).backgroundColor,
-          title: const Text('Add Recipe'),
+          leading: widget.recipe == null
+              ? null
+              : BackButton(onPressed: () async {
+                  DialogResponse<dynamic>? response = await locator<DialogService>()
+                      .showDialog(title: 'Warning', description: 'Are you sure you want to dismiss your changes and go back?', barrierDismissible: true, cancelTitle: 'Cancel');
+                  if (response == null || !response.confirmed) {
+                    return;
+                  } else {
+                    locator<NavigationService>().back();
+                  }
+                }),
+          title: Text(widget.recipe == null ? 'Add Recipe' : 'Edit recipe'),
           bottom: PreferredSize(
               child: Container(
                 color: Theme.of(context).primaryColor,
@@ -41,7 +58,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
             IconButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    model.addRecipe(model.recipe);
+                    widget.recipe == null ? model.addRecipe(model.recipe) : model.updateRecipe(model.recipe);
                   }
                 },
                 icon: Icon(
@@ -74,6 +91,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                           ),
                           vSmallSpace,
                           CustomTextFormField(
+                            initialValue: model.recipe.title,
                             validator: (text) {
                               if (text == null || text.trim().isEmpty) {
                                 return 'Please enter a recipe title.';
@@ -110,6 +128,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                   children: [
                                     Expanded(
                                       child: CustomTextFormField(
+                                        initialValue: model.recipe.sections[i].title,
                                         validator: (text) {
                                           if (text == null || text.trim().isEmpty) {
                                             return 'Please enter a section title.';
@@ -185,6 +204,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                       Flexible(
                                         flex: 3,
                                         child: CustomTextFormField(
+                                          initialValue: model.recipe.sections[i].ingredients[j].title,
                                           validator: (text) {
                                             if (text == null || text.trim().isEmpty) {
                                               return 'Enter an ingredient title.';
@@ -203,6 +223,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                       Flexible(
                                         flex: 1,
                                         child: CustomTextFormField(
+                                          initialValue: model.recipe.sections[i].ingredients[j].amount == 0 ? '' : model.recipe.sections[i].ingredients[j].amount.toString(),
                                           validator: (text) {
                                             if (text == null || text.trim().isEmpty || text.trim().length > 5 || double.tryParse(text) == null) {
                                               return 'Err';
@@ -217,7 +238,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                       ),
                                       hSmallSpace,
                                       PopupMenuButton(
-                                        
+                                        initialValue: model.recipe.sections[i].ingredients[j].unit ?? 'Unit',
                                         child: Text(
                                           model.recipe.sections[i].ingredients[j].unit ?? 'Unit',
                                           style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
