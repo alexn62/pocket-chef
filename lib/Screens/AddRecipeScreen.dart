@@ -235,7 +235,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                       });
                                     },
                                     padding: const EdgeInsets.all(0),
-                                    icon: const Icon(Icons.add)),
+                                    icon: Icon(Platform.isIOS
+                                        ? CupertinoIcons.add
+                                        : Icons.add)),
                               ],
                             ),
                             for (int i = 0;
@@ -271,8 +273,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                           onPressed: () =>
                                               model.removeSection(i),
                                           padding: const EdgeInsets.all(0),
-                                          icon:
-                                              const Icon(Icons.delete_outline)),
+                                          icon: Icon(Platform.isIOS
+                                              ? CupertinoIcons.delete
+                                              : Icons.delete_outline)),
                                     ],
                                   ),
                                   Row(
@@ -315,7 +318,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                             });
                                           },
                                           padding: const EdgeInsets.all(0),
-                                          icon: const Icon(Icons.add)),
+                                          icon: Icon(Platform.isIOS
+                                              ? CupertinoIcons.add
+                                              : Icons.add)),
                                     ],
                                   ),
                                   for (int j = 0;
@@ -369,9 +374,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                                       padding:
                                                           const EdgeInsets.all(
                                                               0),
-                                                      icon: const Icon(
-                                                        Icons.add,
-                                                      )),
+                                                      icon: Icon(Platform.isIOS
+                                                          ? CupertinoIcons.add
+                                                          : Icons.add)),
                                                 ),
                                               )
                                             : hBigSpace,
@@ -462,8 +467,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                             onPressed: () =>
                                                 model.removeIngredient(i, j),
                                             padding: const EdgeInsets.all(0),
-                                            icon: const Icon(
-                                                Icons.delete_outline)),
+                                            icon: Icon(Platform.isIOS
+                                                ? CupertinoIcons.delete
+                                                : Icons.delete_outline)),
                                       ],
                                     ),
                                 ],
