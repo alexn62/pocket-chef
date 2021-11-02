@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:personal_recipes/Constants/ErrorHandling.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
@@ -16,9 +17,15 @@ class RecipesService {
     try {
       QuerySnapshot data = await _api.getRecipesByUserId(userId);
 
-      return data.docs.map<Recipe>((recipe) => Recipe.fromFirestore(recipe)).toList()..sort((a, b) => b.favorite ? 1 : -1);
+      return data.docs
+          .map<Recipe>((recipe) => Recipe.fromFirestore(recipe))
+          .toList()
+        ..sort((a, b) => b.favorite ? 1 : -1);
     } on FirebaseException {
-      _dialogService.showDialog(title: 'Error', description: 'Please make sure all of the ingredients have a valid unit.');
+      _dialogService.showDialog(
+          title: 'Error',
+          description:
+              'Please make sure all of the ingredients have a valid unit.');
       return null;
     }
   }
@@ -28,11 +35,15 @@ class RecipesService {
     if (valid) {
       try {
         await _api.addRecipe(recipe);
-      } on FirebaseException  {
-        throw const CustomError('An error occurred. Please try again later or contact support.');
+      } on FirebaseException {
+        throw const CustomError(
+            'An error occurred. Please try again later or contact support.');
       }
     } else {
-      _dialogService.showDialog(title: 'Error', description: 'Please make sure all of the ingredients have a valid unit.');
+      _dialogService.showDialog(
+          title: 'Error',
+          description:
+              'Please make sure all of the ingredients have a valid unit.');
     }
   }
 
@@ -40,17 +51,17 @@ class RecipesService {
     try {
       await _api.updateRecipe(recipe);
     } on FirebaseException {
-      throw const CustomError('An error occurred. Please try again later or contact support.');
+      throw const CustomError(
+          'An error occurred. Please try again later or contact support.');
     }
   }
 
-  Future<void> deleteRecipe(Recipe recipeToDelete) async{
+  Future<void> deleteRecipe(Recipe recipeToDelete) async {
     try {
       await _api.deleteRecipe(recipeToDelete);
-    } on FirebaseException {
-      throw const CustomError('An error occurred. Please try again later or contact support.');
+    } on FirebaseException catch (e) {
+      throw CustomError(handleFirebaseError(e));
     }
-
   }
 
   bool _validateRecipe(Recipe recipe) {
@@ -63,5 +74,4 @@ class RecipesService {
     }
     return true;
   }
-
 }

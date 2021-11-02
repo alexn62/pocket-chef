@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 
-String handleLoginError(FirebaseException error) {
+String handleFirebaseError(FirebaseException error) {
   switch (error.code) {
     case "ERROR_EMAIL_ALREADY_IN_USE":
     case "account-exists-with-different-credential":
@@ -23,6 +23,9 @@ String handleLoginError(FirebaseException error) {
     case "ERROR_INVALID_EMAIL":
     case "invalid-email":
       return "Email address is invalid.";
+    case "permission-denied":
+    case "PERMISSION_DENIED":
+      return "You do not have the permissions to perform this action.";
     default:
       return "Login failed. Please try again.";
   }

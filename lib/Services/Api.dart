@@ -69,7 +69,8 @@ class Api {
   CollectionReference get recipeReference => _firestore.collection('recipes');
 
   Future<QuerySnapshot> getRecipesByUserId(String userId) async {
-    QuerySnapshot result = await recipeReference.where('authorId', isEqualTo: userId).get();
+    QuerySnapshot result =
+        await recipeReference.where('authorId', isEqualTo: userId).get();
     return result;
   }
 
@@ -78,10 +79,10 @@ class Api {
   }
 
   Future<void> updateRecipe(Recipe recipe) async {
-    recipeReference.doc(recipe.uid).update(recipe.toJson());
+    await recipeReference.doc(recipe.uid).update(recipe.toJson());
   }
 
   Future<void> deleteRecipe(Recipe recipeToDelete) async {
-    recipeReference.doc(recipeToDelete.uid).delete();
+    await recipeReference.doc(recipeToDelete.uid).delete();
   }
 }
