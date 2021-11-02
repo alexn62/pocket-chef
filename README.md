@@ -1,16 +1,16 @@
-# personal_recipes
+This app is a continuation of my previously released app called 'Pizza Calc'
 
-A new Flutter project.
+While Pizza Calc allows users to calculate the correct amount of ingredients
+to get a perfect pizza dough every time, this app brings things to the
+next level.
 
-## Getting Started
+In this app, I adopted some of the UI from Pizza Calc, but added more 
+functionalities. The most important of which is the ability to add
+your own recipes to the app. 
+The recipes are stored in a secure database and are ready to be read, 
+updated, and deleted as you wish.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+By entering the amount of ingredients needed for one serving size, the
+app will do the calculations in the background to figure out how those
+amounts change depending on the user's desired number of servings and 
+sizes.

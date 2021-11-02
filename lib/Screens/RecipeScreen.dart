@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
@@ -13,7 +16,7 @@ class RecipeScreen extends StatelessWidget {
   final Recipe recipe;
   const RecipeScreen({
     required this.recipe,
-    Key? key ,
+    Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,13 @@ class RecipeScreen extends StatelessWidget {
             title: Text(
               recipe.title,
             ),
-            actions: [IconButton(padding: const EdgeInsets.all(0), onPressed: () => model.navigateToRecipe(recipe), icon: const Icon(Icons.edit))],
+            actions: [
+              IconButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () => model.navigateToRecipe(recipe),
+                  icon:
+                      Icon(Platform.isIOS ? CupertinoIcons.pencil : Icons.edit))
+            ],
             backgroundColor: Theme.of(context).backgroundColor,
             bottom: PreferredSize(
                 child: Container(
@@ -47,15 +56,27 @@ class RecipeScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: GenericButton(title: 'Small', invertColors: model.size == ServingSize.Small ? true : false, onTap: () => model.setSize(ServingSize.Small)),
+                      child: GenericButton(
+                          title: 'Small',
+                          invertColors:
+                              model.size == ServingSize.Small ? true : false,
+                          onTap: () => model.setSize(ServingSize.Small)),
                     ),
                     hTinySpace,
                     Expanded(
-                      child: GenericButton(title: 'Regular', invertColors: model.size == ServingSize.Regular ? true : false, onTap: () => model.setSize(ServingSize.Regular)),
+                      child: GenericButton(
+                          title: 'Regular',
+                          invertColors:
+                              model.size == ServingSize.Regular ? true : false,
+                          onTap: () => model.setSize(ServingSize.Regular)),
                     ),
                     hTinySpace,
                     Expanded(
-                      child: GenericButton(title: 'Large', invertColors: model.size == ServingSize.Large ? true : false, onTap: () => model.setSize(ServingSize.Large)),
+                      child: GenericButton(
+                          title: 'Large',
+                          invertColors:
+                              model.size == ServingSize.Large ? true : false,
+                          onTap: () => model.setSize(ServingSize.Large)),
                     ),
                   ],
                 ),
@@ -69,7 +90,11 @@ class RecipeScreen extends StatelessWidget {
               vRegularSpace,
               ...model.sections
                   .map<SectionComponent>(
-                    (section) => SectionComponent(sizeValue: model.getSize, totalAmount: model.amount, sectionTitle: section.title, ingredients: section.ingredients),
+                    (section) => SectionComponent(
+                        sizeValue: model.getSize,
+                        totalAmount: model.amount,
+                        sectionTitle: section.title,
+                        ingredients: section.ingredients),
                   )
                   .toList(),
               InstructionsComponent(instructions: model.recipe.instructions),
@@ -97,7 +122,8 @@ class InstructionsComponent extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Text(
                   instructions!,
-                  style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18),
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor, fontSize: 18),
                 ),
               )
             ],

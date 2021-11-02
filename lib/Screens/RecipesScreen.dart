@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
@@ -63,7 +66,8 @@ class _RecipesScreenState extends State<RecipesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
+    final GeneralServices _generalServices =
+        Provider.of<GeneralServices>(context);
     return BaseView<RecipesViewModel>(
         onModelReady: (model) => model.initialize(model.currentUser.uid),
         builder: (context, model, child) {
@@ -78,7 +82,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
                 IconButton(
                     onPressed: model.navigateToSettings,
                     icon: Icon(
-                      Icons.settings,
+                      Platform.isIOS ? CupertinoIcons.settings : Icons.settings,
                       color: Theme.of(context).primaryColor,
                     ))
               ],
@@ -94,47 +98,71 @@ class _RecipesScreenState extends State<RecipesScreen> {
                     child: CircularProgressIndicator.adaptive(),
                   )
                 : RefreshIndicator(
-                    onRefresh: () => model.getRecipesByUserId(model.currentUser.uid),
+                    onRefresh: () =>
+                        model.getRecipesByUserId(model.currentUser.uid),
                     child: model.recipes.isEmpty
                         ? ListView(
-                            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                            physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
                             children: [
                               SizedBox(
-                                height: MediaQuery.of(context).size.height / 2 - 60,
+                                height:
+                                    MediaQuery.of(context).size.height / 2 - 60,
                               ),
                               Center(
                                 child: Text(
                                   'Tap the + icon below to add your first recipe!',
-                                  style: TextStyle(color: Theme.of(context).primaryColor),
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
                                 ),
                               )
                             ],
                           )
                         : ListView.builder(
-                            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                            physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
                             itemCount: model.recipes.length,
                             itemBuilder: (context, index) => Card(
                                   child: ListTile(
                                       onTap: () {
-                                        if (_generalServices.timer == null || _generalServices.timer != null && !_generalServices.timer!.isActive) {
+                                        if (_generalServices.timer == null ||
+                                            _generalServices.timer != null &&
+                                                !_generalServices
+                                                    .timer!.isActive) {
                                           _generalServices.setTimer();
                                           _showInterstitialAd();
                                         }
-                                        model.navigateToRecipe(model.recipes[index]);
+                                        model.navigateToRecipe(
+                                            model.recipes[index]);
                                       },
-                                      onLongPress: () => model.deleteRecipe(model.recipes[index]),
+                                      onLongPress: () => model
+                                          .deleteRecipe(model.recipes[index]),
                                       title: Text(
                                         model.recipes[index].title,
-                                        style: TextStyle(color: Theme.of(context).primaryColor),
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
                                       ),
                                       trailing: IconButton(
-                                          onPressed: () => model.setFavoriteByRecipeId(model.recipes[index].uid!, !model.recipes[index].favorite),
+                                          onPressed: () =>
+                                              model.setFavoriteByRecipeId(
+                                                  model.recipes[index].uid!,
+                                                  !model
+                                                      .recipes[index].favorite),
                                           icon: !model.recipes[index].favorite
                                               ? Icon(
-                                                  Icons.star_outline_rounded,
-                                                  color: Theme.of(context).primaryColor,
+                                                  Platform.isIOS
+                                                      ? CupertinoIcons.star
+                                                      : Icons
+                                                          .star_outline_rounded,
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
                                                 )
-                                              : Icon(Icons.star_rounded, color: Colors.amber[600]))),
+                                              : Icon(
+                                                  Platform.isIOS
+                                                      ? CupertinoIcons.star_fill
+                                                      : Icons.star_rounded,
+                                                  color: Colors.amber[600]))),
                                 )),
                   ),
           );

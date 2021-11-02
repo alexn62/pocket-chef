@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AmountCounter extends StatelessWidget {
@@ -18,7 +21,8 @@ class AmountCounter extends StatelessWidget {
       children: [
         IconButton(
           onPressed: decrease,
-          icon: Icon(Icons.remove, color: Theme.of(context).primaryColor),
+          icon: Icon(Platform.isIOS ? CupertinoIcons.minus : Icons.remove,
+              color: Theme.of(context).primaryColor),
         ),
         SizedBox(
           height: 45,
@@ -34,7 +38,7 @@ class AmountCounter extends StatelessWidget {
         IconButton(
           onPressed: increase,
           icon: Icon(
-            Icons.add,
+            Platform.isIOS ? CupertinoIcons.add : Icons.add,
             color: Theme.of(context).primaryColor,
           ),
         ),
