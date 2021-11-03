@@ -136,6 +136,14 @@ class _RecipesScreenState extends State<RecipesScreen> {
                                             const Text(
                                               'Tap the + icon below to add your first recipe!',
                                             ),
+                                            vRegularSpace,
+                                            Text(
+                                                '...or pull to refresh if you just did',
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .primaryColor
+                                                      .withOpacity(0.7),
+                                                )),
                                           ],
                                         ),
                                       ),

@@ -21,10 +21,9 @@ class AddRecipeViewModel extends BaseViewModel {
   User get currentUser => _authService.firebaseAuth.currentUser!;
   List<String> possibleUnits = 'ml kg cups tsp tbsp oz g count mg'.split(' ');
 
-  void initialize(String currentUserUid, {Recipe? recipe}) {
+  void initialize({Recipe? recipe}) {
     if (recipe == null) {
       _recipe = Recipe(
-        authorId: currentUserUid,
         title: '',
         sections: [],
       );
@@ -33,31 +32,34 @@ class AddRecipeViewModel extends BaseViewModel {
     }
   }
 
-  void addRecipe(Recipe recipe) async {
+  Future<bool> addRecipe(Recipe recipe) async {
     setLoadingStatus(LoadingStatus.Busy);
     try {
       await _recipesService.addRecipe(recipe);
       _dialogService.showDialog(
           title: 'Success', description: 'Recipe added successfully!');
+      setRecipe(Recipe(title: '', sections: []));
+      setLoadingStatus(LoadingStatus.Idle);
+      return true;
     } on CustomError catch (e) {
       setLoadingStatus(LoadingStatus.Idle);
       _dialogService.showDialog(title: 'Error', description: e.message);
+      return false;
     }
-    setRecipe(Recipe(title: '', sections: []));
-    setLoadingStatus(LoadingStatus.Idle);
   }
 
-  void updateRecipe(Recipe recipe) async {
+  Future<bool> updateRecipe(Recipe recipe) async {
     setLoadingStatus(LoadingStatus.Busy);
     try {
       await _recipesService.updateRecipe(recipe);
       _navigationService.back(result: recipe);
+      setLoadingStatus(LoadingStatus.Idle);
+      return true;
     } on CustomError catch (e) {
       setLoadingStatus(LoadingStatus.Idle);
       _dialogService.showDialog(title: 'Error', description: e.message);
+      return false;
     }
-
-    setLoadingStatus(LoadingStatus.Idle);
   }
 
   late Recipe _recipe;

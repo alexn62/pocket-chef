@@ -4,6 +4,7 @@ import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/SignUpViewModel.dart';
 import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/widgets/FullScreenLoadingIndicator.dart';
 import 'package:personal_recipes/widgets/GenericButton.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -126,16 +127,7 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                       )),
-                  model.loadingStatus != LoadingStatus.Busy
-                      ? const SizedBox()
-                      : Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          color: Colors.black38,
-                          child: const Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          ),
-                        ),
+                  FullScreenLoadingIndicator(model.loadingStatus),
                 ],
               ),
             ));

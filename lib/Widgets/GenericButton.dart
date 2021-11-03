@@ -61,7 +61,7 @@ class GenericButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Center(
               child: loading
-                  ? CircularProgressIndicator.adaptive()
+                  ? const CircularProgressIndicator.adaptive()
                   : Text(
                       title,
                       style: TextStyle(

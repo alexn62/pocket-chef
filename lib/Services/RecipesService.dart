@@ -4,6 +4,7 @@ import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
+import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../locator.dart';
@@ -11,6 +12,7 @@ import 'Api.dart';
 
 class RecipesService {
   final Api _api = locator<Api>();
+  final AuthService _authService = locator<AuthService>();
   final DialogService _dialogService = locator<DialogService>();
 
   Future<List<Recipe>?> getRecipesByUserId(String userId) async {
@@ -30,20 +32,18 @@ class RecipesService {
     }
   }
 
-  addRecipe(Recipe recipe) async {
+  Future<void> addRecipe(Recipe recipe) async {
     bool valid = _validateRecipe(recipe);
     if (valid) {
       try {
+        recipe.authorId = _authService.firebaseAuth.currentUser!.uid;
         await _api.addRecipe(recipe);
-      } on FirebaseException {
-        throw const CustomError(
-            'An error occurred. Please try again later or contact support.');
+      } on FirebaseException catch (e) {
+        throw CustomError(handleFirebaseError(e));
       }
     } else {
-      _dialogService.showDialog(
-          title: 'Error',
-          description:
-              'Please make sure all of the ingredients have a valid unit.');
+      throw const CustomError(
+          'Please make sure all of the ingredients have a valid unit.');
     }
   }
 
@@ -67,7 +67,9 @@ class RecipesService {
   bool _validateRecipe(Recipe recipe) {
     for (Section section in recipe.sections) {
       for (Ingredient ingredient in section.ingredients) {
-        if (ingredient.unit == null || ingredient.unit!.isEmpty) {
+        if (ingredient.unit == null ||
+            ingredient.unit!.isEmpty ||
+            ingredient.unit == 'Unit') {
           return false;
         }
       }
