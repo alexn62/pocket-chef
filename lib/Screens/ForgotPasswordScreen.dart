@@ -27,6 +27,36 @@ class ForgotPasswordScreen extends StatelessWidget {
                           const Expanded(
                             child: SizedBox(),
                           ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                  'uh oh',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                vRegularSpace,
+                                Image.asset('assets/icons/secret.png',
+                                    height: 64,
+                                    color: Theme.of(context).errorColor),
+                                vRegularSpace,
+                                const Text(
+                                  'hang in there',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                vSmallSpace,
+                                const Text(
+                                  'please reset your password',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            ),
+                          ),
+                          vBigSpace,
+                          vBigSpace,
+                          vBigSpace,
                           Text(
                             'Email',
                             style: TextStyle(
@@ -34,7 +64,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          vSmallSpace,
+                          vTinySpace,
                           CustomTextFormField(onChanged: model.setEmail),
                           vRegularSpace,
                           GenericButton(

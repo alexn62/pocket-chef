@@ -26,6 +26,37 @@ class LoginScreen extends StatelessWidget {
                           const Expanded(
                             child: SizedBox(),
                           ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                  'hi',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                vRegularSpace,
+                                Image.asset('assets/icons/smiley.png',
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryVariant),
+                                vRegularSpace,
+                                const Text(
+                                  'welcome back',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                vSmallSpace,
+                                const Text(
+                                  'please login to view your recipes',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            ),
+                          ),
+                          vBigSpace,
+                          vBigSpace,
+                          vBigSpace,
                           Text(
                             'Email',
                             style: TextStyle(
@@ -33,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          vSmallSpace,
+                          vTinySpace,
                           CustomTextFormField(
                             onChanged: model.setEmail,
                             keyboardType: TextInputType.emailAddress,
@@ -62,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          vSmallSpace,
+                          vTinySpace,
                           CustomTextFormField(
                             onChanged: model.setPassword,
                             password: true,

@@ -33,7 +33,7 @@ class ForgotPasswordViewModel extends BaseViewModel {
   }
 
   void navigateToLoginScreen() {
-    _navigationService.navigateTo(
+    _navigationService.replaceWith(
       routes.LoginRoute,
     );
   }

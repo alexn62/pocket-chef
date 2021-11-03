@@ -57,12 +57,6 @@ class SignUpViewModel extends BaseViewModel {
     }
   }
 
-  void navigateToMainScreen() {
-    _navigationService.replaceWith(
-      routes.MainScreenRoute,
-    );
-  }
-
   void navigateToLoginScreen() {
     _navigationService.replaceWith(
       routes.LoginRoute,

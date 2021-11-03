@@ -47,19 +47,13 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
-  void navigateToMainScreen() {
-    _navigationService.navigateTo(
-      routes.MainScreenRoute,
-    );
-  }
-
   void navigateToSignUpScreen() {
-    _navigationService.navigateTo(
+    _navigationService.replaceWith(
       routes.SignUpRoute,
     );
   }
 
   void navigateToForgotPasswordScreen() {
-    _navigationService.navigateTo(routes.ForgotPasswordRoute);
+    _navigationService.replaceWith(routes.ForgotPasswordRoute);
   }
 }
