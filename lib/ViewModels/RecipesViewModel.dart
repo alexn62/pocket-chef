@@ -50,16 +50,19 @@ class RecipesViewModel extends BaseViewModel {
     );
   }
 
- 
-
   Future<void> setFavoriteByRecipeId(String uid, bool favorite) async {
-    List<Recipe> recipes = _recipes.where((element) => element.uid == uid).toList();
+    List<Recipe> recipes =
+        _recipes.where((element) => element.uid == uid).toList();
     if (recipes.isEmpty) {
-      _dialogService.showDialog(title: 'Error', description: 'Recipe not found.');
+      _dialogService.showDialog(
+          title: 'Error', description: 'Recipe not found.');
       return;
     }
     if (recipes.length > 1) {
-      _dialogService.showDialog(title: 'Error', description: 'Duplicate recipes found. Please remove one of the two.');
+      _dialogService.showDialog(
+          title: 'Error',
+          description:
+              'Duplicate recipes found. Please remove one of the two.');
       return;
     }
     Recipe recipe = recipes[0];
@@ -76,7 +79,12 @@ class RecipesViewModel extends BaseViewModel {
 
   Future<void> deleteRecipe(Recipe recipeToDelete) async {
     DialogResponse<dynamic>? response = await _dialogService.showDialog(
-        title: 'Warning', description: 'Are you sure you want to delete your recipe for ${recipeToDelete.title} forever?', buttonTitle: 'Cancel', cancelTitle: 'Delete', barrierDismissible: true);
+        title: 'Warning',
+        description:
+            'Are you sure you want to delete your recipe for ${recipeToDelete.title} forever?',
+        buttonTitle: 'Cancel',
+        cancelTitle: 'Delete',
+        barrierDismissible: true);
     if (response == null || response.confirmed) {
       return;
     } else {

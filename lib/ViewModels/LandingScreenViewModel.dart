@@ -24,7 +24,11 @@ class LandingScreenViewModel extends BaseViewModel {
         } else {
           navigateToLoginScreen();
           DialogResponse<dynamic>? response = await _dialogService.showDialog(
-              title: 'Warning', description: 'Please verify your email to continue!', barrierDismissible: true, cancelTitle: 'Cancel', buttonTitle: 'Send verfification');
+              title: 'Warning',
+              description: 'Please verify your email to continue!',
+              barrierDismissible: true,
+              cancelTitle: 'Cancel',
+              buttonTitle: 'Send verfification');
           if (response == null || !response.confirmed) {
           } else {
             user.sendEmailVerification();

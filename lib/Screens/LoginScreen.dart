@@ -11,65 +11,85 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
-        builder: (context, model, child) => WillPopScope(onWillPop: ()async => false,
-          child: Scaffold(
-              backgroundColor: Theme.of(context).backgroundColor,
-              body: Center(
-                child: Container(
-                  margin: const EdgeInsets.all(15),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Expanded(child: SizedBox(),),
-                      Text(
-                        'Email',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                        ),
-                      ),
-                      vSmallSpace,
-                      CustomTextFormField(onChanged: model.setEmail, keyboardType: TextInputType.emailAddress,),
-                      vSmallSpace,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        builder: (context, model, child) => WillPopScope(
+              onWillPop: () async => false,
+              child: Scaffold(
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  body: Center(
+                    child: Container(
+                      margin: const EdgeInsets.all(15),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const Expanded(
+                            child: SizedBox(),
+                          ),
                           Text(
-                            'Password',
+                            'Email',
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 16,
                             ),
                           ),
-                          Text(
-                            'Forgot password?',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: 16,
-                            ),
+                          vSmallSpace,
+                          CustomTextFormField(
+                            onChanged: model.setEmail,
+                            keyboardType: TextInputType.emailAddress,
                           ),
+                          vSmallSpace,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Password',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: model.navigateToForgotPasswordScreen,
+                                child: Text(
+                                  'Forgot password?',
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          vSmallSpace,
+                          CustomTextFormField(
+                            onChanged: model.setPassword,
+                            password: true,
+                          ),
+                          vRegularSpace,
+                          GenericButton(
+                            onTap: () => model.loginEmailPassword(
+                                email: model.email, password: model.password),
+                            title: 'Login',
+                            positive: true,
+                            stretch: true,
+                          ),
+                          const Expanded(child: SizedBox()),
+                          const Center(
+                              child: Text('Don\'t have an account yet?')),
+                          vSmallSpace,
+                          GenericButton(
+                            title: 'Sign up',
+                            onTap: model.navigateToSignUpScreen,
+                            invertColors: true,
+                            stretch: true,
+                          ),
+                          vRegularSpace,
                         ],
                       ),
-                      vSmallSpace,
-                      CustomTextFormField(onChanged: model.setPassword, password: true,),
-                      vRegularSpace,
-                      GenericButton(
-                        onTap: () => model.loginEmailPassword(email: model.email, password: model.password),
-                        title: 'Login',
-                        positive: true,
-                        stretch: true,
-                      ),
-                      const Expanded(child: SizedBox()),
-                      const Center(child:  Text('Don\'t have an account yet?')),
-                      vSmallSpace,
-                      GenericButton(title: 'Sign up', onTap: model.navigateToSignUpScreen,invertColors: true, stretch: true,),
-                      vRegularSpace,
-                    ],
-                  ),
-                ),
-              )),
-        ));
+                    ),
+                  )),
+            ));
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/Constants/spacing.dart';
+import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 
 import 'DividerWithTitle.dart';

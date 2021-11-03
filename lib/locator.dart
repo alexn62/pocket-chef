@@ -8,10 +8,11 @@ import 'package:personal_recipes/ViewModels/SignUpViewModel.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'Services/Api.dart';
 import 'Services/GeneralServices.dart';
+import 'ViewModels/ForgotPasswordViewModel.dart';
 import 'ViewModels/LoginViewModel.dart';
 import 'ViewModels/RecipeViewModel.dart';
 import 'ViewModels/RecipesViewModel.dart';
-import 'ViewModels/SettingsVIewModel.dart';
+import 'ViewModels/SettingsViewModel.dart';
 
 GetIt locator = GetIt.instance;
 setupLocator() {
@@ -20,15 +21,16 @@ setupLocator() {
   // Services
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => NavigationService());
-  locator.registerSingleton(SharedPrefs());
-  locator.registerSingleton(GeneralServices());
+  locator.registerLazySingleton(() => SharedPrefs());
+  locator.registerLazySingleton(() => GeneralServices());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => RecipesService());
   // ViewModels
-  
+
   locator.registerFactory(() => LandingScreenViewModel());
   locator.registerFactory(() => LoginViewModel());
   locator.registerFactory(() => SignUpViewModel());
+  locator.registerFactory(() => ForgotPasswordViewModel());
   locator.registerFactory(() => RecipeViewModel(null));
   locator.registerFactory(() => RecipesViewModel());
   locator.registerFactory(() => AddRecipeViewModel());

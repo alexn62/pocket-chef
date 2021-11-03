@@ -5,6 +5,7 @@ import 'package:personal_recipes/Models/CustomError.dart';
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirebaseAuth get firebaseAuth => _firebaseAuth;
+
   Future<void> loginWithEmail({
     required String email,
     required String password,
@@ -47,6 +48,15 @@ class AuthService {
         throw const CustomError('Please verify your email!',
             code: 'email-not-verified');
       }
+    } on FirebaseException catch (e) {
+      throw CustomError(handleFirebaseError(e));
+    }
+  }
+
+  Future<void> forgotPassword(String email) async {
+    validateEmail(email);
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseException catch (e) {
       throw CustomError(handleFirebaseError(e));
     }

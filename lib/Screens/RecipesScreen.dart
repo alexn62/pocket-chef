@@ -74,6 +74,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
           return Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
             appBar: AppBar(
+              leading: null,
               backgroundColor: Theme.of(context).backgroundColor,
               title: const Text(
                 'Recipes',

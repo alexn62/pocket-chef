@@ -3,13 +3,13 @@ import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 
 import '../locator.dart';
 
-class SettingsViewModel extends BaseViewModel{
+class SettingsViewModel extends BaseViewModel {
   //----------SETTINGS----------//
   final AuthService _authService = locator<AuthService>();
   //----------------------------//
-  void initialize(){}
-  
-   void logout(){
+  void initialize() {}
+
+  void logout() {
     _authService.firebaseAuth.signOut();
   }
 }

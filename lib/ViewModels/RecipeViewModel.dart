@@ -68,7 +68,8 @@ class RecipeViewModel extends BaseViewModel {
   }
 
   navigateToRecipe(Recipe recipe) async {
-    dynamic result = await _navigationService.navigateTo(routes.AddRecipeRoute, arguments: recipe);
+    dynamic result = await _navigationService.navigateTo(routes.AddRecipeRoute,
+        arguments: recipe);
     if (result != null && result.runtimeType == Recipe) {
       setRecipe(result as Recipe);
     }

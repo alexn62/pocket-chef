@@ -14,17 +14,13 @@ class GeneralServices extends ChangeNotifier {
 
   ThemeMode get themeMode => _sharedPreferences.themeMode;
   bool? get darkMode => _sharedPreferences.getDarkMode() ?? false;
-  
+
   Timer? _timer;
-  Timer? get  timer => _timer;
-  setTimer(){
-    _timer = Timer(const Duration(minutes: 5), (){});
+  Timer? get timer => _timer;
+  setTimer() {
+    _timer = Timer(const Duration(minutes: 5), () {});
     notifyListeners();
   }
- 
-    
-    
-  
 
   Future<void> setDarkMode(bool value) async {
     await _sharedPreferences.setDarkMode(value);

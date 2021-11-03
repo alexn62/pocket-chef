@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Services/GeneralServices.dart';
-import 'package:personal_recipes/ViewModels/SettingsVIewModel.dart';
+import 'package:personal_recipes/ViewModels/SettingsViewModel.dart';
 import 'package:personal_recipes/Widgets/GenericButton.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +12,8 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
+    final GeneralServices _generalServices =
+        Provider.of<GeneralServices>(context);
     return BaseView<SettingsViewModel>(builder: (context, model, child) {
       return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -45,11 +46,10 @@ class SettingsScreen extends StatelessWidget {
                   GenericButton(
                     stretch: true,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
-                  onTap: model.logout,
-                  title: 'Logout',
-                  danger: true,
-                    ),
-                  
+                    onTap: model.logout,
+                    title: 'Logout',
+                    danger: true,
+                  ),
                 ],
               ),
       );
