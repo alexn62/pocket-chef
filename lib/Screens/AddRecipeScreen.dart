@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
-import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/Services/AdService.dart';
@@ -106,6 +105,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
             Scaffold(
               backgroundColor: Theme.of(context).backgroundColor,
               appBar: AppBar(
+                automaticallyImplyLeading: widget.recipe != null,
                 backgroundColor: Theme.of(context).backgroundColor,
                 title:
                     Text(widget.recipe == null ? 'Add Recipe' : 'Edit recipe'),

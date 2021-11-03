@@ -1,3 +1,4 @@
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
@@ -27,8 +28,11 @@ class LoginViewModel extends BaseViewModel {
   Future<void> loginEmailPassword(
       {required String email, required String password}) async {
     try {
+      setLoadingStatus(LoadingStatus.Busy);
       await _authService.loginWithEmail(email: email, password: password);
+      setLoadingStatus(LoadingStatus.Idle);
     } on CustomError catch (e) {
+      setLoadingStatus(LoadingStatus.Idle);
       _dialogService.showDialog(title: 'Error', description: e.message);
     }
   }
