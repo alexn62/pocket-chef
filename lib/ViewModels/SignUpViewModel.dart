@@ -1,3 +1,4 @@
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
@@ -36,26 +37,29 @@ class SignUpViewModel extends BaseViewModel {
       required String password,
       required String confirmPassword}) async {
     try {
+      setLoadingStatus(LoadingStatus.Busy);
       await _authService.signUpWithEmail(
           email: email, password: password, confirmPassword: confirmPassword);
+      setLoadingStatus(LoadingStatus.Idle);
     } on CustomError catch (e) {
-      if (e.code == 'email-not-verified') {
-        DialogResponse<dynamic>? response = await _dialogService.showDialog(
-            title: 'Warning',
-            description: 'Please verify your email to continue!',
-            barrierDismissible: true,
-            cancelTitle: 'Cancel',
-            buttonTitle: 'Send verification');
-        if (response == null || !response.confirmed) {
-          return;
-        } else {
-          _authService.firebaseAuth.currentUser!.sendEmailVerification();
-        }
-      } else {
-        _dialogService.showDialog(title: 'Error', description: e.message);
-      }
+      setLoadingStatus(LoadingStatus.Idle);
+      // if (e.code == 'email-not-verified') {
+      //   DialogResponse<dynamic>? response = await _dialogService.showDialog(
+      //       title: 'Warning',
+      //       description: 'Please verify your email to continue!',
+      //       barrierDismissible: true,
+      //       cancelTitle: 'Cancel',
+      //       buttonTitle: 'Send verification');
+      //   if (response == null || !response.confirmed) {
+      //     return;
+      //   } else {
+      //     _authService.firebaseAuth.currentUser!.sendEmailVerification();
+      //   }
+      // } else {
+      _dialogService.showDialog(title: 'Error', description: e.message);
     }
   }
+  // }
 
   void navigateToLoginScreen() {
     _navigationService.replaceWith(

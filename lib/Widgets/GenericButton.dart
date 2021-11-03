@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GenericButton extends StatelessWidget {
+  final bool loading;
   final bool shrink;
   final bool stretch;
   final Function()? onTap;
@@ -12,6 +13,7 @@ class GenericButton extends StatelessWidget {
   final bool positive;
   const GenericButton(
       {Key? key,
+      this.loading = false,
       this.stretch = false,
       this.margin = const EdgeInsets.all(0),
       required this.onTap,
@@ -58,16 +60,18 @@ class GenericButton extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Center(
-              child: Text(
-                title,
-                style: TextStyle(
-                    color: positive || danger
-                        ? Colors.white
-                        : !invertColors
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).backgroundColor,
-                    fontSize: 14),
-              ),
+              child: loading
+                  ? CircularProgressIndicator.adaptive()
+                  : Text(
+                      title,
+                      style: TextStyle(
+                          color: positive || danger
+                              ? Colors.white
+                              : !invertColors
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).backgroundColor,
+                          fontSize: 14),
+                    ),
             ),
           ),
         ),

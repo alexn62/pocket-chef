@@ -18,10 +18,6 @@ class AuthService {
       if (user == null) {
         throw const CustomError('No user found for the provided credential.');
       }
-      if (!user.emailVerified) {
-        throw const CustomError('Please verify your email!',
-            code: 'email-not-verified');
-      }
     } on FirebaseException catch (e) {
       throw CustomError(handleFirebaseError(e));
     }
@@ -43,10 +39,6 @@ class AuthService {
       User? user = userCredential.user;
       if (user == null) {
         throw const CustomError('Unable to register. Please try again later.');
-      }
-      if (!user.emailVerified) {
-        throw const CustomError('Please verify your email!',
-            code: 'email-not-verified');
       }
     } on FirebaseException catch (e) {
       throw CustomError(handleFirebaseError(e));

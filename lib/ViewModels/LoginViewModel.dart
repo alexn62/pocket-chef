@@ -29,21 +29,7 @@ class LoginViewModel extends BaseViewModel {
     try {
       await _authService.loginWithEmail(email: email, password: password);
     } on CustomError catch (e) {
-      if (e.code == 'email-not-verified') {
-        DialogResponse<dynamic>? response = await _dialogService.showDialog(
-            title: 'Warning',
-            description: 'Please verify your email to continue!',
-            barrierDismissible: true,
-            cancelTitle: 'Cancel',
-            buttonTitle: 'Send verification');
-        if (response == null || !response.confirmed) {
-          return;
-        } else {
-          _authService.firebaseAuth.currentUser!.sendEmailVerification();
-        }
-      } else {
-        _dialogService.showDialog(title: 'Error', description: e.message);
-      }
+      _dialogService.showDialog(title: 'Error', description: e.message);
     }
   }
 
