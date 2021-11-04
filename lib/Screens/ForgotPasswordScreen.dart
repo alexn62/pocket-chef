@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/ViewModels/ForgotPasswordViewModel.dart';
-import 'package:personal_recipes/widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/Widgets/FullScreenLoadingIndicator.dart';
 import 'package:personal_recipes/widgets/GenericButton.dart';
 
 import 'BaseView.dart';
@@ -14,80 +15,82 @@ class ForgotPasswordScreen extends StatelessWidget {
     return BaseView<ForgotPasswordViewModel>(
         builder: (context, model, child) => WillPopScope(
               onWillPop: () async => false,
-              child: Scaffold(
-                  resizeToAvoidBottomInset: true,
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  body: Center(
-                    child: Container(
-                      margin: const EdgeInsets.all(15),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Expanded(
-                            child: SizedBox(),
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Text(
-                                  'uh oh',
-                                  style: TextStyle(fontSize: 18),
+              child: Stack(
+                children: [
+                  Scaffold(
+                      backgroundColor: Theme.of(context).backgroundColor,
+                      body: SingleChildScrollView(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height,
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Expanded(
+                                child: SizedBox(),
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text(
+                                      'uh oh',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    vRegularSpace,
+                                    Image.asset('assets/icons/secret.png', height: 64, color: Theme.of(context).errorColor),
+                                    vRegularSpace,
+                                    const Text(
+                                      'hang in there',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    vSmallSpace,
+                                    const Text(
+                                      'please reset your password',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ],
                                 ),
-                                vRegularSpace,
-                                Image.asset('assets/icons/secret.png',
-                                    height: 64,
-                                    color: Theme.of(context).errorColor),
-                                vRegularSpace,
-                                const Text(
-                                  'hang in there',
-                                  style: TextStyle(fontSize: 18),
+                              ),
+                              const Expanded(
+                                    child: SizedBox(),
+                                  ),
+                              Text(
+                                'Email',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 16,
                                 ),
-                                vSmallSpace,
-                                const Text(
-                                  'please reset your password',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
+                              ),
+                              vTinySpace,
+                              CustomTextFormField(onFieldSubmitted: (_)=> model.forgotPassword(model.email), onChanged: model.setEmail),
+                              vRegularSpace,
+                              GenericButton(
+                                onTap: () => model.forgotPassword(model.email),
+                                title: 'Send',
+                                positive: true,
+                                stretch: true,
+                              ),
+                              const Expanded(child: SizedBox()),
+                              const Center(child: Text('Login instead?')),
+                              vSmallSpace,
+                              GenericButton(
+                                title: 'Login',
+                                onTap: model.navigateToLoginScreen,
+                                invertColors: true,
+                                stretch: true,
+                              ),
+                              vRegularSpace,
+                            ],
                           ),
-                          vBigSpace,
-                          vBigSpace,
-                          vBigSpace,
-                          Text(
-                            'Email',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16,
-                            ),
-                          ),
-                          vTinySpace,
-                          CustomTextFormField(onChanged: model.setEmail),
-                          vRegularSpace,
-                          GenericButton(
-                            onTap: () => model.forgotPassword(model.email),
-                            title: 'Send',
-                            positive: true,
-                            stretch: true,
-                          ),
-                          const Expanded(child: SizedBox()),
-                          const Center(child: Text('Login instead?')),
-                          vSmallSpace,
-                          GenericButton(
-                            title: 'Login',
-                            onTap: model.navigateToLoginScreen,
-                            invertColors: true,
-                            stretch: true,
-                          ),
-                          vRegularSpace,
-                        ],
-                      ),
-                    ),
-                  )),
+                        ),
+                      )),
+                  FullScreenLoadingIndicator(model.loadingStatus)
+
+                ],
+              ),
             ));
   }
 }

@@ -17,14 +17,12 @@ class SignUpScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   Scaffold(
-                      resizeToAvoidBottomInset: true,
                       backgroundColor: Theme.of(context).backgroundColor,
-                      body: Center(
+                      body: SingleChildScrollView(
                         child: Container(
-                          margin: const EdgeInsets.all(15),
+                          height: MediaQuery.of(context).size.height,
+                          padding: const EdgeInsets.all(15),
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(
@@ -43,9 +41,7 @@ class SignUpScreen extends StatelessWidget {
                                     vRegularSpace,
                                     Image.asset(
                                       'assets/icons/hug.png',
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryVariant,
+                                      color: Theme.of(context).colorScheme.primaryVariant,
                                       height: 64,
                                     ),
                                     vRegularSpace,
@@ -61,18 +57,16 @@ class SignUpScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              vBigSpace,
-                              vBigSpace,
-                              vBigSpace,
-                              Text(
+                              const Expanded(child: SizedBox()),
+                             const Text(
                                 'Email',
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
                                   fontSize: 16,
                                 ),
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                textInputAction: TextInputAction.next,
                                 onChanged: model.setEmail,
                                 keyboardType: TextInputType.emailAddress,
                               ),
@@ -86,6 +80,7 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                textInputAction: TextInputAction.next,
                                 onChanged: model.setPassword,
                                 password: true,
                               ),
@@ -99,22 +94,19 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                onFieldSubmitted: (_)=> model.signUpEmailPassword(email: model.email, password: model.password, confirmPassword: model.confirmPassword),
                                 onChanged: model.setConfirmPassword,
                                 password: true,
                               ),
                               vRegularSpace,
                               GenericButton(
-                                onTap: () => model.signUpEmailPassword(
-                                    email: model.email,
-                                    password: model.password,
-                                    confirmPassword: model.confirmPassword),
+                                onTap: () => model.signUpEmailPassword(email: model.email, password: model.password, confirmPassword: model.confirmPassword),
                                 title: 'Sign up',
                                 positive: true,
                                 stretch: true,
                               ),
                               const Expanded(child: SizedBox()),
-                              const Center(
-                                  child: Text('Already have an account?')),
+                              const Center(child: Text('Already have an account?')),
                               vSmallSpace,
                               GenericButton(
                                 title: 'Login',

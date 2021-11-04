@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final TextInputAction? textInputAction;
   final int? minLines;
   final int? maxLines;
   final String? Function(String? text)? validator;
+  final Function(String)? onFieldSubmitted;
   final TextInputType keyboardType;
   final Function onChanged;
   final int? sectionIndex;
@@ -11,6 +13,8 @@ class CustomTextFormField extends StatelessWidget {
   final bool password;
   final String? initialValue;
   const CustomTextFormField({
+    this.textInputAction,
+    this.onFieldSubmitted,
     this.minLines,
     this.maxLines = 1,
     required this.onChanged,
@@ -26,6 +30,8 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textInputAction: textInputAction,
+      onFieldSubmitted: onFieldSubmitted ,
       minLines: minLines,
       maxLines: maxLines,
       initialValue: initialValue ?? '',

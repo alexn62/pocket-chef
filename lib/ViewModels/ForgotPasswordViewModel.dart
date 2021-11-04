@@ -28,6 +28,7 @@ class ForgotPasswordViewModel extends BaseViewModel {
           description:
               'We sent the instructions to reset your password to your email.');
     } on CustomError catch (e) {
+      setLoadingStatus(LoadingStatus.Idle);
       _dialogService.showDialog(title: 'Error', description: e.message);
     }
   }

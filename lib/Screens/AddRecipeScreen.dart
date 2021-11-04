@@ -79,20 +79,14 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GeneralServices _generalServices =
-        Provider.of<GeneralServices>(context);
+    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
 
     return BaseView<AddRecipeViewModel>(
       onModelReady: (model) => model.initialize(recipe: widget.recipe),
       builder: (context, model, child) => WillPopScope(
         onWillPop: () async {
-          DialogResponse<dynamic>? response = await locator<DialogService>()
-              .showDialog(
-                  title: 'Warning',
-                  description:
-                      'Are you sure you want to dismiss your changes and go back?',
-                  barrierDismissible: true,
-                  cancelTitle: 'Cancel');
+          DialogResponse<dynamic>? response =
+              await locator<DialogService>().showDialog(title: 'Warning', description: 'Are you sure you want to dismiss your changes and go back?', barrierDismissible: true, cancelTitle: 'Cancel');
           if (response == null || !response.confirmed) {
             return false;
           } else {
@@ -107,8 +101,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
               appBar: AppBar(
                 automaticallyImplyLeading: widget.recipe != null,
                 backgroundColor: Theme.of(context).backgroundColor,
-                title:
-                    Text(widget.recipe == null ? 'Add Recipe' : 'Edit recipe'),
+                title: Text(widget.recipe == null ? 'Add Recipe' : 'Edit recipe'),
                 bottom: PreferredSize(
                     child: Container(
                       color: Theme.of(context).primaryColor,
@@ -119,21 +112,15 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                   IconButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          bool result = widget.recipe == null
-                              ? await model.addRecipe(model.recipe)
-                              : await model.updateRecipe(model.recipe);
-                          if ((result) && _generalServices.timer == null ||
-                              _generalServices.timer != null &&
-                                  !_generalServices.timer!.isActive) {
+                          bool result = widget.recipe == null ? await model.addRecipe(model.recipe) : await model.updateRecipe(model.recipe);
+                          if ((result) && _generalServices.timer == null || _generalServices.timer != null && !_generalServices.timer!.isActive) {
                             _generalServices.setTimer();
                             _showInterstitialAd();
                           }
                         }
                       },
                       icon: Icon(
-                        Platform.isIOS
-                            ? CupertinoIcons.check_mark
-                            : Icons.check,
+                        Platform.isIOS ? CupertinoIcons.check_mark : Icons.check,
                         color: Theme.of(context).colorScheme.primaryVariant,
                       ))
                 ],
@@ -141,8 +128,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
               body: Padding(
                 padding: const EdgeInsets.all(15),
                 child: ListView(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
+                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   controller: _controller,
                   children: [
                     Form(
@@ -159,6 +145,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                           ),
                           vSmallSpace,
                           CustomTextFormField(
+                            textInputAction: TextInputAction.next,
                             initialValue: model.recipe.title,
                             validator: (text) {
                               if (text == null || text.trim().isEmpty) {
@@ -183,23 +170,14 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                 ),
                               ),
                               model.recipe.instructions == null
-                                  ? IconButton(
-                                      onPressed: () =>
-                                          model.setInstructions(''),
-                                      icon: Icon(Platform.isIOS
-                                          ? CupertinoIcons.add
-                                          : Icons.add))
-                                  : IconButton(
-                                      onPressed: () =>
-                                          model.setInstructions(null),
-                                      icon: Icon(Platform.isIOS
-                                          ? CupertinoIcons.delete
-                                          : Icons.delete_outline))
+                                  ? IconButton(onPressed: () => model.setInstructions(''), icon: Icon(Platform.isIOS ? CupertinoIcons.add : Icons.add))
+                                  : IconButton(onPressed: () => model.setInstructions(null), icon: Icon(Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline))
                             ],
                           ),
                           model.recipe.instructions == null
                               ? const SizedBox()
                               : CustomTextFormField(
+                                  textInputAction: TextInputAction.next,
                                   keyboardType: TextInputType.multiline,
                                   minLines: 3,
                                   maxLines: null,
@@ -219,26 +197,16 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Sections',
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 16)),
+                              Text('Sections', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16)),
                               IconButton(
                                   onPressed: () {
                                     model.addSection();
-                                    SchedulerBinding.instance!
-                                        .addPostFrameCallback((timeStamp) {
-                                      _controller.animateTo(
-                                          _controller.position.maxScrollExtent,
-                                          duration:
-                                              const Duration(milliseconds: 200),
-                                          curve: Curves.fastOutSlowIn);
+                                    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+                                      _controller.animateTo(_controller.position.maxScrollExtent, duration: const Duration(milliseconds: 200), curve: Curves.fastOutSlowIn);
                                     });
                                   },
                                   padding: const EdgeInsets.all(0),
-                                  icon: Icon(Platform.isIOS
-                                      ? CupertinoIcons.add
-                                      : Icons.add)),
+                                  icon: Icon(Platform.isIOS ? CupertinoIcons.add : Icons.add)),
                             ],
                           ),
                           for (int i = 0; i < model.recipe.sections.length; i++)
@@ -246,20 +214,17 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                               key: ValueKey(model.recipe.sections[i].uid),
                               children: [
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: CustomTextFormField(
-                                        initialValue:
-                                            model.recipe.sections[i].title,
+                                        textInputAction: TextInputAction.next,
+                                        initialValue: model.recipe.sections[i].title,
                                         validator: (text) {
-                                          if (text == null ||
-                                              text.trim().isEmpty) {
+                                          if (text == null || text.trim().isEmpty) {
                                             return 'Please enter a section title.';
                                           }
-                                          if (text.length < 2 ||
-                                              text.length > 20) {
+                                          if (text.length < 2 || text.length > 20) {
                                             return 'The text has to be between two and twenty characters.';
                                           }
                                           return null;
@@ -268,76 +233,37 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                         sectionIndex: i,
                                       ),
                                     ),
-                                    IconButton(
-                                        onPressed: () => model.removeSection(i),
-                                        padding: const EdgeInsets.all(0),
-                                        icon: Icon(Platform.isIOS
-                                            ? CupertinoIcons.delete
-                                            : Icons.delete_outline)),
+                                    IconButton(onPressed: () => model.removeSection(i), padding: const EdgeInsets.all(0), icon: Icon(Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline)),
                                   ],
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     hBigSpace,
-                                    Expanded(
-                                        child: Text('Ingredients',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                fontSize: 16))),
+                                    Expanded(child: Text('Ingredients', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16))),
                                     IconButton(
                                         onPressed: () {
                                           model.addIngredient(i);
-                                          SchedulerBinding.instance!
-                                              .addPostFrameCallback(
-                                                  (timeStamp) {
+                                          SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
                                             _controller.animateTo(
                                                 _controller.position.maxScrollExtent -
-                                                    (i ==
-                                                            model
-                                                                    .recipe
-                                                                    .sections
-                                                                    .length -
-                                                                1
+                                                    (i == model.recipe.sections.length - 1
                                                         ? 0
-                                                        : model.recipe.sections
-                                                            .sublist(i + 1)
-                                                            .map((section) =>
-                                                                section.ingredients
-                                                                        .length *
-                                                                    48 +
-                                                                96)
-                                                            .reduce((value,
-                                                                    element) =>
-                                                                value +
-                                                                element)),
-                                                duration: const Duration(
-                                                    milliseconds: 200),
+                                                        : model.recipe.sections.sublist(i + 1).map((section) => section.ingredients.length * 48 + 96).reduce((value, element) => value + element)),
+                                                duration: const Duration(milliseconds: 200),
                                                 curve: Curves.fastOutSlowIn);
                                           });
                                         },
                                         padding: const EdgeInsets.all(0),
-                                        icon: Icon(Platform.isIOS
-                                            ? CupertinoIcons.add
-                                            : Icons.add)),
+                                        icon: Icon(Platform.isIOS ? CupertinoIcons.add : Icons.add)),
                                   ],
                                 ),
-                                for (int j = 0;
-                                    j <
-                                        model.recipe.sections[i].ingredients
-                                            .length;
-                                    j++)
+                                for (int j = 0; j < model.recipe.sections[i].ingredients.length; j++)
                                   Row(
-                                    key: ValueKey(model
-                                        .recipe.sections[i].ingredients[j].uid),
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    key: ValueKey(model.recipe.sections[i].ingredients[j].uid),
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      j + 1 ==
-                                              model.recipe.sections[i]
-                                                  .ingredients.length
+                                      j + 1 == model.recipe.sections[i].ingredients.length
                                           ? SizedBox(
                                               height: 40,
                                               width: 30,
@@ -346,51 +272,34 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       model.addIngredient(i);
-                                                      SchedulerBinding.instance!
-                                                          .addPostFrameCallback(
-                                                              (timeStamp) {
+                                                      SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
                                                         _controller.animateTo(
-                                                            _controller.position
-                                                                    .maxScrollExtent -
+                                                            _controller.position.maxScrollExtent -
                                                                 (i == model.recipe.sections.length - 1
                                                                     ? 0
-                                                                    : model
-                                                                        .recipe
-                                                                        .sections
-                                                                        .sublist(i +
-                                                                            1)
-                                                                        .map((section) =>
-                                                                            section.ingredients.length * 48 +
-                                                                            96)
-                                                                        .reduce((value, element) =>
-                                                                            value +
-                                                                            element)),
-                                                            duration: const Duration(
-                                                                milliseconds:
-                                                                    200),
+                                                                    : model.recipe.sections
+                                                                        .sublist(i + 1)
+                                                                        .map((section) => section.ingredients.length * 48 + 96)
+                                                                        .reduce((value, element) => value + element)),
+                                                            duration: const Duration(milliseconds: 200),
                                                             curve: Curves.fastOutSlowIn);
                                                       });
                                                     },
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                    icon: Icon(Platform.isIOS
-                                                        ? CupertinoIcons.add
-                                                        : Icons.add)),
+                                                    padding: const EdgeInsets.all(0),
+                                                    icon: Icon(Platform.isIOS ? CupertinoIcons.add : Icons.add)),
                                               ),
                                             )
                                           : hBigSpace,
                                       Flexible(
                                         flex: 3,
                                         child: CustomTextFormField(
-                                          initialValue: model.recipe.sections[i]
-                                              .ingredients[j].title,
+                                          textInputAction: TextInputAction.next,
+                                          initialValue: model.recipe.sections[i].ingredients[j].title,
                                           validator: (text) {
-                                            if (text == null ||
-                                                text.trim().isEmpty) {
+                                            if (text == null || text.trim().isEmpty) {
                                               return 'Enter an ingredient title.';
                                             }
-                                            if (text.length < 2 ||
-                                                text.length > 20) {
+                                            if (text.length < 2 || text.length > 20) {
                                               return 'The text has to be between two and twenty characters.';
                                             }
                                             return null;
@@ -404,19 +313,11 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                       Flexible(
                                         flex: 1,
                                         child: CustomTextFormField(
-                                          initialValue: model.recipe.sections[i]
-                                                      .ingredients[j].amount ==
-                                                  0
-                                              ? ''
-                                              : model.recipe.sections[i]
-                                                  .ingredients[j].amount
-                                                  .toString(),
+                                          textInputAction: TextInputAction.next,
+                                          initialValue: model.recipe.sections[i].ingredients[j].amount == 0 ? '' : model.recipe.sections[i].ingredients[j].amount.toString(),
                                           validator: (text) {
-                                            if (text == null ||
-                                                text.trim().isEmpty ||
-                                                text.trim().length > 5 ||
-                                                double.tryParse(text) == null) {
-                                              return 'Err';
+                                            if (text == null || text.trim().isEmpty || text.trim().length > 5 || double.tryParse(text) == null) {
+                                              return 'Error';
                                             }
 
                                             return null;
@@ -428,39 +329,21 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                       ),
                                       hSmallSpace,
                                       PopupMenuButton(
-                                        initialValue: model.recipe.sections[i]
-                                                .ingredients[j].unit ??
-                                            'Unit',
+                                        initialValue: model.recipe.sections[i].ingredients[j].unit ?? 'Unit',
                                         child: Text(
-                                          model.recipe.sections[i]
-                                                  .ingredients[j].unit ??
-                                              'Unit',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Theme.of(context)
-                                                  .primaryColor),
+                                          model.recipe.sections[i].ingredients[j].unit ?? 'Unit',
+                                          style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
                                         ),
-                                        itemBuilder: (context) =>
-                                            model.possibleUnits
-                                                .map((item) => PopupMenuItem(
-                                                      value: item,
-                                                      child: Text(item),
-                                                    ))
-                                                .toList(),
-                                        onSelected: (value) =>
-                                            model.setIngredientUnit(
-                                                sectionIndex: i,
-                                                ingredientIndex: j,
-                                                ingredientUnit:
-                                                    value.toString()),
+                                        itemBuilder: (context) => model.possibleUnits
+                                            .map((item) => PopupMenuItem(
+                                                  value: item,
+                                                  child: Text(item),
+                                                ))
+                                            .toList(),
+                                        onSelected: (value) => model.setIngredientUnit(sectionIndex: i, ingredientIndex: j, ingredientUnit: value.toString()),
                                       ),
                                       IconButton(
-                                          onPressed: () =>
-                                              model.removeIngredient(i, j),
-                                          padding: const EdgeInsets.all(0),
-                                          icon: Icon(Platform.isIOS
-                                              ? CupertinoIcons.delete
-                                              : Icons.delete_outline)),
+                                          onPressed: () => model.removeIngredient(i, j), padding: const EdgeInsets.all(0), icon: Icon(Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline)),
                                     ],
                                   ),
                               ],

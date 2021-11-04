@@ -23,6 +23,8 @@ class LoginScreen extends StatelessWidget {
                           height: MediaQuery.of(context).size.height,
                           padding: const EdgeInsets.all(15),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
                             children: [
                               const Expanded(
                                 child: SizedBox(),
@@ -58,18 +60,15 @@ class LoginScreen extends StatelessWidget {
                               const Expanded(
                                 child: SizedBox(),
                               ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Email',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16,
-                                  ),
+                              const Text(
+                                'Email',
+                                style: TextStyle(
+                                  fontSize: 16,
                                 ),
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                textInputAction: TextInputAction.next,
                                 onChanged: model.setEmail,
                                 keyboardType: TextInputType.emailAddress,
                               ),
@@ -101,6 +100,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                onFieldSubmitted: (_) => model.loginEmailPassword(email: model.email, password: model.password),
                                 onChanged: model.setPassword,
                                 password: true,
                               ),

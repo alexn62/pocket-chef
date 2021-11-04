@@ -9,8 +9,10 @@ import 'package:personal_recipes/ViewModels/RecipeViewModel.dart';
 import 'package:personal_recipes/Widgets/AmountCounter.dart';
 import 'package:personal_recipes/Widgets/DividerWithTitle.dart';
 import 'package:personal_recipes/Widgets/GenericButton.dart';
+import 'package:personal_recipes/locator.dart';
 import 'package:personal_recipes/widgets/SectionComponent.dart';
 import 'package:personal_recipes/constants/spacing.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class RecipeScreen extends StatelessWidget {
   final Recipe recipe;
@@ -23,83 +25,85 @@ class RecipeScreen extends StatelessWidget {
     return BaseView<RecipeViewModel>(
       viewModelBuilder: () => RecipeViewModel(recipe),
       onModelReady: (model) => model.initialize(),
-      builder: (context, model, child) => Scaffold(
-          backgroundColor: Theme.of(context).backgroundColor,
-          appBar: AppBar(
-            iconTheme: Theme.of(context).iconTheme,
-            elevation: 0,
-            title: Text(
-              recipe.title,
-            ),
-            actions: [
-              IconButton(
-                  padding: const EdgeInsets.all(0),
-                  onPressed: () => model.navigateToRecipe(recipe),
-                  icon:
-                      Icon(Platform.isIOS ? CupertinoIcons.pencil : Icons.edit))
-            ],
+      builder: (context, model, child) => WillPopScope(onWillPop: ()async{locator<NavigationService>().back(result: model.recipe); return false;},
+        child: Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
-            bottom: PreferredSize(
-                child: Container(
-                  color: Theme.of(context).primaryColor,
-                  height: 1.0,
-                ),
-                preferredSize: const Size.fromHeight(1.0)),
-          ),
-          body: ListView(
-            physics: const BouncingScrollPhysics(),
-            shrinkWrap: true,
-            children: [
-              vRegularSpace,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GenericButton(
-                          title: 'Small',
-                          invertColors:
-                              model.size == ServingSize.Small ? true : false,
-                          onTap: () => model.setSize(ServingSize.Small)),
-                    ),
-                    hTinySpace,
-                    Expanded(
-                      child: GenericButton(
-                          title: 'Regular',
-                          invertColors:
-                              model.size == ServingSize.Regular ? true : false,
-                          onTap: () => model.setSize(ServingSize.Regular)),
-                    ),
-                    hTinySpace,
-                    Expanded(
-                      child: GenericButton(
-                          title: 'Large',
-                          invertColors:
-                              model.size == ServingSize.Large ? true : false,
-                          onTap: () => model.setSize(ServingSize.Large)),
-                    ),
-                  ],
-                ),
+            appBar: AppBar(
+              iconTheme: Theme.of(context).iconTheme,
+              elevation: 0,
+              title: Text(
+                recipe.title,
               ),
-              vRegularSpace,
-              AmountCounter(
-                amount: model.amount,
-                increase: model.increaseAmount,
-                decrease: model.decreaseAmount,
-              ),
-              vRegularSpace,
-              ...model.sections
-                  .map<SectionComponent>(
-                    (section) => SectionComponent(
-                        sizeValue: model.getSize,
-                        totalAmount: model.amount,
-                        sectionTitle: section.title,
-                        ingredients: section.ingredients),
-                  )
-                  .toList(),
-              InstructionsComponent(instructions: model.recipe.instructions),
-            ],
-          )),
+              actions: [
+                IconButton(
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () => model.navigateToRecipe(recipe),
+                    icon:
+                        Icon(Platform.isIOS ? CupertinoIcons.pencil : Icons.edit))
+              ],
+              backgroundColor: Theme.of(context).backgroundColor,
+              bottom: PreferredSize(
+                  child: Container(
+                    color: Theme.of(context).primaryColor,
+                    height: 1.0,
+                  ),
+                  preferredSize: const Size.fromHeight(1.0)),
+            ),
+            body: ListView(
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                vRegularSpace,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GenericButton(
+                            title: 'Small',
+                            invertColors:
+                                model.size == ServingSize.Small ? true : false,
+                            onTap: () => model.setSize(ServingSize.Small)),
+                      ),
+                      hTinySpace,
+                      Expanded(
+                        child: GenericButton(
+                            title: 'Regular',
+                            invertColors:
+                                model.size == ServingSize.Regular ? true : false,
+                            onTap: () => model.setSize(ServingSize.Regular)),
+                      ),
+                      hTinySpace,
+                      Expanded(
+                        child: GenericButton(
+                            title: 'Large',
+                            invertColors:
+                                model.size == ServingSize.Large ? true : false,
+                            onTap: () => model.setSize(ServingSize.Large)),
+                      ),
+                    ],
+                  ),
+                ),
+                vRegularSpace,
+                AmountCounter(
+                  amount: model.amount,
+                  increase: model.increaseAmount,
+                  decrease: model.decreaseAmount,
+                ),
+                vRegularSpace,
+                ...model.sections
+                    .map<SectionComponent>(
+                      (section) => SectionComponent(
+                          sizeValue: model.getSize,
+                          totalAmount: model.amount,
+                          sectionTitle: section.title,
+                          ingredients: section.ingredients),
+                    )
+                    .toList(),
+                InstructionsComponent(instructions: model.recipe.instructions),
+              ],
+            )),
+      ),
     );
   }
 }
