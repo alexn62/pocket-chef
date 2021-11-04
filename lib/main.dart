@@ -12,8 +12,7 @@ import 'Services/SharedPrefs.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
-
+  await MobileAds.instance.initialize();
   await setupLocator();
   await Firebase.initializeApp();
   await SharedPrefs.init();

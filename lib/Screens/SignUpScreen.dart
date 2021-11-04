@@ -17,6 +17,7 @@ class SignUpScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   Scaffold(
+                      resizeToAvoidBottomInset: true,
                       backgroundColor: Theme.of(context).backgroundColor,
                       body: Center(
                         child: Container(

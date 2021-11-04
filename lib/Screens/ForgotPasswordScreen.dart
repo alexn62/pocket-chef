@@ -15,6 +15,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         builder: (context, model, child) => WillPopScope(
               onWillPop: () async => false,
               child: Scaffold(
+                  resizeToAvoidBottomInset: true,
                   backgroundColor: Theme.of(context).backgroundColor,
                   body: Center(
                     child: Container(

@@ -18,13 +18,11 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Scaffold(
                       backgroundColor: Theme.of(context).backgroundColor,
-                      body: Center(
+                      body: SingleChildScrollView(
                         child: Container(
-                          margin: const EdgeInsets.all(15),
+                          height: MediaQuery.of(context).size.height,
+                          padding: const EdgeInsets.all(15),
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(
                                 child: SizedBox(),
@@ -57,14 +55,17 @@ class LoginScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              vBigSpace,
-                              vBigSpace,
-                              vBigSpace,
-                              Text(
-                                'Email',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16,
+                              const Expanded(
+                                child: SizedBox(),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Email',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                               vTinySpace,
