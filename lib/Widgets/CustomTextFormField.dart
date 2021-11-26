@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final String? hintText;
   final int? minLines;
   final int? maxLines;
   final String? Function(String? text)? validator;
@@ -11,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool password;
   final String? initialValue;
   const CustomTextFormField({
+    this.hintText,
     this.minLines,
     this.maxLines = 1,
     required this.onChanged,
@@ -37,25 +39,10 @@ class CustomTextFormField extends StatelessWidget {
           : ingredientIndex == null
               ? onChanged(text, sectionIndex)
               : onChanged(text, sectionIndex, ingredientIndex),
-      cursorColor: Theme.of(context).colorScheme.secondary,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(10),
-        isDense: true,
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary, width: 0.5),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 0.5),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 0.5),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 0.5),
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: Theme.of(context).primaryColor.withOpacity(0.5),
         ),
       ),
     );

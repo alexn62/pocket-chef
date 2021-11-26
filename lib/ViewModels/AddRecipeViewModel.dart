@@ -69,10 +69,21 @@ class AddRecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void expandSection(int i, bool expand) {
+    _recipe.sections[i].expanded = expand;
+    notifyListeners();
+  }
+
   void addSection() {
     _recipe.sections.add(Section(
+        expanded: false,
         uid: math.Random().nextInt(99999).toString(),
-        ingredients: [],
+        ingredients: [
+          Ingredient(
+              uid: math.Random().nextInt(99999).toString(),
+              title: '',
+              amount: 0.0)
+        ],
         title: ''));
     notifyListeners();
   }

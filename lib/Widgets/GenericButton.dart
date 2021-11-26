@@ -70,7 +70,7 @@ class GenericButton extends StatelessWidget {
                               : !invertColors
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).backgroundColor,
-                          fontSize: 14),
+                          fontSize: 15),
                     ),
             ),
           ),

@@ -23,14 +23,14 @@ class IngredientComponent extends StatelessWidget {
         hRegularSpace,
         Text(
           title,
-          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 20),
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15),
         ),
         Expanded(
           child: Container(),
         ),
         Text(
           '${getAmountAndUnit(amount * totalAmount * sizeValue, unit)}',
-          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 20),
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15),
         ),
         hRegularSpace,
       ],
@@ -38,53 +38,53 @@ class IngredientComponent extends StatelessWidget {
   }
 
   getAmountAndUnit(double amount, String unit) {
-    if (unit == 'g'){
-      if (amount >= 1000){
-        return (amount/1000).toStringAsFixed(2) + ' kg'; 
+    if (unit == 'g') {
+      if (amount >= 1000) {
+        return (amount / 1000).toStringAsFixed(2) + ' kg';
       }
-      if (amount < 1){
-        return (amount*1000).toStringAsFixed(0) + ' mg';
+      if (amount < 1) {
+        return (amount * 1000).toStringAsFixed(0) + ' mg';
       }
-      return amount.toStringAsFixed(0)+ ' g';
+      return amount.toStringAsFixed(0) + ' g';
     }
 
-    if (unit == 'kg'){
-      if (amount == amount.round().toDouble()){
+    if (unit == 'kg') {
+      if (amount == amount.round().toDouble()) {
         return amount.toStringAsFixed(0) + ' kg';
       }
-      if (amount < 1){
-        return (amount*1000).toStringAsFixed(2) + ' g';
+      if (amount < 1) {
+        return (amount * 1000).toStringAsFixed(2) + ' g';
       }
     }
 
-    if (unit == 'ml'){
-       if (amount >= 1000){
-        return (amount/1000).toStringAsFixed(2) + ' l'; 
+    if (unit == 'ml') {
+      if (amount >= 1000) {
+        return (amount / 1000).toStringAsFixed(2) + ' l';
       }
-     
-      return amount.toStringAsFixed(0)+ ' ml';
+
+      return amount.toStringAsFixed(0) + ' ml';
     }
 
-    if (unit == 'count'){
-      if (amount == amount.round().toDouble()){
+    if (unit == 'count') {
+      if (amount == amount.round().toDouble()) {
         return amount.toStringAsFixed(0);
       }
       return amount.toStringAsFixed(1);
     }
 
-    if (unit == 'tsp'){
-      if (amount >= 3){
-        return (amount/3).toStringAsFixed(1) + ' tbsp';
+    if (unit == 'tsp') {
+      if (amount >= 3) {
+        return (amount / 3).toStringAsFixed(1) + ' tbsp';
       }
     }
 
-    if (unit == 'tbsp'){
-      if (amount < 1){
-        return (amount*3).toStringAsFixed(1)+ ' tsp';
+    if (unit == 'tbsp') {
+      if (amount < 1) {
+        return (amount * 3).toStringAsFixed(1) + ' tsp';
       }
     }
 
-    if (unit == 'cups'){
+    if (unit == 'cups') {
       // round to neareast quarter cup
     }
     return amount.toStringAsFixed(2) + ' $unit';

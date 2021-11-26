@@ -20,7 +20,7 @@ class DividerWithTitle extends StatelessWidget {
         hTinySpace,
         Text(
           title,
-          style: TextStyle(color: Theme.of(context).primaryColor),
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 17),
         ),
         hTinySpace,
         Expanded(

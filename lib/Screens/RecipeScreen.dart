@@ -39,12 +39,6 @@ class RecipeScreen extends StatelessWidget {
                       Icon(Platform.isIOS ? CupertinoIcons.pencil : Icons.edit))
             ],
             backgroundColor: Theme.of(context).backgroundColor,
-            bottom: PreferredSize(
-                child: Container(
-                  color: Theme.of(context).primaryColor,
-                  height: 1.0,
-                ),
-                preferredSize: const Size.fromHeight(1.0)),
           ),
           body: ListView(
             physics: const BouncingScrollPhysics(),

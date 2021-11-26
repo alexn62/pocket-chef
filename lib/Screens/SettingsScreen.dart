@@ -22,12 +22,6 @@ class SettingsScreen extends StatelessWidget {
           title: const Text(
             'Settings',
           ),
-          bottom: PreferredSize(
-              child: Container(
-                color: Theme.of(context).primaryColor,
-                height: 1.0,
-              ),
-              preferredSize: const Size.fromHeight(1.0)),
         ),
         body: model.loadingStatus != LoadingStatus.Idle
             ? const Center(

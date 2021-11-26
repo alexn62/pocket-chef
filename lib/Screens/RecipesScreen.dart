@@ -89,12 +89,6 @@ class _RecipesScreenState extends State<RecipesScreen> {
                       color: Theme.of(context).primaryColor,
                     ))
               ],
-              bottom: PreferredSize(
-                  child: Container(
-                    color: Theme.of(context).primaryColor,
-                    height: 1.0,
-                  ),
-                  preferredSize: const Size.fromHeight(1.0)),
             ),
             body: RefreshIndicator(
               onRefresh: () => model.getRecipesByUserId(model.currentUser.uid),
