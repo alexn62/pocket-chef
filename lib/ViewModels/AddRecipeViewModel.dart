@@ -27,6 +27,7 @@ class AddRecipeViewModel extends BaseViewModel {
         title: '',
         sections: [],
       );
+      addSection();
     } else {
       _recipe = recipe;
     }
@@ -38,7 +39,7 @@ class AddRecipeViewModel extends BaseViewModel {
       await _recipesService.addRecipe(recipe);
       _dialogService.showDialog(
           title: 'Success', description: 'Recipe added successfully!');
-      setRecipe(Recipe(title: '', sections: []));
+      initialize();
       setLoadingStatus(LoadingStatus.Idle);
       return true;
     } on CustomError catch (e) {
@@ -69,14 +70,8 @@ class AddRecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void expandSection(int i, bool expand) {
-    _recipe.sections[i].expanded = expand;
-    notifyListeners();
-  }
-
   void addSection() {
     _recipe.sections.add(Section(
-        expanded: false,
         uid: math.Random().nextInt(99999).toString(),
         ingredients: [
           Ingredient(

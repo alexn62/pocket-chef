@@ -24,7 +24,6 @@ class LoginScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-
                             children: [
                               const Expanded(
                                 child: SizedBox(),
@@ -41,6 +40,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     vRegularSpace,
                                     Image.asset('assets/icons/smiley.png',
+                                        height: 64,
                                         color: Theme.of(context)
                                             .colorScheme
                                             .primaryVariant),
@@ -68,7 +68,6 @@ class LoginScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
-                                textInputAction: TextInputAction.next,
                                 onChanged: model.setEmail,
                                 keyboardType: TextInputType.emailAddress,
                               ),
@@ -100,7 +99,10 @@ class LoginScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
-                                onFieldSubmitted: (_) => model.loginEmailPassword(email: model.email, password: model.password),
+                                onFieldSubmitted: (_) =>
+                                    model.loginEmailPassword(
+                                        email: model.email,
+                                        password: model.password),
                                 onChanged: model.setPassword,
                                 password: true,
                               ),

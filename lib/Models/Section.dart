@@ -1,17 +1,16 @@
 import 'Ingredient.dart';
 
 class Section {
-  bool? expanded;
   String? uid;
   String title;
 
   List<Ingredient> ingredients;
 
-  Section(
-      {required this.title,
-      required this.ingredients,
-      this.uid,
-      this.expanded = false});
+  Section({
+    required this.title,
+    required this.ingredients,
+    this.uid,
+  });
 
   Section.fromJSON(Map<String, dynamic> section)
       : uid = section['uid'],

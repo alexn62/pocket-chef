@@ -41,7 +41,9 @@ class SignUpScreen extends StatelessWidget {
                                     vRegularSpace,
                                     Image.asset(
                                       'assets/icons/hug.png',
-                                      color: Theme.of(context).colorScheme.primaryVariant,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryVariant,
                                       height: 64,
                                     ),
                                     vRegularSpace,
@@ -58,7 +60,7 @@ class SignUpScreen extends StatelessWidget {
                                 ),
                               ),
                               const Expanded(child: SizedBox()),
-                             const Text(
+                              const Text(
                                 'Email',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -66,7 +68,6 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
-                                textInputAction: TextInputAction.next,
                                 onChanged: model.setEmail,
                                 keyboardType: TextInputType.emailAddress,
                               ),
@@ -80,7 +81,6 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
-                                textInputAction: TextInputAction.next,
                                 onChanged: model.setPassword,
                                 password: true,
                               ),
@@ -94,19 +94,27 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
-                                onFieldSubmitted: (_)=> model.signUpEmailPassword(email: model.email, password: model.password, confirmPassword: model.confirmPassword),
+                                onFieldSubmitted: (_) =>
+                                    model.signUpEmailPassword(
+                                        email: model.email,
+                                        password: model.password,
+                                        confirmPassword: model.confirmPassword),
                                 onChanged: model.setConfirmPassword,
                                 password: true,
                               ),
                               vRegularSpace,
                               GenericButton(
-                                onTap: () => model.signUpEmailPassword(email: model.email, password: model.password, confirmPassword: model.confirmPassword),
+                                onTap: () => model.signUpEmailPassword(
+                                    email: model.email,
+                                    password: model.password,
+                                    confirmPassword: model.confirmPassword),
                                 title: 'Sign up',
                                 positive: true,
                                 stretch: true,
                               ),
                               const Expanded(child: SizedBox()),
-                              const Center(child: Text('Already have an account?')),
+                              const Center(
+                                  child: Text('Already have an account?')),
                               vSmallSpace,
                               GenericButton(
                                 title: 'Login',
