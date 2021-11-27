@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Services/GeneralServices.dart';
@@ -16,9 +18,18 @@ class SettingsScreen extends StatelessWidget {
         Provider.of<GeneralServices>(context);
     return BaseView<SettingsViewModel>(builder: (context, model, child) {
       return Scaffold(
+        extendBodyBehindAppBar: true,
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
+          flexibleSpace: ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+          backgroundColor: Theme.of(context).backgroundColor.withOpacity(2 / 3),
           title: const Text(
             'Settings',
           ),

@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
@@ -28,10 +30,20 @@ class RecipeScreen extends StatelessWidget {
                 return false;
               },
               child: Scaffold(
+                  extendBodyBehindAppBar: true,
                   backgroundColor: Theme.of(context).backgroundColor,
                   appBar: AppBar(
+                    flexibleSpace: ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                        child: Container(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                    ),
                     iconTheme: Theme.of(context).iconTheme,
-                    backgroundColor: Theme.of(context).backgroundColor,
+                    backgroundColor:
+                        Theme.of(context).backgroundColor.withOpacity(2 / 3),
                     elevation: 0,
                     title: Text(
                       recipe.title,
@@ -49,6 +61,18 @@ class RecipeScreen extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 15),
+                        height: 150,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                                'https://ais.kochbar.de/kbrezept/40041_1010280/1200x1200/tiramisu-rezept-bild-nr-2.jpg'),
+                          ),
+                        ),
+                      ),
                       // vRegularSpace,
                       // Padding(
                       // padding: const EdgeInsets.symmetric(horizontal: 15),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -74,10 +75,20 @@ class _RecipesScreenState extends State<RecipesScreen> {
         onModelReady: (model) => model.initialize(model.currentUser.uid),
         builder: (context, model, child) {
           return Scaffold(
+              extendBodyBehindAppBar: true,
               backgroundColor: Theme.of(context).backgroundColor,
               appBar: AppBar(
+                flexibleSpace: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                    child: Container(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ),
                 automaticallyImplyLeading: false,
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor:
+                    Theme.of(context).backgroundColor.withOpacity(2 / 3),
                 title: const Text(
                   'Recipes',
                 ),

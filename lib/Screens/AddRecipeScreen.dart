@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -106,10 +107,21 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
             GestureDetector(
               onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               child: Scaffold(
+                extendBodyBehindAppBar: true,
                 backgroundColor: Theme.of(context).backgroundColor,
                 appBar: AppBar(
+                  elevation: 0,
+                  flexibleSpace: ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                      child: Container(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ),
                   automaticallyImplyLeading: widget.recipe != null,
-                  backgroundColor: Theme.of(context).backgroundColor,
+                  backgroundColor:
+                      Theme.of(context).backgroundColor.withOpacity(2 / 3),
                   title: Text(
                     widget.recipe == null ? 'Add Recipe' : 'Edit recipe',
                   ),
@@ -137,7 +149,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                   ],
                 ),
                 body: Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.only(
+                    right: 15,
+                    left: 15,
+                  ),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     controller: _controller,
@@ -146,6 +161,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                              height: MediaQuery.of(context).padding.top +
+                                  AppBar().preferredSize.height +
+                                  15),
                           Text(
                             'Title',
                             style: TextStyle(
