@@ -113,7 +113,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                   elevation: 0,
                   flexibleSpace: ClipRect(
                     child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                      filter: ImageFilter.blur(sigmaX: 7, sigmaY: -7),
                       child: Container(
                         color: Colors.transparent,
                       ),
@@ -163,8 +163,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                         children: [
                           SizedBox(
                               height: MediaQuery.of(context).padding.top +
-                                  AppBar().preferredSize.height +
-                                  15),
+                                  AppBar().preferredSize.height),
                           Text(
                             'Title',
                             style: TextStyle(

@@ -35,7 +35,7 @@ class RecipeScreen extends StatelessWidget {
                   appBar: AppBar(
                     flexibleSpace: ClipRect(
                       child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                        filter: ImageFilter.blur(sigmaX: 7, sigmaY: -7),
                         child: Container(
                           color: Colors.transparent,
                         ),
@@ -62,10 +62,9 @@ class RecipeScreen extends StatelessWidget {
                     shrinkWrap: true,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 15),
                         height: 150,
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: CachedNetworkImageProvider(
