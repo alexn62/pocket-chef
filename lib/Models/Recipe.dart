@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Section.dart';
 
 class Recipe {
+  int? serves;
   String? authorId;
   String? uid;
   String title;
@@ -11,7 +12,8 @@ class Recipe {
   bool favorite;
 
   Recipe(
-      {this.authorId,
+      {this.serves,
+      this.authorId,
       this.uid,
       required this.title,
       this.instructions,
@@ -20,13 +22,14 @@ class Recipe {
 
   Recipe.fromFirestore(DocumentSnapshot doc)
       : uid = doc.id,
+        serves = (doc.data() as Map<String, dynamic>)['serves'] ?? 1,
         authorId = (doc.data() as Map<String, dynamic>)['authorId'],
         title = (doc.data() as Map<String, dynamic>)['title'],
         instructions = (doc.data() as Map<String, dynamic>)['instructions'],
         sections = (doc.data() as Map<String, dynamic>)['sections']
             .map<Section>((doc) => Section.fromJSON(doc))
             .toList(),
-        favorite= (doc.data() as Map<String, dynamic>)['favorite'] ?? false;
+        favorite = (doc.data() as Map<String, dynamic>)['favorite'] ?? false;
 
   Recipe.fromJSON(Map<String, dynamic> recipe)
       : authorId = recipe['authorId'],
@@ -35,10 +38,11 @@ class Recipe {
         sections = recipe['sections']
             .map<Section>((recipe) => Section.fromJSON(recipe))
             .toList(),
-            favorite = recipe['favorite'] ?? false;
+        favorite = recipe['favorite'] ?? false;
 
   Map<String, dynamic> toJson() => {
         'authorId': authorId,
+        'serves': serves,
         'title': title,
         'instructions': instructions,
         'sections': sections

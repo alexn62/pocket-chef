@@ -45,6 +45,8 @@ dependencies:
   google_mobile_ads: ^0.13.5
   scrollable_positioned_list: ^0.2.3
   cached_network_image: ^3.1.0+1
+  dotted_border: ^2.0.0+1
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:

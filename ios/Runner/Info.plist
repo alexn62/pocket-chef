@@ -50,5 +50,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+		<string>To add a picture, this app needs permission to access your photos.</string>
 </dict>
 </plist>

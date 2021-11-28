@@ -50,23 +50,26 @@ class AddSectionComponent extends StatelessWidget {
                     : Icons.delete_outline)),
           ],
         ),
-        ExpansionTile(
-          initiallyExpanded: true,
-          tilePadding: const EdgeInsets.only(left: 30, right: 12),
-          backgroundColor: Theme.of(context).backgroundColor,
-          title: const Text(
-            'Ingredients',
-            style: (TextStyle(fontSize: 17)),
+        ListTileTheme(
+          dense: true,
+          child: ExpansionTile(
+            initiallyExpanded: true,
+            tilePadding: const EdgeInsets.only(left: 30, right: 12),
+            backgroundColor: Theme.of(context).backgroundColor,
+            title: const Text(
+              'Ingredients',
+              style: (TextStyle(fontSize: 17)),
+            ),
+            children: [
+              for (int j = 0;
+                  j < model.recipe.sections[sectionIndex].ingredients.length;
+                  j++)
+                AddIngredientComponent(
+                  sectionIndex: sectionIndex,
+                  ingredientIndex: j,
+                ),
+            ],
           ),
-          children: [
-            for (int j = 0;
-                j < model.recipe.sections[sectionIndex].ingredients.length;
-                j++)
-              AddIngredientComponent(
-                sectionIndex: sectionIndex,
-                ingredientIndex: j,
-              ),
-          ],
         ),
       ],
     );

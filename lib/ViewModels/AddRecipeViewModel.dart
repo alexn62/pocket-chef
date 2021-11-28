@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
@@ -103,6 +106,11 @@ class AddRecipeViewModel extends BaseViewModel {
     _recipe.title = newRecipeTitle.trim();
   }
 
+  void setServesNumber(String newServesNumber) {
+    int amount = int.tryParse(newServesNumber) ?? 0;
+    _recipe.serves = amount;
+  }
+
   void setSectionTitle(String newSectionTitle, int index) {
     _recipe.sections[index].title = newSectionTitle.trim();
   }
@@ -131,6 +139,24 @@ class AddRecipeViewModel extends BaseViewModel {
 
   void setInstructions(String? newInstructions) {
     _recipe.instructions = newInstructions?.trim();
+    notifyListeners();
+  }
+
+  final ImagePicker _picker = ImagePicker();
+
+  File? img;
+
+  void getImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      final path = image.path;
+      img = File(path);
+      notifyListeners();
+    }
+  }
+
+  void deleteImage() {
+    img = null;
     notifyListeners();
   }
 }
