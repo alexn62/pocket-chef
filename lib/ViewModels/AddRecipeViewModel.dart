@@ -28,7 +28,9 @@ class AddRecipeViewModel extends BaseViewModel {
     if (recipe == null) {
       _recipe = Recipe(
         title: '',
+      
         sections: [],
+        instructions: '',
       );
       addSection();
     } else {

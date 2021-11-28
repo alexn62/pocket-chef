@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -222,6 +221,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                     ),
                                     vSmallSpace,
                                     CustomTextFormField(
+                                      keyboardType: TextInputType.number,
                                       hintText: 'e.g., 4',
                                       initialValue:
                                           model.recipe.serves?.toString() ?? '',

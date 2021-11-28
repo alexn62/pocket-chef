@@ -55,7 +55,7 @@ class AddPhotoComponent extends StatelessWidget {
                     width: 60,
                     child: Center(
                       child: AnimatedContainer(
-                        height: img == null ? 0 : 60,
+                        height: img == null ? 0 : 45,
                         duration: const Duration(milliseconds: 200),
                         child: FloatingActionButton(
                           backgroundColor: Theme.of(context).backgroundColor,

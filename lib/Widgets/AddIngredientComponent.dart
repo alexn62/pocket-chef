@@ -86,6 +86,7 @@ class _AddIngredientComponentState extends State<AddIngredientComponent> {
           Flexible(
             flex: 1,
             child: CustomTextFormField(
+              keyboardType: TextInputType.number,
               hintText: '0',
               initialValue: model.recipe.sections[widget.sectionIndex]
                           .ingredients[widget.ingredientIndex].amount ==
