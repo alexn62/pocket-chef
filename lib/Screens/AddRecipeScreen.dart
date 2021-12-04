@@ -103,13 +103,35 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
           if (response == null || !response.confirmed) {
             return false;
           } else {
-            locator<NavigationService>().back(result: model.recipe.photoUrl);
+            locator<NavigationService>().back(
+                result:
+                    Provider.of<AddRecipeViewModel>(context).recipe.photoUrl);
             return true;
           }
+          ;
         },
         child: Stack(
           children: [
             GestureDetector(
+              onHorizontalDragUpdate: (details) async {
+                int sensitivity = 30;
+                if (details.delta.dx > sensitivity) {
+                  DialogResponse<dynamic>? response =
+                      await locator<DialogService>().showDialog(
+                          title: 'Warning',
+                          description:
+                              'Are you sure you want to dismiss your changes and go back?',
+                          barrierDismissible: true,
+                          cancelTitle: 'Cancel');
+                  if (response == null || !response.confirmed) {
+                    return;
+                  } else {
+                    locator<NavigationService>()
+                        .back(result: model.recipe.photoUrl);
+                    return;
+                  }
+                }
+              },
               onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               child: Scaffold(
                 extendBodyBehindAppBar: true,
