@@ -30,9 +30,12 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         backgroundColor: Theme.of(context).backgroundColor,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        selectedLabelStyle: TextStyle(
+          color: Theme.of(context).primaryColor,
+        ),
         currentIndex: model.index,
         onTap: (val) {
           WidgetsBinding.instance!.focusManager.primaryFocus?.unfocus();
@@ -42,24 +45,24 @@ class _MainScreenState extends State<MainScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            label: '',
+            label: 'Recipes',
             tooltip: '',
             icon: Center(
               child: Icon(
                   Platform.isIOS ? CupertinoIcons.book : Icons.menu_book,
                   color: model.index == 0
                       ? Theme.of(context).primaryColor
-                      : Theme.of(context).primaryColor.withOpacity(0.5),
+                      : Theme.of(context).primaryColor.withOpacity(0.8),
                   size: model.index == 0 ? 24 : 18),
             ),
           ),
           BottomNavigationBarItem(
-            label: '',
+            label: 'Add Recipe',
             tooltip: '',
             icon: Icon(Platform.isIOS ? CupertinoIcons.add : Icons.add_sharp,
                 color: model.index == 1
                     ? Theme.of(context).primaryColor
-                    : Theme.of(context).primaryColor.withOpacity(0.5),
+                    : Theme.of(context).primaryColor.withOpacity(0.8),
                 size: model.index == 1 ? 24 : 18),
           ),
         ],
