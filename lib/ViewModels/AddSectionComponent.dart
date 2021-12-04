@@ -53,23 +53,21 @@ class AddSectionComponent extends StatelessWidget {
         ListTileTheme(
           dense: true,
           child: ExpansionTile(
-            initiallyExpanded: true,
-            tilePadding: const EdgeInsets.only(left: 30, right: 12),
-            backgroundColor: Theme.of(context).backgroundColor,
-            title: const Text(
-              'Ingredients',
-              style: (TextStyle(fontSize: 17)),
-            ),
-            children: [
-              for (int j = 0;
-                  j < model.recipe.sections[sectionIndex].ingredients.length;
-                  j++)
-                AddIngredientComponent(
-                  sectionIndex: sectionIndex,
-                  ingredientIndex: j,
-                ),
-            ],
-          ),
+              initiallyExpanded: true,
+              tilePadding: const EdgeInsets.only(left: 30, right: 12),
+              backgroundColor: Theme.of(context).backgroundColor,
+              title: const Text(
+                'Ingredients',
+                style: (TextStyle(fontSize: 17)),
+              ),
+              children: model.recipe.sections[sectionIndex].ingredients
+                  .asMap()
+                  .entries
+                  .map((entry) => AddIngredientComponent(
+                        sectionIndex: sectionIndex,
+                        ingredientIndex: entry.key,
+                      ))
+                  .toList()),
         ),
       ],
     );

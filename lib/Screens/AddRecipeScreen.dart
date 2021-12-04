@@ -27,14 +27,16 @@ class AddRecipeScreen extends StatefulWidget {
   State<AddRecipeScreen> createState() => _AddRecipeScreenState();
 }
 
-class _AddRecipeScreenState extends State<AddRecipeScreen> {
+class _AddRecipeScreenState extends State<AddRecipeScreen>
+    with AutomaticKeepAliveClientMixin<AddRecipeScreen> {
   final ScrollController _controller = ScrollController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _servesController = TextEditingController();
   late GlobalKey<FormState> _formKey;
 
   InterstitialAd? _interstitialAd;
-
+  @override
+  bool get wantKeepAlive => true;
   void _createInterstitialAd() {
     InterstitialAd.load(
       adUnitId: AdService.interstitialAdUnitId,
@@ -83,6 +85,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final GeneralServices _generalServices =
         Provider.of<GeneralServices>(context);
 
@@ -166,6 +169,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                     left: 15,
                   ),
                   child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
                     physics: const BouncingScrollPhysics(),
                     controller: _controller,
                     child: Form(
@@ -254,7 +258,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                                             double.tryParse(text) == null) {
                                           return 'Err';
                                         }
-
                                         return null;
                                       },
                                       onChanged: model.setServesNumber,
@@ -287,8 +290,14 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                               ),
                             ],
                           ),
-                          for (int i = 0; i < model.recipe.sections.length; i++)
-                            AddSectionComponent(sectionIndex: i),
+                          ...model.recipe.sections
+                              .asMap()
+                              .entries
+                              .map(
+                                (entry) => AddSectionComponent(
+                                    sectionIndex: entry.key),
+                              )
+                              .toList(),
                           ListTileTheme(
                             dense: true,
                             child: ExpansionTile(

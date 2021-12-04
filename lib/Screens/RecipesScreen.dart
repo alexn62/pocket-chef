@@ -20,8 +20,12 @@ class RecipesScreen extends StatefulWidget {
   State<RecipesScreen> createState() => _RecipesScreenState();
 }
 
-class _RecipesScreenState extends State<RecipesScreen> {
+class _RecipesScreenState extends State<RecipesScreen>
+    with AutomaticKeepAliveClientMixin<RecipesScreen> {
   InterstitialAd? _interstitialAd;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -69,6 +73,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final GeneralServices _generalServices =
         Provider.of<GeneralServices>(context);
     return BaseView<RecipesViewModel>(

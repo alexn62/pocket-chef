@@ -27,9 +27,14 @@ class _AddIngredientComponentState extends State<AddIngredientComponent> {
 
   @override
   void initState() {
+    // scroll down x pixels
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-      Scrollable.ensureVisible(dataKey.currentContext!,
-          alignment: 1, duration: const Duration(milliseconds: 300));
+      Scrollable.ensureVisible(
+        dataKey.currentContext!,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
+        alignment: 0.5,
+        duration: const Duration(milliseconds: 300),
+      );
     });
     super.initState();
   }
