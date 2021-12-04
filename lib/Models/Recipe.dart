@@ -6,10 +6,11 @@ class Recipe {
   int? serves;
   String? authorId;
   String? uid;
-  String title;
+  String? title;
   String? instructions;
   List<Section> sections;
   bool favorite;
+  String? photoUrl;
 
   Recipe(
       {this.serves,
@@ -18,7 +19,8 @@ class Recipe {
       required this.title,
       this.instructions,
       required this.sections,
-      this.favorite = false});
+      this.favorite = false,
+      this.photoUrl});
 
   Recipe.fromFirestore(DocumentSnapshot doc)
       : uid = doc.id,
@@ -29,7 +31,8 @@ class Recipe {
         sections = (doc.data() as Map<String, dynamic>)['sections']
             .map<Section>((doc) => Section.fromJSON(doc))
             .toList(),
-        favorite = (doc.data() as Map<String, dynamic>)['favorite'] ?? false;
+        favorite = (doc.data() as Map<String, dynamic>)['favorite'] ?? false,
+        photoUrl = (doc.data() as Map<String, dynamic>)['photoUrl'];
 
   Recipe.fromJSON(Map<String, dynamic> recipe)
       : authorId = recipe['authorId'],
@@ -49,5 +52,6 @@ class Recipe {
             .map<Map<String, dynamic>>((section) => section.toJson())
             .toList(),
         'favorite': favorite,
+        'photoUrl': photoUrl,
       };
 }

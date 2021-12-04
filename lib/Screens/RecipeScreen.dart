@@ -47,7 +47,7 @@ class RecipeScreen extends StatelessWidget {
                   Theme.of(context).backgroundColor.withOpacity(2 / 3),
               elevation: 0,
               title: Text(
-                recipe.title,
+                recipe.title!,
               ),
               actions: [
                 IconButton(
@@ -61,17 +61,19 @@ class RecipeScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               children: [
-                Container(
-                  height: 150,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(
-                          'https://ais.kochbar.de/kbrezept/40041_1010280/1200x1200/tiramisu-rezept-bild-nr-2.jpg'),
-                    ),
-                  ),
-                ),
+                model.recipe.photoUrl != null
+                    ? Container(
+                        height: 150,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                                model.recipe.photoUrl!),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
                 // vRegularSpace,
                 // Padding(
                 // padding: const EdgeInsets.symmetric(horizontal: 15),

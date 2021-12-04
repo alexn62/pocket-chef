@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final TextEditingController? controller;
   final String? hintText;
   final int? minLines;
   final int? maxLines;
@@ -13,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool password;
   final String? initialValue;
   const CustomTextFormField({
+    this.controller,
     this.hintText,
     this.minLines,
     this.maxLines = 1,
@@ -30,10 +32,11 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       onFieldSubmitted: onFieldSubmitted,
       minLines: minLines,
       maxLines: maxLines,
-      initialValue: initialValue ?? '',
+      initialValue: initialValue,
       validator: validator,
       keyboardType: keyboardType,
       obscureText: password,

@@ -70,8 +70,13 @@ class RecipeViewModel extends BaseViewModel {
   navigateToRecipe(Recipe recipe) async {
     var result = await _navigationService.navigateTo(routes.AddRecipeRoute,
         arguments: recipe);
-    if (result != null && result.runtimeType == Recipe) {
-      setRecipe(result as Recipe);
+    if (result != null) {
+      if (result.runtimeType == Recipe) {
+        setRecipe(result as Recipe);
+      }
+    } else {
+      _recipe!.photoUrl = null;
+      notifyListeners();
     }
   }
 }
