@@ -75,7 +75,6 @@ class Api {
   }
 
   Future<DocumentReference<Object?>> addRecipe(Recipe recipe) async {
-    print(recipe.toJson());
     DocumentReference<Object?> result =
         await recipeReference.add(recipe.toJson());
     return result;

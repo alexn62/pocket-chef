@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
@@ -179,9 +178,10 @@ class AddRecipeViewModel extends BaseViewModel {
   void deleteImage({required File? tempImage, required Recipe recipe}) async {
     try {
       if (recipe.photoUrl != null) {
+        setPhotoLoadingStatus(LoadingStatus.Busy);
         await _recipesService.deleteImageFromDatabase(recipe);
         recipe.photoUrl = null;
-        notifyListeners();
+        setPhotoLoadingStatus(LoadingStatus.Idle);
       } else if (tempImage != null) {
         _setNewImage(null);
       }

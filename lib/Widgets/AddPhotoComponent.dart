@@ -57,18 +57,18 @@ class AddPhotoComponent extends StatelessWidget {
                             : null),
             child: Stack(
               children: [
-                img != null || currentImage != null
-                    ? const SizedBox()
-                    : Center(
-                        child: status == LoadingStatus.Busy
-                            ? const CircularProgressIndicator.adaptive()
-                            : Icon(
-                                Platform.isIOS
-                                    ? CupertinoIcons.photo
-                                    : Icons.photo,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                      ),
+                Center(
+                  child: status == LoadingStatus.Busy
+                      ? const CircularProgressIndicator.adaptive()
+                      : img != null || currentImage != null
+                          ? const SizedBox()
+                          : Icon(
+                              Platform.isIOS
+                                  ? CupertinoIcons.photo
+                                  : Icons.photo,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                ),
                 Positioned(
                   right: 5,
                   bottom: 5,

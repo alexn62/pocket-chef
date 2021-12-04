@@ -70,25 +70,27 @@ class RecipesViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> deleteRecipe(Recipe recipeToDelete) async {
+  Future<void> deleteRecipes(Iterable<Recipe> recipesToDelete) async {
     DialogResponse<dynamic>? response = await _dialogService.showDialog(
         title: 'Warning',
         description:
-            'Are you sure you want to delete your recipe for ${recipeToDelete.title} forever?',
+            'Are you sure you want to delete ${recipesToDelete.length} recipe${recipesToDelete.length != 1 ? 's' : ''} forever?',
         buttonTitle: 'Cancel',
         cancelTitle: 'Delete',
         barrierDismissible: true);
     if (response == null || response.confirmed) {
       return;
     } else {
-      _recipes.remove(recipeToDelete);
-      notifyListeners();
-      try {
-        await _recipesService.deleteRecipe(recipeToDelete);
-      } on CustomError catch (e) {
-        _recipes.add(recipeToDelete);
-        notifyListeners();
-        _dialogService.showDialog(title: 'Error', description: e.message);
+      for (Recipe recipeToDelete in recipesToDelete.toList()) {
+        try {
+          _recipes.remove(recipeToDelete);
+          notifyListeners();
+          await _recipesService.deleteRecipe(recipeToDelete);
+        } on CustomError catch (e) {
+          _recipes.add(recipeToDelete);
+          notifyListeners();
+          _dialogService.showDialog(title: 'Error', description: e.message);
+        }
       }
     }
   }
@@ -110,5 +112,12 @@ class RecipesViewModel extends BaseViewModel {
     _navigationService.navigateTo(
       routes.SettingsRoute,
     );
+  }
+
+  void selectTile(
+    Recipe recipe,
+  ) {
+    recipe.selected = !recipe.selected!;
+    notifyListeners();
   }
 }

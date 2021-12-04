@@ -89,6 +89,16 @@ class _RecipesScreenState extends State<RecipesScreen> {
                 backgroundColor:
                     Theme.of(context).backgroundColor.withOpacity(2 / 3),
                 automaticallyImplyLeading: false,
+                leading: model.recipes
+                        .where((element) => element.selected!)
+                        .isNotEmpty
+                    ? IconButton(
+                        onPressed: () => model.deleteRecipes(model.recipes
+                            .where((element) => element.selected!)),
+                        icon: Icon(Platform.isIOS
+                            ? CupertinoIcons.delete
+                            : Icons.delete_outline))
+                    : const SizedBox(),
                 title: const Text(
                   'Recipes',
                 ),
@@ -189,17 +199,30 @@ class _RecipesScreenState extends State<RecipesScreen> {
                             parent: AlwaysScrollableScrollPhysics()),
                         itemCount: model.recipes.length,
                         itemBuilder: (context, index) => ListTile(
-                            onTap: () {
-                              if (_generalServices.timer == null ||
-                                  _generalServices.timer != null &&
-                                      !_generalServices.timer!.isActive) {
-                                _generalServices.setTimer();
-                                _showInterstitialAd();
-                              }
-                              model.navigateToRecipe(model.recipes[index]);
-                            },
+                            key: ValueKey(model.recipes[index].uid),
+                            onTap: model.recipes
+                                    .where((e) => e.selected!)
+                                    .isNotEmpty
+                                ? () => model.selectTile(model.recipes[index])
+                                : () {
+                                    if (_generalServices.timer == null ||
+                                        _generalServices.timer != null &&
+                                            !_generalServices.timer!.isActive) {
+                                      _generalServices.setTimer();
+                                      _showInterstitialAd();
+                                    }
+                                    model
+                                        .navigateToRecipe(model.recipes[index]);
+                                  },
+                            // onLongPress: () =>
+                            //     model.deleteRecipe(model.recipes[index]),
                             onLongPress: () =>
-                                model.deleteRecipe(model.recipes[index]),
+                                model.selectTile(model.recipes[index]),
+                            tileColor: model.recipes[index].selected!
+                                ? Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.2)
+                                : Colors.transparent,
                             title: Text(
                               model.recipes[index].title!,
                               style: TextStyle(

@@ -11,6 +11,7 @@ class Recipe {
   List<Section> sections;
   bool favorite;
   String? photoUrl;
+  bool? selected;
 
   Recipe(
       {this.serves,
@@ -20,7 +21,8 @@ class Recipe {
       this.instructions,
       required this.sections,
       this.favorite = false,
-      this.photoUrl});
+      this.photoUrl,
+      this.selected = false});
 
   Recipe.fromFirestore(DocumentSnapshot doc)
       : uid = doc.id,
@@ -32,7 +34,8 @@ class Recipe {
             .map<Section>((doc) => Section.fromJSON(doc))
             .toList(),
         favorite = (doc.data() as Map<String, dynamic>)['favorite'] ?? false,
-        photoUrl = (doc.data() as Map<String, dynamic>)['photoUrl'];
+        photoUrl = (doc.data() as Map<String, dynamic>)['photoUrl'],
+        selected = false;
 
   Recipe.fromJSON(Map<String, dynamic> recipe)
       : authorId = recipe['authorId'],
