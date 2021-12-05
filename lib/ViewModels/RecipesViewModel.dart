@@ -96,16 +96,11 @@ class RecipesViewModel extends BaseViewModel {
   }
 
   Future<void> navigateToRecipe(Recipe recipe) async {
-    var returnedRecipe = await _navigationService.navigateTo(
+    await _navigationService.navigateTo(
       routes.RecipeRoute,
       arguments: recipe,
     );
-    if (returnedRecipe != null && returnedRecipe.runtimeType == Recipe) {
-      int index =
-          _recipes.indexWhere((element) => element.uid == returnedRecipe.uid);
-      _recipes[index] = returnedRecipe;
-      notifyListeners();
-    }
+    notifyListeners();
   }
 
   void navigateToSettings() {

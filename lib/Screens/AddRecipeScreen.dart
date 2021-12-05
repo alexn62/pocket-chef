@@ -11,6 +11,7 @@ import 'package:personal_recipes/Services/AdService.dart';
 import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:personal_recipes/ViewModels/AddSectionComponent.dart';
+import 'package:personal_recipes/Widgets/AddAdvancedComponent.dart';
 import 'package:personal_recipes/Widgets/AddPhotoComponent.dart';
 import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/widgets/FullScreenLoadingIndicator.dart';
@@ -321,6 +322,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                     sectionIndex: entry.key),
                               )
                               .toList(),
+                          vSmallSpace,
                           ListTileTheme(
                             dense: true,
                             child: ExpansionTile(
@@ -346,7 +348,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                 ),
                               ],
                             ),
-                          )
+                          ),
+                          const AddAdvancedComponent()
                         ],
                       ),
                     ),

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/SettingsViewModel.dart';
@@ -38,23 +39,37 @@ class SettingsScreen extends StatelessWidget {
             ? const Center(
                 child: CircularProgressIndicator.adaptive(),
               )
-            : ListView(
-                children: [
-                  ListTile(
-                      title: const Text('Dark mode'),
-                      trailing: Switch.adaptive(
-                        onChanged: (value) async {
-                          await _generalServices.setDarkMode(value);
-                        },
-                        value: _generalServices.darkMode!,
-                      )),
-                  GenericButton(
-                    stretch: true,
-                    margin: const EdgeInsets.symmetric(horizontal: 15),
-                    onTap: model.logout,
-                    title: 'Logout',
-                    danger: true,
-                  ),
+            : CustomScrollView(
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            height: MediaQuery.of(context).padding.top +
+                                AppBar().preferredSize.height),
+                        ListTile(
+                            title: const Text('Dark mode'),
+                            trailing: Switch.adaptive(
+                              onChanged: (value) async {
+                                await _generalServices.setDarkMode(value);
+                              },
+                              value: _generalServices.darkMode!,
+                            )),
+                        const Expanded(
+                          child: SizedBox(),
+                        ),
+                        GenericButton(
+                          stretch: true,
+                          margin: const EdgeInsets.symmetric(horizontal: 15),
+                          onTap: model.logout,
+                          title: 'Logout',
+                          danger: true,
+                        ),
+                        vBigSpace,
+                      ],
+                    ),
+                  )
                 ],
               ),
       );

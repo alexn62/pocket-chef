@@ -4,14 +4,13 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Services/AdService.dart';
 import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/RecipesViewModel.dart';
+import 'package:personal_recipes/Widgets/EmptyRecipesPlaceholder.dart';
 import 'package:provider/provider.dart';
 import 'BaseView.dart';
-import 'dart:math';
 
 class RecipesScreen extends StatefulWidget {
   const RecipesScreen({Key? key}) : super(key: key);
@@ -80,176 +79,126 @@ class _RecipesScreenState extends State<RecipesScreen>
         onModelReady: (model) => model.initialize(model.currentUser.uid),
         builder: (context, model, child) {
           return Scaffold(
-              extendBodyBehindAppBar: true,
-              backgroundColor: Theme.of(context).backgroundColor,
-              appBar: AppBar(
-                flexibleSpace: ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 7, sigmaY: -7),
-                    child: Container(
-                      color: Colors.transparent,
-                    ),
+            extendBodyBehindAppBar: true,
+            backgroundColor: Theme.of(context).backgroundColor,
+            appBar: AppBar(
+              flexibleSpace: ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 7, sigmaY: -7),
+                  child: Container(
+                    color: Colors.transparent,
                   ),
                 ),
-                backgroundColor:
-                    Theme.of(context).backgroundColor.withOpacity(2 / 3),
-                automaticallyImplyLeading: false,
-                leading: model.recipes
-                        .where((element) => element.selected!)
-                        .isNotEmpty
-                    ? IconButton(
-                        onPressed: () => model.deleteRecipes(model.recipes
-                            .where((element) => element.selected!)),
-                        icon: Icon(Platform.isIOS
-                            ? CupertinoIcons.delete
-                            : Icons.delete_outline))
-                    : const SizedBox(),
-                title: const Text(
-                  'Recipes',
-                ),
-                actions: [
-                  IconButton(
-                      onPressed: model.navigateToSettings,
-                      icon: Icon(
-                        Platform.isIOS
-                            ? CupertinoIcons.settings
-                            : Icons.settings,
-                        color: Theme.of(context).primaryColor,
-                      ))
-                ],
               ),
-              body: RefreshIndicator(
+              backgroundColor:
+                  Theme.of(context).backgroundColor.withOpacity(2 / 3),
+              automaticallyImplyLeading: false,
+              leading: model.recipes
+                      .where((element) => element.selected!)
+                      .isNotEmpty
+                  ? IconButton(
+                      onPressed: () => model.deleteRecipes(
+                          model.recipes.where((element) => element.selected!)),
+                      icon: Icon(Platform.isIOS
+                          ? CupertinoIcons.delete
+                          : Icons.delete_outline))
+                  : const SizedBox(),
+              title: const Text(
+                'Recipes',
+              ),
+              actions: [
+                IconButton(
+                  onPressed: model.navigateToSettings,
+                  icon: Icon(
+                    Platform.isIOS ? CupertinoIcons.settings : Icons.settings,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ],
+            ),
+            body: RefreshIndicator(
                 edgeOffset: MediaQuery.of(context).padding.top +
                     AppBar().preferredSize.height,
                 onRefresh: () =>
                     model.getRecipesByUserId(model.currentUser.uid),
-                child: model.recipes.isEmpty &&
-                        model.loadingStatus == LoadingStatus.Idle
-                    ? LayoutBuilder(builder: (context, constraints) {
-                        return SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                                minHeight: constraints.maxHeight),
-                            child: IntrinsicHeight(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Expanded(
-                                    child: SizedBox(),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Column(
-                                      children: [
-                                        const Text(
-                                          'There are no recipes to display',
-                                        ),
-                                        vRegularSpace,
-                                        Image.asset(
-                                          'assets/icons/secret.png',
-                                          height: 64,
-                                          color: Theme.of(context).errorColor,
-                                        ),
-                                        vRegularSpace,
-                                        const Text(
-                                          'Tap the + icon below to add your first recipe!',
-                                        ),
-                                        vRegularSpace,
-                                        Text(
-                                            '...or pull to refresh if you just did',
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor
-                                                  .withOpacity(0.7),
-                                            )),
-                                      ],
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  slivers: [
+                    SliverToBoxAdapter(
+                        child: SizedBox(
+                      height: MediaQuery.of(context).padding.top +
+                          AppBar().preferredSize.height,
+                    )),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: model.recipes.isEmpty &&
+                              model.loadingStatus == LoadingStatus.Idle
+                          ? const EmptyRecipesPlaceholder()
+                          : Column(
+                              children: model.recipes
+                                  .map(
+                                    (element) => ListTile(
+                                      contentPadding: const EdgeInsets.only(
+                                          right: 0, left: 15),
+                                      key: ValueKey(element.uid),
+                                      onTap: model.recipes
+                                              .where((e) => e.selected!)
+                                              .isNotEmpty
+                                          ? () => model.selectTile(element)
+                                          : () {
+                                              if (_generalServices.timer ==
+                                                      null ||
+                                                  _generalServices.timer !=
+                                                          null &&
+                                                      !_generalServices
+                                                          .timer!.isActive) {
+                                                _generalServices.setTimer();
+                                                _showInterstitialAd();
+                                              }
+                                              model.navigateToRecipe(element);
+                                            },
+                                      onLongPress: () =>
+                                          model.selectTile(element),
+                                      tileColor: element.selected!
+                                          ? Theme.of(context)
+                                              .primaryColor
+                                              .withOpacity(0.2)
+                                          : Colors.transparent,
+                                      title: Text(
+                                        element.title!,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                      trailing: IconButton(
+                                        onPressed: () =>
+                                            model.setFavoriteByRecipeId(
+                                                element.uid!,
+                                                !element.favorite),
+                                        icon: !element.favorite
+                                            ? Icon(
+                                                Platform.isIOS
+                                                    ? CupertinoIcons.star
+                                                    : Icons
+                                                        .star_outline_rounded,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              )
+                                            : Icon(
+                                                Platform.isIOS
+                                                    ? CupertinoIcons.star_fill
+                                                    : Icons.star_rounded,
+                                                color: Colors.amber[600]),
+                                      ),
                                     ),
-                                  ),
-                                  const Expanded(
-                                    child: SizedBox(),
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Expanded(
-                                        flex: 3,
-                                        child: SizedBox(),
-                                      ),
-                                      Expanded(
-                                        flex: 4,
-                                        child: Center(
-                                          // color: Colors.red,
-                                          child: Transform.rotate(
-                                            angle: pi * 1.1,
-                                            child: Image.asset(
-                                              'assets/icons/left-arrow.png',
-                                              height: 64,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                  )
+                                  .toList(),
                             ),
-                          ),
-                        );
-                      })
-                    : ListView.builder(
-                        physics: const BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                        itemCount: model.recipes.length,
-                        itemBuilder: (context, index) => ListTile(
-                            key: ValueKey(model.recipes[index].uid),
-                            onTap: model.recipes
-                                    .where((e) => e.selected!)
-                                    .isNotEmpty
-                                ? () => model.selectTile(model.recipes[index])
-                                : () {
-                                    if (_generalServices.timer == null ||
-                                        _generalServices.timer != null &&
-                                            !_generalServices.timer!.isActive) {
-                                      _generalServices.setTimer();
-                                      _showInterstitialAd();
-                                    }
-                                    model
-                                        .navigateToRecipe(model.recipes[index]);
-                                  },
-                            // onLongPress: () =>
-                            //     model.deleteRecipe(model.recipes[index]),
-                            onLongPress: () =>
-                                model.selectTile(model.recipes[index]),
-                            tileColor: model.recipes[index].selected!
-                                ? Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.2)
-                                : Colors.transparent,
-                            title: Text(
-                              model.recipes[index].title!,
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            trailing: IconButton(
-                                onPressed: () => model.setFavoriteByRecipeId(
-                                    model.recipes[index].uid!,
-                                    !model.recipes[index].favorite),
-                                icon: !model.recipes[index].favorite
-                                    ? Icon(
-                                        Platform.isIOS
-                                            ? CupertinoIcons.star
-                                            : Icons.star_outline_rounded,
-                                        color: Theme.of(context).primaryColor,
-                                      )
-                                    : Icon(
-                                        Platform.isIOS
-                                            ? CupertinoIcons.star_fill
-                                            : Icons.star_rounded,
-                                        color: Colors.amber[600])))),
-              ));
+                    )
+                  ],
+                )),
+          );
         });
   }
 }
