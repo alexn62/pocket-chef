@@ -117,18 +117,37 @@ class _RecipesScreenState extends State<RecipesScreen>
               ],
             ),
             body: RefreshIndicator(
-                edgeOffset: MediaQuery.of(context).padding.top +
-                    AppBar().preferredSize.height,
-                onRefresh: () =>
-                    model.getRecipesByUserId(model.currentUser.uid),
+                displacement: Platform.isIOS ? 0 : 40,
+                edgeOffset: Platform.isIOS
+                    ? 0
+                    : MediaQuery.of(context).padding.top +
+                        AppBar().preferredSize.height,
+                onRefresh: Platform.isIOS
+                    ? () async {}
+                    : () => model.getRecipesByUserId(model.currentUser.uid),
                 child: CustomScrollView(
                   physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   slivers: [
+                    !Platform.isIOS
+                        ? const SliverToBoxAdapter(
+                            child: SizedBox(),
+                          )
+                        : SliverPadding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).padding.top +
+                                    AppBar().preferredSize.height),
+                            sliver: CupertinoSliverRefreshControl(
+                              onRefresh: () => model
+                                  .getRecipesByUserId(model.currentUser.uid),
+                            ),
+                          ),
                     SliverToBoxAdapter(
                         child: SizedBox(
-                      height: MediaQuery.of(context).padding.top +
-                          AppBar().preferredSize.height,
+                      height: Platform.isIOS
+                          ? 0
+                          : MediaQuery.of(context).padding.top +
+                              AppBar().preferredSize.height,
                     )),
                     SliverFillRemaining(
                       hasScrollBody: false,
