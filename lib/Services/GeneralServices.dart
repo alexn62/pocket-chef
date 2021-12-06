@@ -60,4 +60,10 @@ class GeneralServices extends ChangeNotifier {
     int frac = int.parse(am.toStringAsFixed(2).split('.')[1]);
     return am.floor().toStringAsFixed(0) + fraction(frac);
   }
+
+  bool _newRecipeAdded = false;
+  bool get newRecipeAdded => _newRecipeAdded;
+  setNewRecipeAdded(bool newRecipeAdded) {
+    _newRecipeAdded = newRecipeAdded;
+  }
 }

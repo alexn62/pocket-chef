@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
+import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -14,9 +15,11 @@ class AddIngredientComponent extends StatefulWidget {
     Key? key,
     required this.sectionIndex,
     required this.ingredientIndex,
+    required this.ingredients,
   }) : super(key: key);
   final int sectionIndex;
   final int ingredientIndex;
+  final List<Ingredient> ingredients;
 
   @override
   State<AddIngredientComponent> createState() => _AddIngredientComponentState();
@@ -27,25 +30,29 @@ class _AddIngredientComponentState extends State<AddIngredientComponent> {
 
   @override
   void initState() {
+    // scroll down x pixels
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-      Scrollable.ensureVisible(dataKey.currentContext!,
-          alignment: 1, duration: const Duration(milliseconds: 300));
+      Scrollable.ensureVisible(
+        dataKey.currentContext!,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
+        alignment: 0.5,
+        duration: const Duration(milliseconds: 300),
+      );
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final AddRecipeViewModel model = Provider.of<AddRecipeViewModel>(context);
+    final AddRecipeViewModel model =
+        Provider.of<AddRecipeViewModel>(context, listen: false);
     return SizedBox(
       key: dataKey,
       child: Row(
-        key: ValueKey(model.recipe.sections[widget.sectionIndex]
-            .ingredients[widget.ingredientIndex].uid),
+        key: ValueKey(widget.ingredients[widget.ingredientIndex].uid),
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          widget.ingredientIndex + 1 ==
-                  model.recipe.sections[widget.sectionIndex].ingredients.length
+          widget.ingredientIndex + 1 == widget.ingredients.length
               ? SizedBox(
                   height: 40,
                   width: 30,
@@ -66,8 +73,7 @@ class _AddIngredientComponentState extends State<AddIngredientComponent> {
             flex: 2,
             child: CustomTextFormField(
               hintText: 'e.g., Flour',
-              initialValue: model.recipe.sections[widget.sectionIndex]
-                  .ingredients[widget.ingredientIndex].title,
+              initialValue: widget.ingredients[widget.ingredientIndex].title,
               validator: (text) {
                 if (text == null || text.trim().isEmpty) {
                   return 'Enter an ingredient title.';
@@ -88,13 +94,11 @@ class _AddIngredientComponentState extends State<AddIngredientComponent> {
             child: CustomTextFormField(
               keyboardType: TextInputType.number,
               hintText: '0',
-              initialValue: model.recipe.sections[widget.sectionIndex]
-                          .ingredients[widget.ingredientIndex].amount ==
-                      0
-                  ? ''
-                  : model.recipe.sections[widget.sectionIndex]
-                      .ingredients[widget.ingredientIndex].amount
-                      .toString(),
+              initialValue:
+                  widget.ingredients[widget.ingredientIndex].amount == 0
+                      ? ''
+                      : widget.ingredients[widget.ingredientIndex].amount
+                          .toString(),
               validator: (text) {
                 if (text == null ||
                     text.trim().isEmpty ||
@@ -112,15 +116,12 @@ class _AddIngredientComponentState extends State<AddIngredientComponent> {
           ),
           hSmallSpace,
           PopupMenuButton(
-            initialValue: model.recipe.sections[widget.sectionIndex]
-                    .ingredients[widget.ingredientIndex].unit ??
-                'Unit',
+            initialValue:
+                widget.ingredients[widget.ingredientIndex].unit ?? 'Unit',
             child: Row(
               children: [
                 Text(
-                  model.recipe.sections[widget.sectionIndex]
-                          .ingredients[widget.ingredientIndex].unit ??
-                      'Unit',
+                  widget.ingredients[widget.ingredientIndex].unit ?? 'Unit',
                   style: TextStyle(
                       fontSize: 16, color: Theme.of(context).primaryColor),
                 ),
@@ -139,21 +140,13 @@ class _AddIngredientComponentState extends State<AddIngredientComponent> {
                 ingredientUnit: value.toString()),
           ),
           IconButton(
-              splashRadius: model.recipe.sections[widget.sectionIndex]
-                          .ingredients.length <=
-                      1
-                  ? 1
-                  : 35,
-              onPressed: model.recipe.sections[widget.sectionIndex].ingredients
-                          .length <=
-                      1
+              splashRadius: widget.ingredients.length <= 1 ? 1 : 35,
+              onPressed: widget.ingredients.length <= 1
                   ? () {}
                   : () => model.removeIngredient(
                       widget.sectionIndex, widget.ingredientIndex),
               padding: const EdgeInsets.all(0),
-              icon: model.recipe.sections[widget.sectionIndex].ingredients
-                          .length <=
-                      1
+              icon: widget.ingredients.length <= 1
                   ? const SizedBox()
                   : Icon(Platform.isIOS
                       ? CupertinoIcons.delete

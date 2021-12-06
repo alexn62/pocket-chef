@@ -8,6 +8,7 @@ import 'package:personal_recipes/ViewModels/SignUpViewModel.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'Services/Api.dart';
 import 'Services/GeneralServices.dart';
+import 'Services/PhotoService.dart';
 import 'ViewModels/ForgotPasswordViewModel.dart';
 import 'ViewModels/LoginViewModel.dart';
 import 'ViewModels/RecipeViewModel.dart';
@@ -25,6 +26,7 @@ setupLocator() {
   locator.registerLazySingleton(() => GeneralServices());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => RecipesService());
+  locator.registerLazySingleton(() => PhotoService());
   // ViewModels
 
   locator.registerFactory(() => LandingScreenViewModel());

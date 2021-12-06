@@ -20,8 +20,8 @@ class AmountCounter extends StatelessWidget {
       alignment: Alignment.center,
       child: Container(
         decoration: BoxDecoration(
-         
           border: Border.all(color: Theme.of(context).primaryColor, width: 0.5),
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(45),
         ),
         child: Row(

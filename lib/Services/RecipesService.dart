@@ -1,19 +1,22 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personal_recipes/Constants/ErrorHandling.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
-import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../locator.dart';
 import 'Api.dart';
+import 'PhotoService.dart';
 
 class RecipesService {
   final Api _api = locator<Api>();
-  final AuthService _authService = locator<AuthService>();
   final DialogService _dialogService = locator<DialogService>();
+  final PhotoService _photoService = locator<PhotoService>();
 
   Future<List<Recipe>?> getRecipesByUserId(String userId) async {
     try {
@@ -32,12 +35,18 @@ class RecipesService {
     }
   }
 
-  Future<void> addRecipe(Recipe recipe) async {
+  Future<void> addRecipe(Recipe recipe, File? image) async {
     bool valid = _validateRecipe(recipe);
     if (valid) {
       try {
-        recipe.authorId = _authService.firebaseAuth.currentUser!.uid;
-        await _api.addRecipe(recipe);
+        DocumentReference<Object?> result = await _api.addRecipe(recipe);
+        String recipeId = result.id;
+        if (image != null) {
+          String? downloadUrl =
+              await _photoService.uploadImageToFirebase(recipeId, image);
+          recipe.photoUrl = downloadUrl;
+          updateRecipe(recipe, null);
+        }
       } on FirebaseException catch (e) {
         throw CustomError(handleFirebaseError(e));
       }
@@ -47,9 +56,16 @@ class RecipesService {
     }
   }
 
-  Future<void> updateRecipe(Recipe recipe) async {
+  Future<void> updateRecipe(Recipe recipe, File? image) async {
     try {
-      await _api.updateRecipe(recipe);
+      if (image != null) {
+        String? downloadUrl =
+            await _photoService.uploadImageToFirebase(recipe.uid!, image);
+        recipe.photoUrl = downloadUrl;
+      }
+      await _api.updateRecipe(
+        recipe,
+      );
     } on FirebaseException {
       throw const CustomError(
           'An error occurred. Please try again later or contact support.');
@@ -75,5 +91,12 @@ class RecipesService {
       }
     }
     return true;
+  }
+
+  Future<void> deleteImageFromDatabase(Recipe recipe) async {
+    await CachedNetworkImage.evictFromCache(recipe.photoUrl!);
+    await _photoService.removeImage(recipe.uid!);
+    recipe.photoUrl = null;
+    await updateRecipe(recipe, null);
   }
 }

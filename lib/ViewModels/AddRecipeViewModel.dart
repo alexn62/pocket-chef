@@ -24,24 +24,32 @@ class AddRecipeViewModel extends BaseViewModel {
   User get currentUser => _authService.firebaseAuth.currentUser!;
   List<String> possibleUnits = 'ml kg cups tsp tbsp oz g count mg'.split(' ');
 
-  void initialize({Recipe? recipe}) {
+  void initialize({Recipe? recipe}) async {
     if (recipe == null) {
       _recipe = Recipe(
-        title: '',
-      
-        sections: [],
-        instructions: '',
-      );
+          authorId: currentUser.uid,
+          title: null,
+          serves: null,
+          sections: [],
+          instructions: null,
+          mealtime: {
+            'Snack': false,
+            'Breakfast': false,
+            'Lunch': false,
+            'Dinner': false,
+            'Dessert': false,
+          });
+      _setNewImage(null);
       addSection();
     } else {
       _recipe = recipe;
     }
   }
 
-  Future<bool> addRecipe(Recipe recipe) async {
+  Future<bool> addRecipe(Recipe recipe, File? image) async {
     setLoadingStatus(LoadingStatus.Busy);
     try {
-      await _recipesService.addRecipe(recipe);
+      await _recipesService.addRecipe(recipe, image);
       _dialogService.showDialog(
           title: 'Success', description: 'Recipe added successfully!');
       initialize();
@@ -54,10 +62,10 @@ class AddRecipeViewModel extends BaseViewModel {
     }
   }
 
-  Future<bool> updateRecipe(Recipe recipe) async {
+  Future<bool> updateRecipe(Recipe recipe, File? image) async {
     setLoadingStatus(LoadingStatus.Busy);
     try {
-      await _recipesService.updateRecipe(recipe);
+      await _recipesService.updateRecipe(recipe, image);
       _navigationService.back(result: recipe);
       setLoadingStatus(LoadingStatus.Idle);
       return true;
@@ -144,21 +152,55 @@ class AddRecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void setMealtimeStatus(String mealtimeKey) {
+    _recipe.mealtime[mealtimeKey] = !_recipe.mealtime[mealtimeKey]!;
+    notifyListeners();
+  }
+
+  LoadingStatus _photoLoadingStatus = LoadingStatus.Idle;
+  LoadingStatus get photoLoadingStatus => _photoLoadingStatus;
+  void setPhotoLoadingStatus(LoadingStatus newLoadingStatus) {
+    _photoLoadingStatus = newLoadingStatus;
+    notifyListeners();
+  }
+
   final ImagePicker _picker = ImagePicker();
 
-  File? img;
+  File? _img;
+  File? get img => _img;
+  _setNewImage(File? newImg) {
+    _img = newImg;
+    notifyListeners();
+  }
 
   void getImage() async {
+    setPhotoLoadingStatus(LoadingStatus.Busy);
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
+    if (image == null) {
+      _dialogService.showDialog(
+          title: 'Error', description: 'Error retrieving the image');
+      setPhotoLoadingStatus(LoadingStatus.Idle);
+      return;
+    } else {
       final path = image.path;
-      img = File(path);
-      notifyListeners();
+      _setNewImage(File(path));
+      setPhotoLoadingStatus(LoadingStatus.Idle);
     }
   }
 
-  void deleteImage() {
-    img = null;
-    notifyListeners();
+  void deleteImage({required File? tempImage, required Recipe recipe}) async {
+    try {
+      if (recipe.photoUrl != null) {
+        setPhotoLoadingStatus(LoadingStatus.Busy);
+        await _recipesService.deleteImageFromDatabase(recipe);
+        recipe.photoUrl = null;
+        setPhotoLoadingStatus(LoadingStatus.Idle);
+      } else if (tempImage != null) {
+        _setNewImage(null);
+      }
+    } on CustomError {
+      _dialogService.showDialog(
+          title: 'Error', description: 'Error deleting the image');
+    }
   }
 }

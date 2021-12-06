@@ -74,8 +74,10 @@ class Api {
     return result;
   }
 
-  Future<void> addRecipe(Recipe recipe) async {
-    await recipeReference.add(recipe.toJson());
+  Future<DocumentReference<Object?>> addRecipe(Recipe recipe) async {
+    DocumentReference<Object?> result =
+        await recipeReference.add(recipe.toJson());
+    return result;
   }
 
   Future<void> updateRecipe(Recipe recipe) async {
