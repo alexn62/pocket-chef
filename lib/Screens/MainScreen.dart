@@ -22,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: PageView(
+        physics: const BouncingScrollPhysics(),
         controller: _pageController,
         children: const [RecipesScreen(), AddRecipeScreen()],
         onPageChanged: (val) {

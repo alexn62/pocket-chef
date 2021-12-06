@@ -52,7 +52,7 @@ class _RecipesScreenState extends State<RecipesScreen>
                         icon: Icon(Platform.isIOS
                             ? CupertinoIcons.delete
                             : Icons.delete_outline))
-                    : const SizedBox(),
+                    : null,
                 title: const Text(
                   'Recipes',
                 ),
