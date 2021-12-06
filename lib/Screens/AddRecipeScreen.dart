@@ -33,6 +33,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   final ScrollController _controller = ScrollController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _servesController = TextEditingController();
+  final TextEditingController _instructionsController = TextEditingController();
   late GlobalKey<FormState> _formKey;
 
   InterstitialAd? _interstitialAd;
@@ -105,8 +106,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
             return false;
           } else {
             locator<NavigationService>().back(
-                result:
-                    Provider.of<AddRecipeViewModel>(context).recipe.photoUrl);
+                result: Provider.of<AddRecipeViewModel>(context, listen: false)
+                    .recipe
+                    .photoUrl);
             return true;
           }
         },
@@ -116,7 +118,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
               onHorizontalDragUpdate: widget.recipe == null
                   ? null
                   : (details) async {
-                      int sensitivity = 30;
+                      int sensitivity = 10;
                       if (details.delta.dx > sensitivity) {
                         DialogResponse<dynamic>? response =
                             await locator<DialogService>().showDialog(
@@ -166,6 +168,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                               );
                               _titleController.text = '';
                               _servesController.text = '';
+                              _instructionsController.text = '';
                             } else {
                               result = await model.updateRecipe(
                                   model.recipe, model.img);
@@ -253,7 +256,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                   ],
                                 ),
                               ),
-                              hRegularSpace,
+                              hTinySpace,
                               Flexible(
                                 flex: 1,
                                 child: Column(
@@ -319,7 +322,15 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                               .entries
                               .map(
                                 (entry) => AddSectionComponent(
-                                    sectionIndex: entry.key),
+                                  setSectionTitle: model.setSectionTitle,
+                                  removeSection: () =>
+                                      model.removeSection(entry.key),
+                                  title: entry.value.title,
+                                  sectionIndex: entry.key,
+                                  ingredients: model
+                                      .recipe.sections[entry.key].ingredients,
+                                  key: ValueKey(entry.value.uid),
+                                ),
                               )
                               .toList(),
                           vSmallSpace,
@@ -331,10 +342,15 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                   style: TextStyle(fontSize: 17)),
                               children: [
                                 CustomTextFormField(
+                                  controller: widget.recipe == null
+                                      ? _instructionsController
+                                      : null,
                                   keyboardType: TextInputType.multiline,
                                   minLines: 3,
                                   maxLines: null,
-                                  initialValue: model.recipe.instructions,
+                                  initialValue: widget.recipe != null
+                                      ? model.recipe.instructions
+                                      : null,
                                   validator: (text) {
                                     if (text == null) {
                                       return 'Value cannot be null';
@@ -349,7 +365,11 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                               ],
                             ),
                           ),
-                          const AddAdvancedComponent()
+                          AddAdvancedComponent(
+                            mealtimes: model.recipe.mealtime,
+                            toggleMealtime: model.setMealtimeStatus,
+                          ),
+                          vBigSpace
                         ],
                       ),
                     ),

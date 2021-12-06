@@ -27,11 +27,19 @@ class AddRecipeViewModel extends BaseViewModel {
   void initialize({Recipe? recipe}) async {
     if (recipe == null) {
       _recipe = Recipe(
-        authorId: currentUser.uid,
-        title: null,
-        serves: null,
-        sections: [],
-      );
+          authorId: currentUser.uid,
+          title: null,
+          serves: null,
+          sections: [],
+          instructions: null,
+          mealtime: {
+            'Snack': false,
+            'Breakfast': false,
+            'Lunch': false,
+            'Dinner': false,
+            'Dessert': false,
+          });
+      _setNewImage(null);
       addSection();
     } else {
       _recipe = recipe;
@@ -141,6 +149,11 @@ class AddRecipeViewModel extends BaseViewModel {
 
   void setInstructions(String? newInstructions) {
     _recipe.instructions = newInstructions?.trim();
+    notifyListeners();
+  }
+
+  void setMealtimeStatus(String mealtimeKey) {
+    _recipe.mealtime[mealtimeKey] = !_recipe.mealtime[mealtimeKey]!;
     notifyListeners();
   }
 

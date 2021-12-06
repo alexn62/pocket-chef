@@ -2,25 +2,29 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/widgets/AddIngredientComponent.dart';
+import 'package:personal_recipes/Models/Ingredient.dart';
+import 'package:personal_recipes/Widgets/AddIngredientComponent.dart';
 import 'package:personal_recipes/widgets/CustomTextFormField.dart';
-import 'package:provider/provider.dart';
-
-import 'AddRecipeViewModel.dart';
 
 class AddSectionComponent extends StatelessWidget {
+  final String title;
+  final Function(String title, int index) setSectionTitle;
+  final Function() removeSection;
+  final List<Ingredient> ingredients;
   const AddSectionComponent({
     Key? key,
     required this.sectionIndex,
+    required this.title,
+    required this.setSectionTitle,
+    required this.removeSection,
+    required this.ingredients,
   }) : super(key: key);
 
   final int sectionIndex;
 
   @override
   Widget build(BuildContext context) {
-    final AddRecipeViewModel model = Provider.of<AddRecipeViewModel>(context);
     return Column(
-      key: ValueKey(model.recipe.sections[sectionIndex].uid),
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,7 +32,7 @@ class AddSectionComponent extends StatelessWidget {
             Expanded(
               child: CustomTextFormField(
                 hintText: 'e.g., Dough',
-                initialValue: model.recipe.sections[sectionIndex].title,
+                initialValue: title,
                 validator: (text) {
                   if (text == null || text.trim().isEmpty) {
                     return 'Please enter a section title.';
@@ -38,12 +42,12 @@ class AddSectionComponent extends StatelessWidget {
                   }
                   return null;
                 },
-                onChanged: model.setSectionTitle,
+                onChanged: setSectionTitle,
                 sectionIndex: sectionIndex,
               ),
             ),
             IconButton(
-                onPressed: () => model.removeSection(sectionIndex),
+                onPressed: removeSection,
                 padding: const EdgeInsets.all(0),
                 icon: Icon(Platform.isIOS
                     ? CupertinoIcons.delete
@@ -60,10 +64,11 @@ class AddSectionComponent extends StatelessWidget {
                 'Ingredients',
                 style: (TextStyle(fontSize: 17)),
               ),
-              children: model.recipe.sections[sectionIndex].ingredients
+              children: ingredients
                   .asMap()
                   .entries
                   .map((entry) => AddIngredientComponent(
+                        ingredients: ingredients,
                         sectionIndex: sectionIndex,
                         ingredientIndex: entry.key,
                       ))
