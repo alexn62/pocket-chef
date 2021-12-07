@@ -1,90 +1,116 @@
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Constants/Spacing.dart';
+import 'package:personal_recipes/Widgets/GenericButton.dart';
+
+import 'AddTagItem.dart';
 
 class AddAdvancedComponent extends StatelessWidget {
-  final void Function(String mealtimeKey) toggleMealtime;
-  final Map<String, bool> mealtimes;
+  final void Function() toggleAddTag;
+  final void Function(String title) deleteTag;
+  final void Function(String tagKey) toggleTag;
+  final Map<String, bool> tags;
   const AddAdvancedComponent({
     Key? key,
-    required this.toggleMealtime,
-    required this.mealtimes,
+    required this.deleteTag,
+    required this.toggleAddTag,
+    required this.toggleTag,
+    required this.tags,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List<MapEntry<String, bool>> mealtime = mealtimes.entries.toList();
+    final List<MapEntry<String, bool>> tagList = tags.entries.toList();
     return ListTileTheme(
-        dense: true,
-        child: ExpansionTile(
-            tilePadding: const EdgeInsets.only(right: 12),
-            title: const Text('Advanced', style: TextStyle(fontSize: 17)),
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  height: 30,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: mealtime.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx, i) => MealTimeItem(
-                      margin: EdgeInsets.only(
-                        left: mealtime[0].key == mealtime[i].key ? 0 : 2.5,
-                        right: mealtime.last.key == mealtime[i].key ? 0 : 2.5,
-                      ),
-                      selected: mealtime[i].value,
-                      title: mealtime[i].key,
-                      toggleMealtime: toggleMealtime,
+      dense: true,
+      child: ExpansionTile(
+        expandedCrossAxisAlignment: CrossAxisAlignment.start,
+        tilePadding: const EdgeInsets.only(right: 12),
+        title: const Text('Tags', style: TextStyle(fontSize: 17)),
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Wrap(
+                spacing: 5,
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                runSpacing: 5,
+                children: [
+                  for (int i = 0; i < tagList.length; i++)
+                    TagItem(
+                      deleteTag: deleteTag,
+                      selected: tagList[i].value,
+                      title: tagList[i].key,
+                      toggleTag: toggleTag,
                     ),
+                  GenericButton(
+                    onTap: () {
+                      toggleAddTag();
+                    },
+                    title: '+',
+                    invertColors: true,
+                    shrink: true,
+                    fontsize: 15,
                   ),
-                ),
-              )
-            ]));
-  }
-}
-
-class MealTimeItem extends StatelessWidget {
-  final void Function(String mealtimeKey) toggleMealtime;
-  final EdgeInsets margin;
-  final bool selected;
-  final String title;
-  const MealTimeItem({
-    required this.toggleMealtime,
-    required this.margin,
-    required this.selected,
-    required this.title,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => toggleMealtime(title),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        margin: margin,
-        height: 35,
-        decoration: BoxDecoration(
-          color: selected
-              ? Theme.of(context).colorScheme.primaryVariant.withOpacity(0.1)
-              : Colors.transparent,
-          border: Border.all(
-            color: selected
-                ? Theme.of(context).colorScheme.primaryVariant
-                : Theme.of(context).primaryColor,
+                ]),
           ),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Center(
-          child: Text(
-            title,
-            softWrap: false,
-            overflow: TextOverflow.fade,
-            style: TextStyle(
-                color: selected
-                    ? Theme.of(context).colorScheme.primaryVariant
-                    : Theme.of(context).primaryColor),
-          ),
-        ),
+          vSmallSpace,
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           const Text('Prep time', style: TextStyle(fontSize: 15)),
+          //           vTinySpace,
+          //           Row(
+          //             children: [
+          //               SizedBox(
+          //                 width: 70,
+          //                 child: CustomTextFormField(
+          //                   keyboardType: TextInputType.number,
+          //                   onChanged: (_) {},
+          //                 ),
+          //               ),
+          //               hSmallSpace,
+          //               const Text(
+          //                 'minutes',
+          //                 style: TextStyle(fontSize: 15),
+          //               )
+          //             ],
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //     hSmallSpace,
+          //     Expanded(
+          // child: Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           const Text('Cooking time', style: TextStyle(fontSize: 15)),
+          //           vTinySpace,
+          //           Row(
+          //             children: [
+          //               SizedBox(
+          //                 width: 70,
+          //                 child: CustomTextFormField(
+          //                   keyboardType: TextInputType.number,
+          //                   onChanged: (_) {},
+          //                 ),
+          //               ),
+          //               hSmallSpace,
+          //               const Text(
+          //                 'minutes',
+          //                 style: TextStyle(fontSize: 15),
+          //               )
+          //             ],
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // vSmallSpace,
+        ],
       ),
     );
   }

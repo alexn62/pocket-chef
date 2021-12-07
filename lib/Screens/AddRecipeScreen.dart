@@ -14,6 +14,7 @@ import 'package:personal_recipes/ViewModels/AddSectionComponent.dart';
 import 'package:personal_recipes/Widgets/AddAdvancedComponent.dart';
 import 'package:personal_recipes/Widgets/AddPhotoComponent.dart';
 import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/Widgets/GenericButton.dart';
 import 'package:personal_recipes/widgets/FullScreenLoadingIndicator.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -34,6 +35,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _servesController = TextEditingController();
   final TextEditingController _instructionsController = TextEditingController();
+  late GlobalKey<FormState> _addNewTagFormKey;
   late GlobalKey<FormState> _formKey;
 
   InterstitialAd? _interstitialAd;
@@ -74,6 +76,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
+    _addNewTagFormKey = GlobalKey<FormState>();
     _createInterstitialAd();
     super.initState();
   }
@@ -366,8 +369,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                             ),
                           ),
                           AddAdvancedComponent(
-                            mealtimes: model.recipe.mealtime,
-                            toggleMealtime: model.setMealtimeStatus,
+                            deleteTag: model.deleteTag,
+                            toggleAddTag: model.toggleAddTag,
+                            tags: model.recipe.tags,
+                            toggleTag: model.setTagStatus,
                           ),
                           vBigSpace
                         ],
@@ -377,6 +382,88 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                 ),
               ),
             ),
+            model.showAddTag
+                ? Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            model.toggleAddTag();
+                            FocusScopeNode currentFocus =
+                                FocusScope.of(context);
+
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+                          },
+                          child: Container(
+                              color: Colors.black54,
+                              height: MediaQuery.of(context).size.height),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).backgroundColor,
+                              border: Border(
+                                  top: BorderSide(
+                                      color: Theme.of(context).primaryColor))),
+                          child: Center(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Form(
+                                    key: _addNewTagFormKey,
+                                    child: CustomTextFormField(
+                                      autofocus: true,
+                                      onFieldSubmitted: (_) {
+                                        if (_addNewTagFormKey.currentState!
+                                            .validate()) {
+                                          model.addTag(model.newTag);
+                                        }
+                                      },
+                                      maxLines: 1,
+                                      onChanged: model.setNewTag,
+                                      validator: (text) {
+                                        if (text == null) {
+                                          return 'Tag cannot be null';
+                                        }
+                                        if (text.trim().length < 3) {
+                                          return 'A tag must be longer than two characters.';
+                                        }
+                                        if (text.length > 2000) {
+                                          return 'A tag must not be longer than 20 characters.';
+                                        }
+                                        if (text.trim().contains(' ')) {
+                                          return 'A tag may not contain whitespaces';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                hSmallSpace,
+                                GenericButton(
+                                    onTap: () {
+                                      if (_addNewTagFormKey.currentState!
+                                          .validate()) {
+                                        model.addTag(model.newTag);
+                                      }
+                                    },
+                                    title: 'Add tag',
+                                    invertColors: true,
+                                    shrink: true),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
+                : const SizedBox(),
             FullScreenLoadingIndicator(model.loadingStatus)
           ],
         ),

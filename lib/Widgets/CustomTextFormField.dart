@@ -13,6 +13,7 @@ class CustomTextFormField extends StatelessWidget {
   final int? ingredientIndex;
   final bool password;
   final String? initialValue;
+  final bool autofocus;
   const CustomTextFormField({
     this.controller,
     this.hintText,
@@ -26,12 +27,14 @@ class CustomTextFormField extends StatelessWidget {
     this.password = false,
     this.initialValue,
     this.onFieldSubmitted,
+    this.autofocus = false,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: autofocus,
       controller: controller,
       onFieldSubmitted: onFieldSubmitted,
       minLines: minLines,

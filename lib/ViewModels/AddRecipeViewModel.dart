@@ -32,12 +32,13 @@ class AddRecipeViewModel extends BaseViewModel {
           serves: null,
           sections: [],
           instructions: null,
-          mealtime: {
+          tags: {
             'Snack': false,
             'Breakfast': false,
             'Lunch': false,
             'Dinner': false,
             'Dessert': false,
+            'Drink': false,
           });
       _setNewImage(null);
       addSection();
@@ -152,8 +153,8 @@ class AddRecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setMealtimeStatus(String mealtimeKey) {
-    _recipe.mealtime[mealtimeKey] = !_recipe.mealtime[mealtimeKey]!;
+  void setTagStatus(String tagKey) {
+    _recipe.tags[tagKey] = !_recipe.tags[tagKey]!;
     notifyListeners();
   }
 
@@ -202,5 +203,28 @@ class AddRecipeViewModel extends BaseViewModel {
       _dialogService.showDialog(
           title: 'Error', description: 'Error deleting the image');
     }
+  }
+
+  bool _showAddTag = false;
+  bool get showAddTag => _showAddTag;
+  toggleAddTag() {
+    _showAddTag = !_showAddTag;
+    notifyListeners();
+  }
+
+  Future<void> addTag(String newTag) async {
+    _recipe.tags[newTag.trim()] = true;
+    toggleAddTag();
+  }
+
+  String _newTag = '';
+  String get newTag => _newTag;
+  void setNewTag(String newNewTag) {
+    _newTag = newNewTag;
+  }
+
+  void deleteTag(String title) {
+    _recipe.tags.removeWhere((key, value) => key == title);
+    notifyListeners();
   }
 }

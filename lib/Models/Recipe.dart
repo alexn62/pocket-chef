@@ -12,7 +12,7 @@ class Recipe {
   bool favorite;
   String? photoUrl;
   bool? selected;
-  Map<String, bool> mealtime;
+  Map<String, bool> tags;
 
   Recipe({
     this.serves,
@@ -24,7 +24,7 @@ class Recipe {
     this.favorite = false,
     this.photoUrl,
     this.selected = false,
-    this.mealtime = const {
+    this.tags = const {
       'Snack': false,
       'Breakfast': false,
       'Lunch': false,
@@ -45,7 +45,7 @@ class Recipe {
         favorite = (doc.data() as Map<String, dynamic>)['favorite'] ?? false,
         photoUrl = (doc.data() as Map<String, dynamic>)['photoUrl'],
         selected = false,
-        mealtime = (doc.data() as Map<String, dynamic>)['mealtime'] == null
+        tags = (doc.data() as Map<String, dynamic>)['tags'] == null
             ? {
                 'Snack': false,
                 'Breakfast': false,
@@ -54,7 +54,7 @@ class Recipe {
                 'Dessert': false,
               }
             : Map<String, bool>.from(
-                (doc.data() as Map<String, dynamic>)['mealtime']);
+                (doc.data() as Map<String, dynamic>)['tags']);
 
   Map<String, dynamic> toJson() => {
         'authorId': authorId,
@@ -66,6 +66,6 @@ class Recipe {
             .toList(),
         'favorite': favorite,
         'photoUrl': photoUrl,
-        'mealtime': mealtime
+        'tags': tags
       };
 }
