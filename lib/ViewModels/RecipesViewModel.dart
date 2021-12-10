@@ -115,4 +115,16 @@ class RecipesViewModel extends BaseViewModel {
     recipe.selected = !recipe.selected!;
     notifyListeners();
   }
+
+  List<Recipe>? foundRecipes;
+  void searchRecipes(String searchQuery) {
+    if (searchQuery == '') {
+      foundRecipes = null;
+      notifyListeners();
+      return;
+    }
+    foundRecipes =
+        recipes.where((recipe) => recipe.title!.contains(searchQuery)).toList();
+    notifyListeners();
+  }
 }

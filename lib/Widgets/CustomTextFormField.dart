@@ -14,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool password;
   final String? initialValue;
   final bool autofocus;
+  final Widget? prefixIcon;
   const CustomTextFormField({
     this.controller,
     this.hintText,
@@ -28,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
     this.initialValue,
     this.onFieldSubmitted,
     this.autofocus = false,
+    this.prefixIcon,
     Key? key,
   }) : super(key: key);
 
@@ -49,6 +51,7 @@ class CustomTextFormField extends StatelessWidget {
               ? onChanged(text, sectionIndex)
               : onChanged(text, sectionIndex, ingredientIndex),
       decoration: InputDecoration(
+        prefixIcon: prefixIcon,
         hintText: hintText,
         hintStyle: TextStyle(
           color: Theme.of(context).primaryColor.withOpacity(0.5),
