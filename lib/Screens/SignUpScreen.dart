@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/SignUpViewModel.dart';
-import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/widgets/FullScreenLoadingIndicator.dart';
 import 'package:personal_recipes/widgets/GenericButton.dart';
 

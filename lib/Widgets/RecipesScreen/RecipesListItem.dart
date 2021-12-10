@@ -10,10 +10,12 @@ import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/RecipesViewModel.dart';
 import 'package:provider/provider.dart';
 
+import '../../locator.dart';
+
 class RecipesListItem extends StatefulWidget {
-  final Recipe element;
+  final Recipe recipe;
   const RecipesListItem({
-    required this.element,
+    required this.recipe,
     Key? key,
   }) : super(key: key);
 
@@ -26,25 +28,11 @@ class _RecipesListItemState extends State<RecipesListItem> {
 
   @override
   void initState() {
-    _createInterstitialAd();
+    locator<AdService>().createInterstitialAd();
     super.initState();
   }
 
-  void _createInterstitialAd() {
-    InterstitialAd.load(
-      adUnitId: AdService.interstitialAdUnitId,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (InterstitialAd ad) {
-          _interstitialAd = ad;
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          _interstitialAd = null;
-          _createInterstitialAd();
-        },
-      ),
-    );
-  }
+
 
   @override
   void dispose() {
@@ -52,21 +40,6 @@ class _RecipesListItemState extends State<RecipesListItem> {
     _interstitialAd?.dispose();
   }
 
-  void _showInterstitialAd() {
-    if (_interstitialAd != null) {
-      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (InterstitialAd ad) {
-          ad.dispose();
-          _createInterstitialAd();
-        },
-        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-          ad.dispose();
-          _createInterstitialAd();
-        },
-      );
-      _interstitialAd!.show();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +52,7 @@ class _RecipesListItemState extends State<RecipesListItem> {
           motion: const DrawerMotion(),
           children: [
             SlidableAction(
-              onPressed: (ctx) {},
+              onPressed: (ctx) => model.deleteRecipes([widget.recipe], confirm: false),
               backgroundColor: const Color(0xFFFE4A49),
               foregroundColor: Colors.white,
               icon: Icons.delete,
@@ -89,30 +62,31 @@ class _RecipesListItemState extends State<RecipesListItem> {
           ]),
       child: ListTile(
         contentPadding: const EdgeInsets.only(right: 0, left: 15),
-        key: ValueKey(widget.element.uid),
+        key: ValueKey(widget.recipe.uid),
         onTap: model.recipes.where((e) => e.selected!).isNotEmpty
-            ? () => model.selectTile(widget.element)
+            ? () => model.selectTile(widget.recipe)
             : () {
                 if (_generalServices.timer == null ||
                     _generalServices.timer != null &&
                         !_generalServices.timer!.isActive) {
+                        
                   _generalServices.setTimer();
-                  _showInterstitialAd();
+                  locator<AdService>().showInterstitialAd();
                 }
-                model.navigateToRecipe(widget.element);
+                model.navigateToRecipe(widget.recipe);
               },
-        onLongPress: () => model.selectTile(widget.element),
-        tileColor: widget.element.selected!
+        onLongPress: () => model.selectTile(widget.recipe),
+        tileColor: widget.recipe.selected!
             ? Theme.of(context).primaryColor.withOpacity(0.2)
             : Colors.transparent,
         title: Text(
-          widget.element.title!,
+          widget.recipe.title!,
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
         trailing: IconButton(
           onPressed: () => model.setFavoriteByRecipeId(
-              widget.element.uid!, !widget.element.favorite),
-          icon: !widget.element.favorite
+              widget.recipe.uid!, !widget.recipe.favorite),
+          icon: !widget.recipe.favorite
               ? Icon(
                   Platform.isIOS
                       ? CupertinoIcons.star

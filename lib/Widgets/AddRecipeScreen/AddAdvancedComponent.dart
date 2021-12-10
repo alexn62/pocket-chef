@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
-import 'package:personal_recipes/Widgets/GenericButton.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
 
-import 'AddTagItem.dart';
+import '../General Widgets/AddTagItem.dart';
 
 class AddAdvancedComponent extends StatelessWidget {
   final void Function() toggleAddTag;

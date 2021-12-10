@@ -4,10 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/ViewModels/RecipesViewModel.dart';
-import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
-import 'package:personal_recipes/Widgets/EmptyRecipesPlaceholder.dart';
-import 'package:personal_recipes/Widgets/RecipesListItem.dart';
-import 'package:personal_recipes/Widgets/SearchFiltersComponent.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/AddTagTextField.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/Widgets/RecipesScreen/EmptyRecipesPlaceholder.dart';
+import 'package:personal_recipes/Widgets/RecipesScreen/RecipesListItem.dart';
+import 'package:personal_recipes/Widgets/RecipesScreen/SearchFiltersComponent.dart';
 import 'BaseView.dart';
 
 class RecipesScreen extends StatefulWidget {
@@ -17,10 +18,7 @@ class RecipesScreen extends StatefulWidget {
   State<RecipesScreen> createState() => _RecipesScreenState();
 }
 
-class _RecipesScreenState extends State<RecipesScreen>
-    with
-        AutomaticKeepAliveClientMixin<RecipesScreen>,
-        TickerProviderStateMixin {
+class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveClientMixin<RecipesScreen>, TickerProviderStateMixin {
   bool expandFilters = false;
   void setExpandFilters() {
     setState(() {
@@ -58,7 +56,6 @@ class _RecipesScreenState extends State<RecipesScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
     return BaseView<RecipesViewModel>(
         onModelReady: (model) => model.initialize(model.currentUser.uid),
         builder: (context, model, child) {
@@ -74,18 +71,10 @@ class _RecipesScreenState extends State<RecipesScreen>
                     ),
                   ),
                 ),
-                backgroundColor:
-                    Theme.of(context).backgroundColor.withOpacity(2 / 3),
+                backgroundColor: Theme.of(context).backgroundColor.withOpacity(2 / 3),
                 automaticallyImplyLeading: false,
-                leading: model.recipes
-                        .where((element) => element.selected!)
-                        .isNotEmpty
-                    ? IconButton(
-                        onPressed: () => model.deleteRecipes(model.recipes
-                            .where((element) => element.selected!)),
-                        icon: Icon(Platform.isIOS
-                            ? CupertinoIcons.delete
-                            : Icons.delete_outline))
+                leading: model.recipes.where((element) => element.selected!).isNotEmpty
+                    ? IconButton(onPressed: () => model.deleteRecipes(model.recipes.where((element) => element.selected!)), icon: Icon(Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline))
                     : null,
                 title: const Text(
                   'Recipes',
@@ -102,124 +91,131 @@ class _RecipesScreenState extends State<RecipesScreen>
                 bottom: PreferredSize(
                     preferredSize: const Size(double.infinity, 60),
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 5, bottom: 5, right: 0, left: 15),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5, right: 0, left: 15),
                       child: Row(
                         children: [
                           Expanded(
                             child: CustomTextFormField(
                               hintText: 'Search',
-                              prefixIcon: Icon(
-                                  Platform.isIOS
-                                      ? CupertinoIcons.search
-                                      : Icons.search,
-                                  color: Theme.of(context).primaryColor),
+                              prefixIcon: Icon(Platform.isIOS ? CupertinoIcons.search : Icons.search, color: Theme.of(context).primaryColor),
                               onChanged: model.searchRecipes,
                             ),
                           ),
                           IconButton(
                             onPressed: _toggleContainer,
-                            icon: Icon(Platform.isIOS
-                                ? CupertinoIcons.slider_horizontal_3
-                                : Icons.filter_alt_outlined),
+                            icon: Icon(Platform.isIOS ? CupertinoIcons.slider_horizontal_3 : Icons.filter_alt_outlined),
                             padding: EdgeInsets.zero,
                           )
                         ],
                       ),
                     )),
               ),
-              body: !Platform.isIOS
-                  ? RefreshIndicator(
-                      displacement: 40,
-                      edgeOffset: MediaQuery.of(context).padding.top +
-                          AppBar().preferredSize.height +
-                          60,
-                      onRefresh: () =>
-                          model.getRecipesByUserId(model.currentUser.uid),
-                      child: CustomScrollView(
-                        physics: const BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                        slivers: [
-                          SliverToBoxAdapter(
-                              child: SizedBox(
-                            height: MediaQuery.of(context).padding.top +
-                                AppBar().preferredSize.height +
-                                60,
-                          )),
-                          SliverFillRemaining(
-                            hasScrollBody: false,
-                            child: model.recipes.isEmpty &&
-                                    model.loadingStatus == LoadingStatus.Idle
-                                ? const EmptyRecipesPlaceholder()
-                                : Column(
-                                    children: model.recipes
-                                        .map(
-                                          (element) =>
-                                              RecipesListItem(element: element),
-                                        )
-                                        .toList(),
-                                  ),
+              body: Stack(
+                children: [
+                  !Platform.isIOS
+                      ? RefreshIndicator(
+                          displacement: 40,
+                          edgeOffset: MediaQuery.of(context).padding.top + AppBar().preferredSize.height + 60,
+                          onRefresh: () => model.getRecipesByUserId(model.currentUser.uid),
+                          child: CustomScrollView(
+                            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                            slivers: [
+                              SliverToBoxAdapter(
+                                child: SizedBox(
+                                  height: MediaQuery.of(context).padding.top + AppBar().preferredSize.height + 60,
+                                ),
+                              ),
+                              SearchFiltersComponents(
+                                toggleAddTag: model.toggleAddTag,
+                                toggleTag: model.filterRecipes,
+                                tagList: model.filters,
+                                expandFilters: expandFilters,
+                                controller: _controller!,
+                                animation: _animation!,
+                              ),
+                              SliverFillRemaining(
+                                hasScrollBody: false,
+                                child: model.recipes.isEmpty && model.loadingStatus == LoadingStatus.Idle
+                                    ? const EmptyRecipesPlaceholder()
+                                    : Column(
+                                        children: model.foundRecipes != null
+                                            ? [
+                                                ...model.foundRecipes!
+                                                    .map(
+                                                      (element) => RecipesListItem(recipe: element),
+                                                    )
+                                                    .toList(),
+                                                Expanded(
+                                                    child: GestureDetector(
+                                                  onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                                                ))
+                                              ]
+                                            : [
+                                                ...model.recipes
+                                                    .map(
+                                                      (element) => RecipesListItem(recipe: element),
+                                                    )
+                                                    .toList(),
+                                                Expanded(
+                                                    child: GestureDetector(
+                                                  onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                                                ))
+                                              ]),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                  : CustomScrollView(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      slivers: [
-                        SliverPadding(
-                          padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).padding.top +
-                                  AppBar().preferredSize.height +
-                                  60),
-                          sliver: CupertinoSliverRefreshControl(
-                            onRefresh: () =>
-                                model.getRecipesByUserId(model.currentUser.uid),
-                          ),
-                        ),
-                        SearchFiltersComponents(
-                          expandFilters: expandFilters,
-                          controller: _controller!,
-                          animation: _animation!,
-                        ),
-                        SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: model.recipes.isEmpty &&
-                                  model.loadingStatus == LoadingStatus.Idle
-                              ? const EmptyRecipesPlaceholder()
-                              : Column(
-                                  children: model.foundRecipes != null
-                                      ? [
-                                          ...model.foundRecipes!
-                                              .map(
-                                                (element) => RecipesListItem(
-                                                    element: element),
-                                              )
-                                              .toList(),
-                                          Expanded(
-                                              child: GestureDetector(
-                                            onTap: () => FocusManager
-                                                .instance.primaryFocus
-                                                ?.unfocus(),
-                                          ))
-                                        ]
-                                      : [
-                                          ...model.recipes
-                                              .map(
-                                                (element) => RecipesListItem(
-                                                    element: element),
-                                              )
-                                              .toList(),
-                                          Expanded(
-                                              child: GestureDetector(
-                                            onTap: () => FocusManager
-                                                .instance.primaryFocus
-                                                ?.unfocus(),
-                                          ))
-                                        ]),
                         )
-                      ],
-                    ));
+                      : CustomScrollView(
+                          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                          slivers: [
+                            SliverPadding(
+                              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + AppBar().preferredSize.height + 60),
+                              sliver: CupertinoSliverRefreshControl(
+                                onRefresh: () => model.getRecipesByUserId(model.currentUser.uid),
+                              ),
+                            ),
+                            SearchFiltersComponents(
+                              toggleAddTag: model.toggleAddTag,
+                              toggleTag: model.filterRecipes,
+                              tagList: model.filters,
+                              expandFilters: expandFilters,
+                              controller: _controller!,
+                              animation: _animation!,
+                            ),
+                            SliverFillRemaining(
+                              hasScrollBody: false,
+                              child: model.recipes.isEmpty && model.loadingStatus == LoadingStatus.Idle
+                                  ? const EmptyRecipesPlaceholder()
+                                  : Column(
+                                      children: model.foundRecipes != null
+                                          ? [
+                                              ...model.foundRecipes!
+                                                  .map(
+                                                    (element) => RecipesListItem(recipe: element),
+                                                  )
+                                                  .toList(),
+                                              Expanded(
+                                                  child: GestureDetector(
+                                                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                                              ))
+                                            ]
+                                          : [
+                                              ...model.recipes
+                                                  .map(
+                                                    (element) => RecipesListItem(recipe: element),
+                                                  )
+                                                  .toList(),
+                                              Expanded(
+                                                  child: GestureDetector(
+                                                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                                              ))
+                                            ]),
+                            )
+                          ],
+                        ),
+                  AddTagTextField(show: model.showAddTag, toggleAddTag: model.toggleAddTag, addTag: model.addTag)
+                ],
+              ));
         });
   }
 }

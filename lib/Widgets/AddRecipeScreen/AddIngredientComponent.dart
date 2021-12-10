@@ -8,7 +8,7 @@ import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:provider/provider.dart';
 
-import 'CustomTextFormField.dart';
+import '../General Widgets/CustomTextFormField.dart';
 
 class AddIngredientComponent extends StatefulWidget {
   const AddIngredientComponent({

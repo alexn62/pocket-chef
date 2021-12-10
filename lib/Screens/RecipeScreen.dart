@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/RecipeViewModel.dart';
-import 'package:personal_recipes/Widgets/DividerWithTitle.dart';
+import 'package:personal_recipes/Widgets/RecipeScreen/DividerWithTitle.dart';
 import 'package:personal_recipes/widgets/AmountCounter.dart';
 import 'package:personal_recipes/widgets/InstructionsComponent.dart';
 import 'package:personal_recipes/widgets/SectionComponent.dart';

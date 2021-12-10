@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:personal_recipes/Services/AdService.dart';
 import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:personal_recipes/Services/RecipesService.dart';
 import 'package:personal_recipes/Services/SharedPrefs.dart';
@@ -27,6 +28,7 @@ setupLocator() {
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => RecipesService());
   locator.registerLazySingleton(() => PhotoService());
+  locator.registerLazySingleton(() => AdService());
   // ViewModels
 
   locator.registerFactory(() => LandingScreenViewModel());

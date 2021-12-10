@@ -5,7 +5,7 @@ import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/SettingsViewModel.dart';
-import 'package:personal_recipes/Widgets/GenericButton.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
 import 'package:provider/provider.dart';
 
 import 'BaseView.dart';

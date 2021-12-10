@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/ViewModels/ForgotPasswordViewModel.dart';
-import 'package:personal_recipes/Widgets/CustomTextFormField.dart';
-import 'package:personal_recipes/Widgets/FullScreenLoadingIndicator.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndicator.dart';
 import 'package:personal_recipes/widgets/GenericButton.dart';
 
 import 'BaseView.dart';

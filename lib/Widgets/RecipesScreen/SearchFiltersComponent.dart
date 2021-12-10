@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/AddTagItem.dart';
 
-import 'AddTagItem.dart';
-import 'GenericButton.dart';
+import '../General Widgets/GenericButton.dart';
 
 class SearchFiltersComponents extends StatefulWidget {
+  final Function() toggleAddTag;
+  final Function(String) toggleTag;
+  final Map<String, bool> tagList;
   final bool expandFilters;
   final AnimationController controller;
   final Animation animation;
   const SearchFiltersComponents({
+    required this.toggleAddTag,
+    required this.toggleTag,
+    required this.tagList,
     required this.animation,
     required this.controller,
     Key? key,
@@ -22,14 +28,7 @@ class SearchFiltersComponents extends StatefulWidget {
 
 class _SearchFiltersComponentsState extends State<SearchFiltersComponents>
     with TickerProviderStateMixin {
-  List<MapEntry<String, bool>> tagList = {
-    'Snack': false,
-    'Breakfast': false,
-    'Lunch': false,
-    'Dinner': false,
-    'Dessert': false,
-    'Drink': false,
-  }.entries.toList();
+  
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -55,16 +54,17 @@ class _SearchFiltersComponentsState extends State<SearchFiltersComponents>
                         crossAxisAlignment: WrapCrossAlignment.start,
                         runSpacing: 5,
                         children: [
-                          for (int i = 0; i < tagList.length; i++)
+                          for (int i = 0; i < widget.tagList.length; i++)
                             TagItem(
+                              key: ValueKey(widget.tagList.entries.toList()[i].key),
                               deleteTag: (_) {},
-                              selected: tagList[i].value,
-                              title: tagList[i].key,
-                              toggleTag: (_) {},
+                              selected: widget.tagList.entries.toList()[i].value,
+                              title: widget.tagList.entries.toList()[i].key,
+                              toggleTag: widget.toggleTag,
                             ),
                           GenericButton(
                             onTap: () {
-                              // toggleAddTag();
+                              widget.toggleAddTag();
                             },
                             title: '+',
                             invertColors: true,
