@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/widgets/DividerWithTitle.dart';
+
+import 'DividerWithTitle.dart';
 
 class InstructionsComponent extends StatelessWidget {
   final String? instructions;

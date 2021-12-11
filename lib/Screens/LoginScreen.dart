@@ -3,8 +3,8 @@ import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/LoginViewModel.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndicator.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
-import 'package:personal_recipes/widgets/FullScreenLoadingIndicator.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);

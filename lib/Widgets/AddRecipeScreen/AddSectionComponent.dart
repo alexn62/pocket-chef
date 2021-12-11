@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Widgets/AddRecipeScreen/AddIngredientComponent.dart';
-import 'package:personal_recipes/widgets/CustomTextFormField.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
 
 class AddSectionComponent extends StatelessWidget {
   final String title;

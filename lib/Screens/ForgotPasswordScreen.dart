@@ -3,7 +3,7 @@ import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/ViewModels/ForgotPasswordViewModel.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndicator.dart';
-import 'package:personal_recipes/widgets/GenericButton.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
 
 import 'BaseView.dart';
 
@@ -40,7 +40,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     vRegularSpace,
-                                    Image.asset('assets/icons/secret.png', height: 64, color: Theme.of(context).errorColor),
+                                    Image.asset('assets/icons/secret.png',
+                                        height: 64,
+                                        color: Theme.of(context).errorColor),
                                     vRegularSpace,
                                     const Text(
                                       'hang in there',
@@ -55,8 +57,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 ),
                               ),
                               const Expanded(
-                                    child: SizedBox(),
-                                  ),
+                                child: SizedBox(),
+                              ),
                               Text(
                                 'Email',
                                 style: TextStyle(
@@ -65,7 +67,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 ),
                               ),
                               vTinySpace,
-                              CustomTextFormField(onFieldSubmitted: (_)=> model.forgotPassword(model.email), onChanged: model.setEmail),
+                              CustomTextFormField(
+                                  onFieldSubmitted: (_) =>
+                                      model.forgotPassword(model.email),
+                                  onChanged: model.setEmail),
                               vRegularSpace,
                               GenericButton(
                                 onTap: () => model.forgotPassword(model.email),
@@ -88,7 +93,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ),
                       )),
                   FullScreenLoadingIndicator(model.loadingStatus)
-
                 ],
               ),
             ));

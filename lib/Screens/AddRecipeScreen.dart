@@ -14,8 +14,7 @@ import 'package:personal_recipes/Widgets/AddRecipeScreen/AddAdvancedComponent.da
 import 'package:personal_recipes/Widgets/AddRecipeScreen/AddPhotoComponent.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/AddTagTextField.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
-import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
-import 'package:personal_recipes/widgets/FullScreenLoadingIndicator.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndicator.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -29,7 +28,8 @@ class AddRecipeScreen extends StatefulWidget {
   State<AddRecipeScreen> createState() => _AddRecipeScreenState();
 }
 
-class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAliveClientMixin<AddRecipeScreen> {
+class _AddRecipeScreenState extends State<AddRecipeScreen>
+    with AutomaticKeepAliveClientMixin<AddRecipeScreen> {
   final ScrollController _controller = ScrollController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _servesController = TextEditingController();
@@ -56,18 +56,27 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
+    final GeneralServices _generalServices =
+        Provider.of<GeneralServices>(context);
 
     return BaseView<AddRecipeViewModel>(
       onModelReady: (model) => model.initialize(recipe: widget.recipe),
       builder: (context, model, child) => WillPopScope(
         onWillPop: () async {
-          DialogResponse<dynamic>? response =
-              await locator<DialogService>().showDialog(title: 'Warning', description: 'Are you sure you want to dismiss your changes and go back?', barrierDismissible: true, cancelTitle: 'Cancel');
+          DialogResponse<dynamic>? response = await locator<DialogService>()
+              .showDialog(
+                  title: 'Warning',
+                  description:
+                      'Are you sure you want to dismiss your changes and go back?',
+                  barrierDismissible: true,
+                  cancelTitle: 'Cancel');
           if (response == null || !response.confirmed) {
             return false;
           } else {
-            locator<NavigationService>().back(result: Provider.of<AddRecipeViewModel>(context, listen: false).recipe.photoUrl);
+            locator<NavigationService>().back(
+                result: Provider.of<AddRecipeViewModel>(context, listen: false)
+                    .recipe
+                    .photoUrl);
             return true;
           }
         },
@@ -79,12 +88,18 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                   : (details) async {
                       int sensitivity = 10;
                       if (details.delta.dx > sensitivity) {
-                        DialogResponse<dynamic>? response = await locator<DialogService>()
-                            .showDialog(title: 'Warning', description: 'Are you sure you want to dismiss your changes and go back?', barrierDismissible: true, cancelTitle: 'Cancel');
+                        DialogResponse<dynamic>? response =
+                            await locator<DialogService>().showDialog(
+                                title: 'Warning',
+                                description:
+                                    'Are you sure you want to dismiss your changes and go back?',
+                                barrierDismissible: true,
+                                cancelTitle: 'Cancel');
                         if (response == null || !response.confirmed) {
                           return;
                         } else {
-                          locator<NavigationService>().back(result: model.recipe.photoUrl);
+                          locator<NavigationService>()
+                              .back(result: model.recipe.photoUrl);
                           return;
                         }
                       }
@@ -104,7 +119,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                     ),
                   ),
                   automaticallyImplyLeading: widget.recipe != null,
-                  backgroundColor: Theme.of(context).backgroundColor.withOpacity(2 / 3),
+                  backgroundColor:
+                      Theme.of(context).backgroundColor.withOpacity(2 / 3),
                   title: Text(
                     widget.recipe == null ? 'Add Recipe' : 'Edit recipe',
                   ),
@@ -122,16 +138,21 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                               _servesController.text = '';
                               _instructionsController.text = '';
                             } else {
-                              result = await model.updateRecipe(model.recipe, model.img);
+                              result = await model.updateRecipe(
+                                  model.recipe, model.img);
                             }
-                            if (result && _generalServices.timer == null || _generalServices.timer != null && !_generalServices.timer!.isActive) {
+                            if (result && _generalServices.timer == null ||
+                                _generalServices.timer != null &&
+                                    !_generalServices.timer!.isActive) {
                               _generalServices.setTimer();
                               locator<AdService>().showInterstitialAd();
                             }
                           }
                         },
                         icon: Icon(
-                          Platform.isIOS ? CupertinoIcons.check_mark : Icons.check,
+                          Platform.isIOS
+                              ? CupertinoIcons.check_mark
+                              : Icons.check,
                           color: Theme.of(context).colorScheme.primaryVariant,
                         ))
                   ],
@@ -151,12 +172,15 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: MediaQuery.of(context).padding.top + AppBar().preferredSize.height),
+                          SizedBox(
+                              height: MediaQuery.of(context).padding.top +
+                                  AppBar().preferredSize.height),
                           AddPhotoComponent(
                             status: model.photoLoadingStatus,
                             currentImage: model.recipe.photoUrl,
                             img: model.img,
-                            deleteImage: () => model.deleteImage(tempImage: model.img, recipe: model.recipe),
+                            deleteImage: () => model.deleteImage(
+                                tempImage: model.img, recipe: model.recipe),
                             getImage: model.getImage,
                           ),
                           vRegularSpace,
@@ -177,14 +201,20 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                                     ),
                                     vSmallSpace,
                                     CustomTextFormField(
-                                      controller: widget.recipe == null ? _titleController : null,
+                                      controller: widget.recipe == null
+                                          ? _titleController
+                                          : null,
                                       hintText: 'e.g., Pizza',
-                                      initialValue: widget.recipe != null ? model.recipe.title : null,
+                                      initialValue: widget.recipe != null
+                                          ? model.recipe.title
+                                          : null,
                                       validator: (text) {
-                                        if (text == null || text.trim().isEmpty) {
+                                        if (text == null ||
+                                            text.trim().isEmpty) {
                                           return 'Please enter a recipe title.';
                                         }
-                                        if (text.length < 2 || text.length > 20) {
+                                        if (text.length < 2 ||
+                                            text.length > 20) {
                                           return 'The text has to be between two and twenty characters.';
                                         }
                                         return null;
@@ -209,11 +239,18 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                                     ),
                                     vSmallSpace,
                                     CustomTextFormField(
-                                      controller: widget.recipe == null ? _servesController : null,
+                                      controller: widget.recipe == null
+                                          ? _servesController
+                                          : null,
                                       hintText: 'e.g., 4',
-                                      initialValue: widget.recipe != null ? model.recipe.serves?.toString() : null,
+                                      initialValue: widget.recipe != null
+                                          ? model.recipe.serves?.toString()
+                                          : null,
                                       validator: (text) {
-                                        if (text == null || text.trim().isEmpty || text.trim().length > 5 || double.tryParse(text) == null) {
+                                        if (text == null ||
+                                            text.trim().isEmpty ||
+                                            text.trim().length > 5 ||
+                                            double.tryParse(text) == null) {
                                           return 'Err';
                                         }
                                         return null;
@@ -229,7 +266,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Sections', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 17)),
+                              Text('Sections',
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 17)),
                               SizedBox(
                                 height: 30,
                                 child: IconButton(
@@ -238,7 +278,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                                     },
                                     padding: const EdgeInsets.all(0),
                                     icon: Icon(
-                                      Platform.isIOS ? CupertinoIcons.add : Icons.add,
+                                      Platform.isIOS
+                                          ? CupertinoIcons.add
+                                          : Icons.add,
                                     )),
                               ),
                             ],
@@ -249,10 +291,12 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                               .map(
                                 (entry) => AddSectionComponent(
                                   setSectionTitle: model.setSectionTitle,
-                                  removeSection: () => model.removeSection(entry.key),
+                                  removeSection: () =>
+                                      model.removeSection(entry.key),
                                   title: entry.value.title,
                                   sectionIndex: entry.key,
-                                  ingredients: model.recipe.sections[entry.key].ingredients,
+                                  ingredients: model
+                                      .recipe.sections[entry.key].ingredients,
                                   key: ValueKey(entry.value.uid),
                                 ),
                               )
@@ -262,14 +306,19 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                             dense: true,
                             child: ExpansionTile(
                               tilePadding: const EdgeInsets.only(right: 12),
-                              title: const Text('Instructions', style: TextStyle(fontSize: 17)),
+                              title: const Text('Instructions',
+                                  style: TextStyle(fontSize: 17)),
                               children: [
                                 CustomTextFormField(
-                                  controller: widget.recipe == null ? _instructionsController : null,
+                                  controller: widget.recipe == null
+                                      ? _instructionsController
+                                      : null,
                                   keyboardType: TextInputType.multiline,
                                   minLines: 3,
                                   maxLines: null,
-                                  initialValue: widget.recipe != null ? model.recipe.instructions : null,
+                                  initialValue: widget.recipe != null
+                                      ? model.recipe.instructions
+                                      : null,
                                   validator: (text) {
                                     if (text == null) {
                                       return 'Value cannot be null';
@@ -310,4 +359,3 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
     );
   }
 }
-
