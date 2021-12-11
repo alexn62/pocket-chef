@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
       body: PageView(
         physics: const BouncingScrollPhysics(),
         controller: _pageController,
-        children: const [RecipesScreen(), AddRecipeScreen()],
+        children:  [RecipesScreen(reload: model.newRecipeAdded),const AddRecipeScreen()],
         onPageChanged: (val) {
           WidgetsBinding.instance!.focusManager.primaryFocus?.unfocus();
           model.setIndex(val);
@@ -40,31 +40,22 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: model.index,
         onTap: (val) {
           WidgetsBinding.instance!.focusManager.primaryFocus?.unfocus();
-          _pageController.animateToPage(val,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut);
+          _pageController.animateToPage(val, duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
         },
         items: [
           BottomNavigationBarItem(
             label: 'Recipes',
             tooltip: '',
             icon: Center(
-              child: Icon(
-                  Platform.isIOS ? CupertinoIcons.book : Icons.menu_book,
-                  color: model.index == 0
-                      ? Theme.of(context).primaryColor
-                      : Theme.of(context).primaryColor.withOpacity(0.8),
-                  size: model.index == 0 ? 24 : 18),
+              child: Icon(Platform.isIOS ? CupertinoIcons.book : Icons.menu_book,
+                  color: model.index == 0 ? Theme.of(context).primaryColor : Theme.of(context).primaryColor.withOpacity(0.8), size: model.index == 0 ? 24 : 18),
             ),
           ),
           BottomNavigationBarItem(
             label: 'Add Recipe',
             tooltip: '',
             icon: Icon(Platform.isIOS ? CupertinoIcons.add : Icons.add_sharp,
-                color: model.index == 1
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).primaryColor.withOpacity(0.8),
-                size: model.index == 1 ? 24 : 18),
+                color: model.index == 1 ? Theme.of(context).primaryColor : Theme.of(context).primaryColor.withOpacity(0.8), size: model.index == 1 ? 24 : 18),
           ),
         ],
       ),

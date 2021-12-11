@@ -110,6 +110,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                   actions: [
                     IconButton(
                         onPressed: () async {
+                          
                           if (_formKey.currentState!.validate()) {
                             late bool result;
                             if (widget.recipe == null) {
@@ -120,6 +121,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                               _titleController.text = '';
                               _servesController.text = '';
                               _instructionsController.text = '';
+                              Provider.of<GeneralServices>(context,listen: false).setNewRecipeAdded(true);
                             } else {
                               result = await model.updateRecipe(model.recipe, model.img);
                             }

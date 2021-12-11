@@ -34,10 +34,6 @@ class GeneralServices extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Widget> screens = const [
-    RecipesScreen(),
-    AddRecipeScreen(),
-  ];
 
   String fraction(int? frac) {
     switch (frac) {
