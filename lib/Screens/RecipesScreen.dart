@@ -22,7 +22,10 @@ class RecipesScreen extends StatefulWidget {
   State<RecipesScreen> createState() => _RecipesScreenState();
 }
 
-class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveClientMixin<RecipesScreen>, TickerProviderStateMixin {
+class _RecipesScreenState extends State<RecipesScreen>
+    with
+        AutomaticKeepAliveClientMixin<RecipesScreen>,
+        TickerProviderStateMixin {
   bool expandFilters = false;
   void setExpandFilters() {
     setState(() {
@@ -65,12 +68,10 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
         builder: (context, model, child) {
           bool reload = Provider.of<GeneralServices>(context).newRecipeAdded;
           if (reload) {
-            print('reload');
-            Provider.of<GeneralServices>(context, listen: false).setNewRecipeAdded(false);
+            Provider.of<GeneralServices>(context, listen: false)
+                .setNewRecipeAdded(false);
             SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-              
-
-            model.initialize(model.currentUser.uid);
+              model.initialize(model.currentUser.uid);
             });
           }
           return Scaffold(
@@ -88,11 +89,18 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
                           ),
                         ),
                       ),
-                      backgroundColor: Theme.of(context).backgroundColor.withOpacity(2 / 3),
+                      backgroundColor:
+                          Theme.of(context).backgroundColor.withOpacity(2 / 3),
                       automaticallyImplyLeading: false,
-                      leading: model.recipes.where((element) => element.selected!).isNotEmpty
+                      leading: model.recipes
+                              .where((element) => element.selected!)
+                              .isNotEmpty
                           ? IconButton(
-                              onPressed: () => model.deleteRecipes(model.recipes.where((element) => element.selected!)), icon: Icon(Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline))
+                              onPressed: () => model.deleteRecipes(model.recipes
+                                  .where((element) => element.selected!)),
+                              icon: Icon(Platform.isIOS
+                                  ? CupertinoIcons.delete
+                                  : Icons.delete_outline))
                           : null,
                       title: const Text(
                         'Recipes',
@@ -101,7 +109,9 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
                         IconButton(
                           onPressed: model.navigateToSettings,
                           icon: Icon(
-                            Platform.isIOS ? CupertinoIcons.settings : Icons.settings,
+                            Platform.isIOS
+                                ? CupertinoIcons.settings
+                                : Icons.settings,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -109,19 +119,26 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
                       bottom: PreferredSize(
                           preferredSize: const Size(double.infinity, 60),
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 5, right: 0, left: 15),
+                            padding: const EdgeInsets.only(
+                                top: 5, bottom: 5, right: 0, left: 15),
                             child: Row(
                               children: [
                                 Expanded(
                                   child: CustomTextFormField(
                                     hintText: 'Search',
-                                    prefixIcon: Icon(Platform.isIOS ? CupertinoIcons.search : Icons.search, color: Theme.of(context).primaryColor),
+                                    prefixIcon: Icon(
+                                        Platform.isIOS
+                                            ? CupertinoIcons.search
+                                            : Icons.search,
+                                        color: Theme.of(context).primaryColor),
                                     onChanged: model.searchRecipes,
                                   ),
                                 ),
                                 IconButton(
                                   onPressed: _toggleContainer,
-                                  icon: Icon(Platform.isIOS ? CupertinoIcons.slider_horizontal_3 : Icons.filter_alt_outlined),
+                                  icon: Icon(Platform.isIOS
+                                      ? CupertinoIcons.slider_horizontal_3
+                                      : Icons.filter_alt_outlined),
                                   padding: EdgeInsets.zero,
                                 )
                               ],
@@ -133,14 +150,21 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
                         !Platform.isIOS
                             ? RefreshIndicator(
                                 displacement: 40,
-                                edgeOffset: MediaQuery.of(context).padding.top + AppBar().preferredSize.height + 60,
-                                onRefresh: () => model.getRecipesByUserId(model.currentUser.uid),
+                                edgeOffset: MediaQuery.of(context).padding.top +
+                                    AppBar().preferredSize.height +
+                                    60,
+                                onRefresh: () => model
+                                    .getRecipesByUserId(model.currentUser.uid),
                                 child: CustomScrollView(
-                                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                                  physics: const BouncingScrollPhysics(
+                                      parent: AlwaysScrollableScrollPhysics()),
                                   slivers: [
                                     SliverToBoxAdapter(
                                       child: SizedBox(
-                                        height: MediaQuery.of(context).padding.top + AppBar().preferredSize.height + 60,
+                                        height:
+                                            MediaQuery.of(context).padding.top +
+                                                AppBar().preferredSize.height +
+                                                60,
                                       ),
                                     ),
                                     SearchFiltersComponents(
@@ -153,43 +177,68 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
                                     ),
                                     SliverFillRemaining(
                                       hasScrollBody: false,
-                                      child: model.recipes.isEmpty && model.loadingStatus == LoadingStatus.Idle
+                                      child: model.recipes.isEmpty &&
+                                              model.loadingStatus ==
+                                                  LoadingStatus.Idle
                                           ? const EmptyRecipesPlaceholder()
                                           : Column(
-                                              children: model.foundRecipes != null
-                                                  ? [
-                                                      ...model.foundRecipes!
-                                                          .map(
-                                                            (element) => RecipesListItem(recipe: element),
-                                                          )
-                                                          .toList(),
-                                                      Expanded(
-                                                          child: GestureDetector(
-                                                        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-                                                      ))
-                                                    ]
-                                                  : [
-                                                      ...model.recipes
-                                                          .map(
-                                                            (element) => RecipesListItem(recipe: element),
-                                                          )
-                                                          .toList(),
-                                                      Expanded(
-                                                          child: GestureDetector(
-                                                        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-                                                      ))
-                                                    ]),
+                                              children:
+                                                  model.foundRecipes != null
+                                                      ? [
+                                                          ...model.foundRecipes!
+                                                              .map(
+                                                                (element) =>
+                                                                    RecipesListItem(
+                                                                        recipe:
+                                                                            element),
+                                                              )
+                                                              .toList(),
+                                                          Expanded(
+                                                              child:
+                                                                  GestureDetector(
+                                                            onTap: () =>
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus(),
+                                                          ))
+                                                        ]
+                                                      : [
+                                                          ...model.recipes
+                                                              .map(
+                                                                (element) =>
+                                                                    RecipesListItem(
+                                                                        recipe:
+                                                                            element),
+                                                              )
+                                                              .toList(),
+                                                          Expanded(
+                                                              child:
+                                                                  GestureDetector(
+                                                            onTap: () =>
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus(),
+                                                          ))
+                                                        ]),
                                     ),
                                   ],
                                 ),
                               )
                             : CustomScrollView(
-                                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                                physics: const BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
                                 slivers: [
                                   SliverPadding(
-                                    padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + AppBar().preferredSize.height + 60),
+                                    padding: EdgeInsets.only(
+                                        top:
+                                            MediaQuery.of(context).padding.top +
+                                                AppBar().preferredSize.height +
+                                                60),
                                     sliver: CupertinoSliverRefreshControl(
-                                      onRefresh: () => model.getRecipesByUserId(model.currentUser.uid),
+                                      onRefresh: () => model.getRecipesByUserId(
+                                          model.currentUser.uid),
                                     ),
                                   ),
                                   SearchFiltersComponents(
@@ -202,30 +251,42 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
                                   ),
                                   SliverFillRemaining(
                                     hasScrollBody: false,
-                                    child: model.recipes.isEmpty && model.loadingStatus == LoadingStatus.Idle
+                                    child: model.recipes.isEmpty &&
+                                            model.loadingStatus ==
+                                                LoadingStatus.Idle
                                         ? const EmptyRecipesPlaceholder()
                                         : Column(
                                             children: model.foundRecipes != null
                                                 ? [
                                                     ...model.foundRecipes!
                                                         .map(
-                                                          (element) => RecipesListItem(recipe: element),
+                                                          (element) =>
+                                                              RecipesListItem(
+                                                                  recipe:
+                                                                      element),
                                                         )
                                                         .toList(),
                                                     Expanded(
                                                         child: GestureDetector(
-                                                      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                                                      onTap: () => FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus(),
                                                     ))
                                                   ]
                                                 : [
                                                     ...model.recipes
                                                         .map(
-                                                          (element) => RecipesListItem(recipe: element),
+                                                          (element) =>
+                                                              RecipesListItem(
+                                                                  recipe:
+                                                                      element),
                                                         )
                                                         .toList(),
                                                     Expanded(
                                                         child: GestureDetector(
-                                                      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                                                      onTap: () => FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus(),
                                                     ))
                                                   ]),
                                   )
@@ -233,7 +294,10 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
                               ),
                       ],
                     )),
-                AddTagTextField(show: model.showAddTag, toggleAddTag: model.toggleAddTag, addTag: model.addTag)
+                AddTagTextField(
+                    show: model.showAddTag,
+                    toggleAddTag: model.toggleAddTag,
+                    addTag: model.addTag)
               ],
             ),
           );

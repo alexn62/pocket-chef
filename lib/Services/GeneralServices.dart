@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/Screens/AddRecipeScreen.dart';
-import 'package:personal_recipes/Screens/RecipesScreen.dart';
 import 'package:personal_recipes/Services/SharedPrefs.dart';
 
 import '../locator.dart';
@@ -33,7 +31,6 @@ class GeneralServices extends ChangeNotifier {
     _index = newIndex;
     notifyListeners();
   }
-
 
   String fraction(int? frac) {
     switch (frac) {

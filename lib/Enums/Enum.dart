@@ -23,3 +23,8 @@ enum Unit {
   Quarts,
   Gallons,
 }
+
+enum AppleGoogle {
+  Apple,
+  Google,
+}

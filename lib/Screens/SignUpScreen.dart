@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/SignUpViewModel.dart';
+import 'package:personal_recipes/Widgets/AuthScreens/AppleGoogleButton.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndicator.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
@@ -111,6 +113,33 @@ class SignUpScreen extends StatelessWidget {
                                 title: 'Sign up',
                                 positive: true,
                                 stretch: true,
+                              ),
+                              vRegularSpace,
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Or continue with...',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              vRegularSpace,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: AppleGoogleButton(
+                                        onTap: () {},
+                                        platform: AppleGoogle.Google),
+                                  ),
+                                  hSmallSpace,
+                                  Expanded(
+                                    child: AppleGoogleButton(
+                                        onTap: () {},
+                                        platform: AppleGoogle.Apple),
+                                  ),
+                                ],
                               ),
                               const Expanded(child: SizedBox()),
                               const Center(
