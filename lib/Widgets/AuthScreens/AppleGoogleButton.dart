@@ -29,7 +29,7 @@ class AppleGoogleButton extends StatelessWidget {
               platform == AppleGoogle.Apple
                   ? 'assets/images/apple-white.png'
                   : 'assets/images/g-logo.png',
-              width: platform == AppleGoogle.Apple ? 18 : 18,
+              width: platform == AppleGoogle.Apple ? 13 : 15,
             ),
             hSmallSpace,
             Text(

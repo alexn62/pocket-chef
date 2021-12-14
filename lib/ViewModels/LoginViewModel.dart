@@ -25,11 +25,21 @@ class LoginViewModel extends BaseViewModel {
     _password = newPassword;
   }
 
-  Future<void> loginEmailPassword(
-      {required String email, required String password}) async {
+  Future<void> loginEmailPassword({required String email, required String password}) async {
     try {
       setLoadingStatus(LoadingStatus.Busy);
       await _authService.loginWithEmail(email: email, password: password);
+      setLoadingStatus(LoadingStatus.Idle);
+    } on CustomError catch (e) {
+      setLoadingStatus(LoadingStatus.Idle);
+      _dialogService.showDialog(title: 'Error', description: e.message);
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    try {
+      setLoadingStatus(LoadingStatus.Busy);
+      await _authService.signInWithGoogle();
       setLoadingStatus(LoadingStatus.Idle);
     } on CustomError catch (e) {
       setLoadingStatus(LoadingStatus.Idle);

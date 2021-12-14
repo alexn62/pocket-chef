@@ -133,7 +133,7 @@ class LoginScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: AppleGoogleButton(
-                                        onTap: () {},
+                                        onTap: model.loginWithGoogle,
                                         platform: AppleGoogle.Google),
                                   ),
                                   hSmallSpace,
