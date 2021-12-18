@@ -42,8 +42,7 @@ class _MainScreenState extends State<MainScreen> {
             elevation: 0,
             selectedItemColor: Theme.of(context).primaryColor,
             unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
-            backgroundColor: Colors.white10,
-            // backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Colors.transparent,
             selectedLabelStyle: TextStyle(
               color: Theme.of(context).primaryColor,
             ),

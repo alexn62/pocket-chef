@@ -53,9 +53,9 @@ class _RecipesListItemState extends State<RecipesListItem> {
           children: [
             SlidableAction(
               onPressed: (ctx) => model.deleteRecipes([widget.recipe], confirm: false),
-              backgroundColor: const Color(0xFFFE4A49),
-              foregroundColor: Colors.white,
-              icon: Icons.delete,
+              backgroundColor: Theme.of(context).primaryColor,
+              foregroundColor: Theme.of(context).backgroundColor,
+              icon: Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline,
               label: 'Delete',
               autoClose: true,
             ),

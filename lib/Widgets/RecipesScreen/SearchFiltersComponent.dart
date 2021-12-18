@@ -38,42 +38,32 @@ class _SearchFiltersComponentsState extends State<SearchFiltersComponents>
           child: Container(
               color: Theme.of(context).primaryColor.withOpacity(0.1),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Tags',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  vSmallSpace,
-                  SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
-                        spacing: 5,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        runSpacing: 5,
-                        children: [
-                          for (int i = 0; i < widget.tagList.length; i++)
-                            TagItem(
-                              key: ValueKey(widget.tagList.entries.toList()[i].key),
-                              deleteTag: (_) {},
-                              selected: widget.tagList.entries.toList()[i].value,
-                              title: widget.tagList.entries.toList()[i].key,
-                              toggleTag: widget.toggleTag,
-                            ),
-                          GenericButton(
-                            onTap: () {
-                              widget.toggleAddTag();
-                            },
-                            title: '+',
-                            invertColors: true,
-                            shrink: true,
-                            fontsize: 15,
-                          ),
-                        ]),
-                  ),
-                ],
+              child: SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    spacing: 5,
+                    alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    runSpacing: 5,
+                    children: [
+                      for (int i = 0; i < widget.tagList.length; i++)
+                        TagItem(
+                          key: ValueKey(widget.tagList.entries.toList()[i].key),
+                          deleteTag: (_) {},
+                          selected: widget.tagList.entries.toList()[i].value,
+                          title: widget.tagList.entries.toList()[i].key,
+                          toggleTag: widget.toggleTag,
+                        ),
+                      GenericButton(
+                        onTap: () {
+                          widget.toggleAddTag();
+                        },
+                        title: '+',
+                        invertColors: true,
+                        shrink: true,
+                        fontsize: 15,
+                      ),
+                    ]),
               )),
         ),
       ),
