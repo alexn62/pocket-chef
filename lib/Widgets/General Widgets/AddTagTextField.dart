@@ -36,72 +36,83 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    widget.toggleAddTag();
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-                    if (!currentFocus.hasPrimaryFocus) {
-                      currentFocus.unfocus();
-                    }
-                  },
-                  child: Container(color: Colors.black54, height: MediaQuery.of(context).size.height),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  decoration: BoxDecoration(color: Theme.of(context).backgroundColor, border: Border(top: BorderSide(color: Theme.of(context).primaryColor))),
-                  child: Center(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Form(
-                            key: _addNewTagFormKey,
-                            child: CustomTextFormField(
-                              autofocus: true,
-                              onFieldSubmitted: (_) {
-                                if (_addNewTagFormKey.currentState!.validate()) {
+            child: SafeArea(
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      widget.toggleAddTag();
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+                    },
+                    child: Container(
+                        color: Colors.black54,
+                        height: MediaQuery.of(context).size.height),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).backgroundColor,
+                        border: Border(
+                            top: BorderSide(
+                                color: Theme.of(context).primaryColor))),
+                    child: Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Form(
+                              key: _addNewTagFormKey,
+                              child: CustomTextFormField(
+                                autofocus: true,
+                                onFieldSubmitted: (_) {
+                                  if (_addNewTagFormKey.currentState!
+                                      .validate()) {
+                                    widget.addTag(newTag);
+                                  }
+                                },
+                                maxLines: 1,
+                                onChanged: (val) {
+                                  newTag = val;
+                                },
+                                validator: (text) {
+                                  if (text == null) {
+                                    return 'Tag cannot be null';
+                                  }
+                                  if (text.trim().length < 3) {
+                                    return 'A tag must be longer than two characters.';
+                                  }
+                                  if (text.length > 2000) {
+                                    return 'A tag must not be longer than 20 characters.';
+                                  }
+                                  if (text.trim().contains(' ')) {
+                                    return 'A tag may not contain whitespaces';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          hSmallSpace,
+                          GenericButton(
+                              onTap: () {
+                                if (_addNewTagFormKey.currentState!
+                                    .validate()) {
                                   widget.addTag(newTag);
                                 }
                               },
-                              maxLines: 1,
-                              onChanged: (val) {
-                                newTag = val;
-                              },
-                              validator: (text) {
-                                if (text == null) {
-                                  return 'Tag cannot be null';
-                                }
-                                if (text.trim().length < 3) {
-                                  return 'A tag must be longer than two characters.';
-                                }
-                                if (text.length > 2000) {
-                                  return 'A tag must not be longer than 20 characters.';
-                                }
-                                if (text.trim().contains(' ')) {
-                                  return 'A tag may not contain whitespaces';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        hSmallSpace,
-                        GenericButton(
-                            onTap: () {
-                              if (_addNewTagFormKey.currentState!.validate()) {
-                                widget.addTag(newTag);
-                              }
-                            },
-                            title: 'Add tag',
-                            invertColors: true,
-                            shrink: true),
-                      ],
+                              title: 'Add tag',
+                              invertColors: true,
+                              shrink: true),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ));
   }
 }

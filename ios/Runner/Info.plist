@@ -5,12 +5,12 @@
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-5748985591345133~6730086030</string>
 	<key>SKAdNetworkItems</key>
-  		<array>
-    		<dict>
-      			<key>SKAdNetworkIdentifier</key>
-      			<string>cstr6suwn9.skadnetwork</string>
-    		</dict>
-  		</array>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -51,6 +51,17 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
-		<string>To add a picture, this app needs permission to access your photos.</string>
+	<string>To add a picture, this app needs permission to access your photos.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.772378025357-08fle68ea67v64e0fr4chbmnoedcca9a</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
