@@ -156,7 +156,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                           Platform.isIOS
                               ? CupertinoIcons.check_mark
                               : Icons.check,
-                          color: Theme.of(context).colorScheme.primaryVariant,
+                          color: Theme.of(context).colorScheme.tertiary,
                         ))
                   ],
                 ),

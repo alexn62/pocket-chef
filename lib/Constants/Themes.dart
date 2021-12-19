@@ -17,7 +17,7 @@ ThemeData darkTheme = ThemeData(
     colorScheme: ThemeData.dark().colorScheme.copyWith(
         primary: primaryColorDark,
         secondary: accentColorDark,
-        primaryVariant: goodColor),
+        tertiary: goodColor),
     iconTheme: const IconThemeData(color: primaryColorDark),
     switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.all(primaryColorDark),
@@ -68,7 +68,7 @@ ThemeData lightTheme = ThemeData(
     colorScheme: ThemeData.light().colorScheme.copyWith(
         primary: primaryColorLight,
         secondary: accentColorLight,
-        primaryVariant: goodColor),
+        tertiary: goodColor),
     iconTheme: const IconThemeData(color: primaryColorLight),
     appBarTheme: const AppBarTheme(
         elevation: 0,

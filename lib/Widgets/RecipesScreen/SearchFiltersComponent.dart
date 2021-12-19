@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/AddTagItem.dart';
 
 import '../General Widgets/GenericButton.dart';
@@ -36,7 +35,7 @@ class _SearchFiltersComponentsState extends State<SearchFiltersComponents>
         sizeFactor: widget.controller,
         child: SingleChildScrollView(
           child: Container(
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              color: Theme.of(context).backgroundColor,
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: SizedBox(
                 width: double.infinity,

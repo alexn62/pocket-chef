@@ -45,7 +45,7 @@ class SignUpScreen extends StatelessWidget {
                                       'assets/icons/hug.png',
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .primaryVariant,
+                                          .tertiary,
                                       height: 64,
                                     ),
                                     vRegularSpace,

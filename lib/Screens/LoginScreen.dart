@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                                         height: 64,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .primaryVariant),
+                                            .tertiary),
                                     vRegularSpace,
                                     const Text(
                                       'welcome back',

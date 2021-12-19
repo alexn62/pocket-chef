@@ -48,7 +48,7 @@ class GenericButton extends StatelessWidget {
                   : customWidth,
       decoration: BoxDecoration(
         color: positive
-            ? Theme.of(context).colorScheme.primaryVariant
+            ? Theme.of(context).colorScheme.tertiary
             : danger
                 ? Theme.of(context).colorScheme.error
                 : invertColors
@@ -56,7 +56,7 @@ class GenericButton extends StatelessWidget {
                     : Theme.of(context).backgroundColor,
         border: Border.all(
             color: positive
-                ? Theme.of(context).colorScheme.primaryVariant
+                ? Theme.of(context).colorScheme.tertiary
                 : danger
                     ? Theme.of(context).colorScheme.error
                     : Theme.of(context).primaryColor),

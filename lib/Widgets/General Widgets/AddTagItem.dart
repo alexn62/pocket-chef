@@ -29,12 +29,12 @@ class TagItem extends StatelessWidget {
         height: 32,
         width: textPainter.size.width + 22,
         decoration: BoxDecoration(
-          color: selected
-              ? Theme.of(context).colorScheme.primaryVariant.withOpacity(0.1)
-              : Colors.transparent,
+          color:
+          
+              Colors.white10,
           border: Border.all(
             color: selected
-                ? Theme.of(context).colorScheme.primaryVariant
+                ? Theme.of(context).colorScheme.tertiary
                 : Theme.of(context).primaryColor,
           ),
           borderRadius: BorderRadius.circular(5),
@@ -47,7 +47,7 @@ class TagItem extends StatelessWidget {
             style: TextStyle(
                 fontSize: 13,
                 color: selected
-                    ? Theme.of(context).colorScheme.primaryVariant
+                    ? Theme.of(context).colorScheme.tertiary
                     : Theme.of(context).primaryColor),
           ),
         ),
