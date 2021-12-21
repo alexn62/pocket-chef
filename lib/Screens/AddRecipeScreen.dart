@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
@@ -43,9 +44,13 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   void initState() {
     _formKey = GlobalKey<FormState>();
     locator<AdService>().createInterstitialAd();
+    
     super.initState();
   }
-
+ void _jumpToTop() {
+    _controller.jumpTo(0,
+       );
+  }
   @override
   void dispose() {
     _controller.dispose();
@@ -55,6 +60,10 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
 
   @override
   Widget build(BuildContext context) {
+    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+    _jumpToTop();
+      
+    });
     super.build(context);
     final GeneralServices _generalServices =
         Provider.of<GeneralServices>(context);
@@ -412,4 +421,5 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
       ),
     );
   }
+
 }
