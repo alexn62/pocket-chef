@@ -26,6 +26,8 @@ String handleFirebaseError(FirebaseException error) {
     case "permission-denied":
     case "PERMISSION_DENIED":
       return "You do not have the permissions to perform this action.";
+    case 'requires-recent-login':
+      return 'Please reauthenticate to proceed';
     default:
       return "Login failed. Please try again.";
   }

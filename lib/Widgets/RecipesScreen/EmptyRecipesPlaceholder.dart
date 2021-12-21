@@ -66,6 +66,8 @@ class EmptyRecipesPlaceholder extends StatelessWidget {
             ),
           ],
         ),
+        vBigSpace,
+        vBigSpace
       ],
     );
   }

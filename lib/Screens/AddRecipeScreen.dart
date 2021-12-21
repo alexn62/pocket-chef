@@ -170,7 +170,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                       ),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
-                        physics: const BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                         controller: _controller,
                         child: Form(
                           key: _formKey,

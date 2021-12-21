@@ -14,7 +14,7 @@ import 'ViewModels/ForgotPasswordViewModel.dart';
 import 'ViewModels/LoginViewModel.dart';
 import 'ViewModels/RecipeViewModel.dart';
 import 'ViewModels/RecipesViewModel.dart';
-import 'ViewModels/SettingsViewModel.dart';
+import 'ViewModels/SettingsVIewModel.dart';
 
 GetIt locator = GetIt.instance;
 setupLocator() {
