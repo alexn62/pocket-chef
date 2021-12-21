@@ -29,6 +29,7 @@ class RecipesViewModel extends BaseViewModel {
   }
 
   Future<void> getRecipesByUserId(String userId) async {
+    
     try {
       setLoadingStatus(LoadingStatus.Busy);
       List<Recipe>? newRecipes = await _recipesService.getRecipesByUserId(userId);

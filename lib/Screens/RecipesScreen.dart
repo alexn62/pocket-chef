@@ -66,8 +66,8 @@ class _RecipesScreenState extends State<RecipesScreen> with AutomaticKeepAliveCl
           bool reload = Provider.of<GeneralServices>(context).newRecipeAdded;
           if (reload) {
             Provider.of<GeneralServices>(context, listen: false).setNewRecipeAdded(false);
-            SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-              model.initialize(model.currentUser.uid);
+            SchedulerBinding.instance!.addPostFrameCallback((timeStamp) async {
+              await model.initialize(model.currentUser.uid);
             });
           }
           return Scaffold(
