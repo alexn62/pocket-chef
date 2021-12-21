@@ -9,15 +9,18 @@ const Color backgroundColorDark = Color(0xFF0E1117);
 const Color accentColorDark = Color(0xFF1F6FEB);
 const Color accentColorLight = Color(0xFF967E6B);
 const Color goodColor = Color(0xFF2EA043);
+const Color errorColor = Color(0xFFFF6961);
 
 ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: primaryColorDark,
     backgroundColor: backgroundColorDark,
     colorScheme: ThemeData.dark().colorScheme.copyWith(
-        primary: primaryColorDark,
-        secondary: accentColorDark,
-        tertiary: goodColor),
+          primary: primaryColorDark,
+          secondary: accentColorDark,
+          tertiary: goodColor,
+          error: errorColor,
+        ),
     iconTheme: const IconThemeData(color: primaryColorDark),
     switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.all(primaryColorDark),
@@ -68,7 +71,8 @@ ThemeData lightTheme = ThemeData(
     colorScheme: ThemeData.light().colorScheme.copyWith(
         primary: primaryColorLight,
         secondary: accentColorLight,
-        tertiary: goodColor),
+        tertiary: goodColor,
+        error: errorColor),
     iconTheme: const IconThemeData(color: primaryColorLight),
     appBarTheme: const AppBarTheme(
         elevation: 0,

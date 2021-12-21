@@ -32,14 +32,11 @@ class _RecipesListItemState extends State<RecipesListItem> {
     super.initState();
   }
 
-
-
   @override
   void dispose() {
     super.dispose();
     _interstitialAd?.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +49,12 @@ class _RecipesListItemState extends State<RecipesListItem> {
           motion: const DrawerMotion(),
           children: [
             SlidableAction(
-              onPressed: (ctx) => model.deleteRecipes([widget.recipe], confirm: false),
-              backgroundColor: Theme.of(context).primaryColor,
-              foregroundColor: Theme.of(context).backgroundColor,
-              icon: Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline,
-              label: 'Delete',
+              onPressed: (ctx) =>
+                  model.deleteRecipes([widget.recipe], confirm: false),
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Colors.white,
+              icon:
+                  Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline,
               autoClose: true,
             ),
           ]),
@@ -69,7 +67,6 @@ class _RecipesListItemState extends State<RecipesListItem> {
                 if (_generalServices.timer == null ||
                     _generalServices.timer != null &&
                         !_generalServices.timer!.isActive) {
-                        
                   _generalServices.setTimer();
                   locator<AdService>().showInterstitialAd();
                 }
