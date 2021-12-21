@@ -162,7 +162,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                 ),
                 body: Stack(
                   children: [
-                    Padding(
+                    Container(
+                      height: MediaQuery.of(context).size.height,
                       padding: const EdgeInsets.only(
                         top: 10,
                         right: 15,
@@ -170,7 +171,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                       ),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
-                        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                        physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
                         controller: _controller,
                         child: Form(
                           key: _formKey,
@@ -188,170 +190,208 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                     tempImage: model.img, recipe: model.recipe),
                                 getImage: model.getImage,
                               ),
-                              vRegularSpace,
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Flexible(
-                                    flex: 3,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Title',
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 17,
-                                          ),
-                                        ),
-                                        vSmallSpace,
-                                        CustomTextFormField(
-                                          controller: widget.recipe == null
-                                              ? _titleController
-                                              : null,
-                                          hintText: 'e.g., Pizza',
-                                          initialValue: widget.recipe != null
-                                              ? model.recipe.title
-                                              : null,
-                                          validator: (text) {
-                                            if (text == null ||
-                                                text.trim().isEmpty) {
-                                              return 'Please enter a recipe title.';
-                                            }
-                                            if (text.length < 2 ||
-                                                text.length > 20) {
-                                              return 'The text has to be between two and twenty characters.';
-                                            }
-                                            return null;
-                                          },
-                                          onChanged: model.setRecipeTitle,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  hTinySpace,
-                                  Flexible(
-                                    flex: 1,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Serves',
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 17,
-                                          ),
-                                        ),
-                                        vSmallSpace,
-                                        CustomTextFormField(
-                                          controller: widget.recipe == null
-                                              ? _servesController
-                                              : null,
-                                          hintText: 'e.g., 4',
-                                          initialValue: widget.recipe != null
-                                              ? model.recipe.serves?.toString()
-                                              : null,
-                                          validator: (text) {
-                                            if (text == null ||
-                                                text.trim().isEmpty ||
-                                                text.trim().length > 5 ||
-                                                double.tryParse(text) == null) {
-                                              return 'Err';
-                                            }
-                                            return null;
-                                          },
-                                          onChanged: model.setServesNumber,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
                               vSmallSpace,
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Sections',
-                                      style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 17)),
-                                  SizedBox(
-                                    height: 30,
-                                    child: IconButton(
-                                        onPressed: () {
-                                          model.addSection();
-                                        },
-                                        padding: const EdgeInsets.all(0),
-                                        icon: Icon(
-                                          Platform.isIOS
-                                              ? CupertinoIcons.add
-                                              : Icons.add,
-                                        )),
-                                  ),
-                                ],
-                              ),
-                              ...model.recipe.sections
-                                  .asMap()
-                                  .entries
-                                  .map(
-                                    (entry) => AddSectionComponent(
-                                      setSectionTitle: model.setSectionTitle,
-                                      removeSection: () =>
-                                          model.removeSection(entry.key),
-                                      title: entry.value.title,
-                                      sectionIndex: entry.key,
-                                      ingredients: model.recipe
-                                          .sections[entry.key].ingredients,
-                                      key: ValueKey(entry.value.uid),
-                                    ),
-                                  )
-                                  .toList(),
-                              vSmallSpace,
-                              ListTileTheme(
-                                dense: true,
-                                child: ExpansionTile(
-                                  tilePadding: const EdgeInsets.only(right: 12),
-                                  title: const Text('Instructions',
-                                      style: TextStyle(fontSize: 17)),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Row(
                                   children: [
-                                    CustomTextFormField(
-                                      controller: widget.recipe == null
-                                          ? _instructionsController
-                                          : null,
-                                      keyboardType: TextInputType.multiline,
-                                      minLines: 3,
-                                      maxLines: null,
-                                      initialValue: widget.recipe != null
-                                          ? model.recipe.instructions
-                                          : null,
-                                      validator: (text) {
-                                        if (text == null) {
-                                          return 'Value cannot be null';
-                                        }
-                                        if (text.length > 2000) {
-                                          return 'The instructions must not be longer than 2000 characters.';
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: model.setInstructions,
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        'Title',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                    ),
+                                    hSmallSpace,
+                                    Flexible(
+                                      flex: 1,
+                                      child: Text(
+                                        'Serves',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 17,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                              AddAdvancedComponent(
-                                deleteTag: model.deleteTag,
-                                toggleAddTag: model.toggleAddTag,
-                                tags: model.recipe.tags,
-                                toggleTag: model.setTagStatus,
+                              Container(
+                                padding: const EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      flex: 3,
+                                      child: CustomTextFormField(
+                                        controller: widget.recipe == null
+                                            ? _titleController
+                                            : null,
+                                        hintText: 'e.g., Pizza',
+                                        initialValue: widget.recipe != null
+                                            ? model.recipe.title
+                                            : null,
+                                        validator: (text) {
+                                          if (text == null ||
+                                              text.trim().isEmpty) {
+                                            return 'Please enter a recipe title.';
+                                          }
+                                          if (text.length < 2 ||
+                                              text.length > 20) {
+                                            return 'The text has to be between two and twenty characters.';
+                                          }
+                                          return null;
+                                        },
+                                        onChanged: model.setRecipeTitle,
+                                      ),
+                                    ),
+                                    hSmallSpace,
+                                    Flexible(
+                                      flex: 1,
+                                      child: CustomTextFormField(
+                                        controller: widget.recipe == null
+                                            ? _servesController
+                                            : null,
+                                        hintText: 'e.g., 4',
+                                        initialValue: widget.recipe != null
+                                            ? model.recipe.serves?.toString()
+                                            : null,
+                                        validator: (text) {
+                                          if (text == null ||
+                                              text.trim().isEmpty ||
+                                              text.trim().length > 5 ||
+                                              double.tryParse(text) == null) {
+                                            return 'Err';
+                                          }
+                                          return null;
+                                        },
+                                        onChanged: model.setServesNumber,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              vBigSpace,
-                              vBigSpace,
-                              vBigSpace,
+                              vSmallSpace,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Sections',
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 17)),
+                                    SizedBox(
+                                      height: 30,
+                                      child: IconButton(
+                                          onPressed: () {
+                                            model.addSection();
+                                          },
+                                          padding: const EdgeInsets.all(0),
+                                          icon: Icon(
+                                            Platform.isIOS
+                                                ? CupertinoIcons.add
+                                                : Icons.add,
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  ...model.recipe.sections
+                                      .asMap()
+                                      .entries
+                                      .map(
+                                        (entry) => AddSectionComponent(
+                                          setSectionTitle:
+                                              model.setSectionTitle,
+                                          removeSection: () =>
+                                              model.removeSection(entry.key),
+                                          title: entry.value.title,
+                                          sectionIndex: entry.key,
+                                          ingredients: model.recipe
+                                              .sections[entry.key].ingredients,
+                                          key: ValueKey(entry.value.uid),
+                                        ),
+                                      )
+                                      .toList(),
+                                ],
+                              ),
+                              vTinySpace,
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 0),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: ListTileTheme(
+                                  dense: true,
+                                  child: ExpansionTile(
+                                    tilePadding:
+                                        const EdgeInsets.only(right: 12),
+                                    title: const Text('Instructions',
+                                        style: TextStyle(fontSize: 17)),
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 15),
+                                        child: CustomTextFormField(
+                                          controller: widget.recipe == null
+                                              ? _instructionsController
+                                              : null,
+                                          keyboardType: TextInputType.multiline,
+                                          minLines: 3,
+                                          maxLines: null,
+                                          initialValue: widget.recipe != null
+                                              ? model.recipe.instructions
+                                              : null,
+                                          validator: (text) {
+                                            if (text == null) {
+                                              return 'Value cannot be null';
+                                            }
+                                            if (text.length > 2000) {
+                                              return 'The instructions must not be longer than 2000 characters.';
+                                            }
+                                            return null;
+                                          },
+                                          onChanged: model.setInstructions,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              vSmallSpace,
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 15),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: AddAdvancedComponent(
+                                  deleteTag: model.deleteTag,
+                                  toggleAddTag: model.toggleAddTag,
+                                  tags: model.recipe.tags,
+                                  toggleTag: model.setTagStatus,
+                                ),
+                              ),
+                              const SafeArea(child: SizedBox())
                             ],
                           ),
                         ),

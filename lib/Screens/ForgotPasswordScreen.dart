@@ -68,6 +68,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                  fillColor: Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(0.1),
                                   onFieldSubmitted: (_) =>
                                       model.forgotPassword(model.email),
                                   onChanged: model.setEmail),

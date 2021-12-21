@@ -70,6 +70,9 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                fillColor: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.1),
                                 onChanged: model.setEmail,
                                 keyboardType: TextInputType.emailAddress,
                               ),
@@ -83,6 +86,9 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                fillColor: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.1),
                                 onChanged: model.setPassword,
                                 password: true,
                               ),
@@ -96,6 +102,9 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               vTinySpace,
                               CustomTextFormField(
+                                fillColor: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.1),
                                 onFieldSubmitted: (_) =>
                                     model.signUpEmailPassword(
                                         email: model.email,

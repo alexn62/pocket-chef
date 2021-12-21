@@ -13,7 +13,8 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
+    final GeneralServices _generalServices =
+        Provider.of<GeneralServices>(context);
     return BaseView<SettingsViewModel>(
         onModelReady: (model) => model.initialize(),
         builder: (context, model, child) {
@@ -31,7 +32,8 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  backgroundColor: Theme.of(context).backgroundColor.withOpacity(2 / 3),
+                  backgroundColor:
+                      Theme.of(context).backgroundColor.withOpacity(2 / 3),
                   title: const Text(
                     'Settings',
                   ),
@@ -39,7 +41,8 @@ class SettingsScreen extends StatelessWidget {
                 body: SafeArea(
                   top: false,
                   child: CustomScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
                     slivers: [
                       SliverFillRemaining(
                         hasScrollBody: false,
@@ -48,31 +51,49 @@ class SettingsScreen extends StatelessWidget {
                             const SafeArea(
                               child: SizedBox(),
                             ),
-                            SettingsComponent(title: 'General Settings', items: [
-                              ListTile(
-                                  title: const Text('Dark mode'),
-                                  trailing: Switch.adaptive(
-                                    onChanged: (value) async {
-                                      await _generalServices.setDarkMode(value);
-                                    },
-                                    value: _generalServices.darkMode!,
-                                  )),
-                            ]),
+                            SettingsComponent(
+                                title: 'General Settings',
+                                items: [
+                                  ListTile(
+                                      title: const Text('Dark mode'),
+                                      trailing: Switch.adaptive(
+                                        onChanged: (value) async {
+                                          await _generalServices
+                                              .setDarkMode(value);
+                                        },
+                                        value: _generalServices.darkMode!,
+                                      )),
+                                ]),
                             SettingsComponent(title: 'Account', items: [
                               const ListTile(
                                 title: Text('Membership'),
                                 trailing: Text('Standard'),
                               ),
-                              model.currentUser != null && model.currentUser!.email != null ? ListTile(title: const Text('Email'), trailing: Text(model.currentUser!.email!)) : null,
+                              model.currentUser != null &&
+                                      model.currentUser!.email != null
+                                  ? ListTile(
+                                      title: const Text('Email'),
+                                      trailing: Text(model.currentUser!.email!))
+                                  : null,
                               ListTile(
                                 title: const Text('Change Password'),
-                                trailing: const Icon(Icons.keyboard_arrow_right),
-                                onTap: model.currentUser != null && model.currentUser!.email != null ? () => model.resetPassword(model.currentUser!.email!) : () {},
+                                trailing:
+                                    const Icon(Icons.keyboard_arrow_right),
+                                onTap: model.currentUser != null &&
+                                        model.currentUser!.email != null
+                                    ? () => model.resetPassword(
+                                        model.currentUser!.email!)
+                                    : () {},
                               ),
-                              model.currentUser != null && model.currentUser!.metadata.creationTime != null
+                              model.currentUser != null &&
+                                      model.currentUser!.metadata
+                                              .creationTime !=
+                                          null
                                   ? ListTile(
                                       title: const Text('Member since'),
-                                      trailing: Text(intl.DateFormat.yMMMMd().format(model.currentUser!.metadata.creationTime!)),
+                                      trailing: Text(intl.DateFormat.yMMMMd()
+                                          .format(model.currentUser!.metadata
+                                              .creationTime!)),
                                     )
                                   : null,
                               ListTile(
@@ -95,7 +116,9 @@ class SettingsScreen extends StatelessWidget {
                               ListTile(
                                 title: Text(
                                   'Delete Account',
-                                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                                  style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.error),
                                 ),
                                 trailing: Icon(
                                   Icons.keyboard_arrow_right,
@@ -144,7 +167,9 @@ class SettingsComponent extends StatelessWidget {
                 ),
           vRegularSpace,
           Container(
-              decoration: BoxDecoration(color: Theme.of(context).primaryColor.withOpacity(0.08), borderRadius: BorderRadius.circular(15)),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(15)),
               child: Column(
                   children: items
                       .map((item) => item != null
@@ -153,7 +178,9 @@ class SettingsComponent extends StatelessWidget {
                                 item,
                                 item != items.last
                                     ? Divider(
-                                        color: Theme.of(context).primaryColor.withOpacity(0.3),
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.3),
                                         height: 0,
                                         thickness: 0,
                                       )

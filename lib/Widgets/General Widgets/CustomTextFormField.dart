@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final Color? fillColor;
   final TextEditingController? controller;
   final String? hintText;
   final int? minLines;
@@ -16,6 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool autofocus;
   final Widget? prefixIcon;
   const CustomTextFormField({
+    this.fillColor,
     this.controller,
     this.hintText,
     this.minLines,
@@ -51,6 +53,7 @@ class CustomTextFormField extends StatelessWidget {
               ? onChanged(text, sectionIndex)
               : onChanged(text, sectionIndex, ingredientIndex),
       decoration: InputDecoration(
+        fillColor: fillColor,
         prefixIcon: prefixIcon,
         hintText: hintText,
         hintStyle: TextStyle(

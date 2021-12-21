@@ -58,6 +58,5 @@ class GeneralServices extends ChangeNotifier {
   bool get newRecipeAdded => _newRecipeAdded;
   setNewRecipeAdded(bool newRecipeAdded) {
     _newRecipeAdded = newRecipeAdded;
-    notifyListeners();
   }
 }

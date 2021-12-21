@@ -29,7 +29,7 @@ class AddPhotoComponent extends StatelessWidget {
           ? () {}
           : getImage,
       child: DottedBorder(
-        radius: const Radius.circular(5),
+        radius: const Radius.circular(15),
         borderType: BorderType.RRect,
         color: img != null || currentImage != null
             ? Colors.transparent
@@ -37,12 +37,12 @@ class AddPhotoComponent extends StatelessWidget {
         strokeWidth: 1,
         dashPattern: const [4, 7],
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(15),
           child: Container(
             width: double.infinity,
             height: 120,
             decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
                 image: img == null && currentImage == null ||
                         status == LoadingStatus.Busy
                     ? null

@@ -54,62 +54,6 @@ class AddAdvancedComponent extends StatelessWidget {
                 ]),
           ),
           vSmallSpace,
-          // Row(
-          //   children: [
-          //     Expanded(
-          //       child: Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           const Text('Prep time', style: TextStyle(fontSize: 15)),
-          //           vTinySpace,
-          //           Row(
-          //             children: [
-          //               SizedBox(
-          //                 width: 70,
-          //                 child: CustomTextFormField(
-          //                   keyboardType: TextInputType.number,
-          //                   onChanged: (_) {},
-          //                 ),
-          //               ),
-          //               hSmallSpace,
-          //               const Text(
-          //                 'minutes',
-          //                 style: TextStyle(fontSize: 15),
-          //               )
-          //             ],
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     hSmallSpace,
-          //     Expanded(
-          // child: Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           const Text('Cooking time', style: TextStyle(fontSize: 15)),
-          //           vTinySpace,
-          //           Row(
-          //             children: [
-          //               SizedBox(
-          //                 width: 70,
-          //                 child: CustomTextFormField(
-          //                   keyboardType: TextInputType.number,
-          //                   onChanged: (_) {},
-          //                 ),
-          //               ),
-          //               hSmallSpace,
-          //               const Text(
-          //                 'minutes',
-          //                 style: TextStyle(fontSize: 15),
-          //               )
-          //             ],
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // vSmallSpace,
         ],
       ),
     );

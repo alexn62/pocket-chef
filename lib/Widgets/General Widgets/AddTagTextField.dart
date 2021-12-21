@@ -67,6 +67,9 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
                             child: Form(
                               key: _addNewTagFormKey,
                               child: CustomTextFormField(
+                                fillColor: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.1),
                                 autofocus: true,
                                 onFieldSubmitted: (_) {
                                   if (_addNewTagFormKey.currentState!

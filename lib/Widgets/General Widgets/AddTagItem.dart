@@ -29,9 +29,6 @@ class TagItem extends StatelessWidget {
         height: 32,
         width: textPainter.size.width + 22,
         decoration: BoxDecoration(
-          color:
-          
-              Colors.white10,
           border: Border.all(
             color: selected
                 ? Theme.of(context).colorScheme.tertiary

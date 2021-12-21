@@ -42,7 +42,7 @@ ThemeData darkTheme = ThemeData(
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: primaryColorDark.withOpacity(0.1),
+      fillColor: backgroundColorDark,
       contentPadding: const EdgeInsets.all(10),
       isDense: true,
       focusedBorder: OutlineInputBorder(
@@ -91,7 +91,7 @@ ThemeData lightTheme = ThemeData(
         subtitle1: TextStyle(color: primaryColorLight)),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: primaryColorLight.withOpacity(0.1),
+      fillColor: backgroundColorLight,
       contentPadding: const EdgeInsets.all(10),
       isDense: true,
       focusedBorder: OutlineInputBorder(

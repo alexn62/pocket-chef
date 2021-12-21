@@ -24,57 +24,66 @@ class AddSectionComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: CustomTextFormField(
-                hintText: 'e.g., Dough',
-                initialValue: title,
-                validator: (text) {
-                  if (text == null || text.trim().isEmpty) {
-                    return 'Please enter a section title.';
-                  }
-                  if (text.length < 2 || text.length > 20) {
-                    return 'The text has to be between two and twenty characters.';
-                  }
-                  return null;
-                },
-                onChanged: setSectionTitle,
-                sectionIndex: sectionIndex,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 10,
+      ),
+      decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: CustomTextFormField(
+                  hintText: 'e.g., Dough',
+                  initialValue: title,
+                  validator: (text) {
+                    if (text == null || text.trim().isEmpty) {
+                      return 'Please enter a section title.';
+                    }
+                    if (text.length < 2 || text.length > 20) {
+                      return 'The text has to be between two and twenty characters.';
+                    }
+                    return null;
+                  },
+                  onChanged: setSectionTitle,
+                  sectionIndex: sectionIndex,
+                ),
               ),
-            ),
-            IconButton(
-                onPressed: removeSection,
-                padding: const EdgeInsets.all(0),
-                icon: Icon(Platform.isIOS
-                    ? CupertinoIcons.delete
-                    : Icons.delete_outline)),
-          ],
-        ),
-        ListTileTheme(
-          dense: true,
-          child: ExpansionTile(
-              initiallyExpanded: true,
-              tilePadding: const EdgeInsets.only(left: 30, right: 12),
-              backgroundColor: Theme.of(context).backgroundColor,
-              title: const Text(
-                'Ingredients',
-                style: (TextStyle(fontSize: 17)),
-              ),
-              children: ingredients
-                  .asMap()
-                  .entries
-                  .map((entry) => AddIngredientComponent(
-                        ingredients: ingredients,
-                        sectionIndex: sectionIndex,
-                        ingredientIndex: entry.key,
-                      ))
-                  .toList()),
-        ),
-      ],
+              IconButton(
+                  onPressed: removeSection,
+                  padding: const EdgeInsets.all(0),
+                  icon: Icon(Platform.isIOS
+                      ? CupertinoIcons.delete
+                      : Icons.delete_outline)),
+            ],
+          ),
+          ListTileTheme(
+            dense: true,
+            child: ExpansionTile(
+                initiallyExpanded: true,
+                tilePadding: const EdgeInsets.only(left: 30, right: 12),
+                title: const Text(
+                  'Ingredients',
+                  style: (TextStyle(fontSize: 17)),
+                ),
+                children: ingredients
+                    .asMap()
+                    .entries
+                    .map((entry) => AddIngredientComponent(
+                          ingredients: ingredients,
+                          sectionIndex: sectionIndex,
+                          ingredientIndex: entry.key,
+                        ))
+                    .toList()),
+          ),
+        ],
+      ),
     );
   }
 }
