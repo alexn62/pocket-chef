@@ -25,133 +25,123 @@ class AddIngredientComponent extends StatefulWidget {
   State<AddIngredientComponent> createState() => _AddIngredientComponentState();
 }
 
-class _AddIngredientComponentState extends State<AddIngredientComponent> {
+class _AddIngredientComponentState extends State<AddIngredientComponent> with SingleTickerProviderStateMixin {
   final GlobalKey dataKey = GlobalKey();
+  late AnimationController controller;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
-    // scroll down x pixels
-    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-      Scrollable.ensureVisible(
-        dataKey.currentContext!,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
-        alignment: 0.5,
-        duration: const Duration(milliseconds: 300),
-      );
-    });
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300))..forward();
+    WidgetsBinding.instance!.addPostFrameCallback((_) => FocusScope.of(context).requestFocus(_focusNode));
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    final AddRecipeViewModel model =
-        Provider.of<AddRecipeViewModel>(context, listen: false);
-    return SizedBox(
-      key: dataKey,
-      child: Row(
-        key: ValueKey(widget.ingredients[widget.ingredientIndex].uid),
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          widget.ingredientIndex + 1 == widget.ingredients.length
-              ? SizedBox(
-                  height: 40,
-                  width: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: IconButton(
-                        onPressed: () async {
-                          model.addIngredient(widget.sectionIndex);
-                        },
-                        padding: const EdgeInsets.all(0),
-                        icon: Icon(
-                            Platform.isIOS ? CupertinoIcons.add : Icons.add),
-                        iconSize: 30),
-                  ),
-                )
-              : hBigSpace,
-          Flexible(
-            flex: 2,
-            child: CustomTextFormField(
-              hintText: 'e.g., Flour',
-              initialValue: widget.ingredients[widget.ingredientIndex].title,
-              validator: (text) {
-                if (text == null || text.trim().isEmpty) {
-                  return 'Enter an ingredient title.';
-                }
-                if (text.length < 2 || text.length > 20) {
-                  return 'The text has to be between two and twenty characters.';
-                }
-                return null;
-              },
-              onChanged: model.setIngredientTitle,
-              sectionIndex: widget.sectionIndex,
-              ingredientIndex: widget.ingredientIndex,
-            ),
-          ),
-          hTinySpace,
-          Flexible(
-            flex: 1,
-            child: CustomTextFormField(
-              keyboardType: TextInputType.number,
-              hintText: '0',
-              initialValue:
-                  widget.ingredients[widget.ingredientIndex].amount == 0
-                      ? ''
-                      : widget.ingredients[widget.ingredientIndex].amount
-                          .toString(),
-              validator: (text) {
-                if (text == null ||
-                    text.trim().isEmpty ||
-                    text.trim().length > 5 ||
-                    double.tryParse(text) == null) {
-                  return 'Err';
-                }
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
-                return null;
-              },
-              onChanged: model.setIngredientAmount,
-              sectionIndex: widget.sectionIndex,
-              ingredientIndex: widget.ingredientIndex,
-            ),
-          ),
-          hSmallSpace,
-          PopupMenuButton(
-            initialValue:
-                widget.ingredients[widget.ingredientIndex].unit ?? 'Unit',
-            child: Row(
-              children: [
-                Text(
-                  widget.ingredients[widget.ingredientIndex].unit ?? 'Unit',
-                  style: TextStyle(
-                      fontSize: 16, color: Theme.of(context).primaryColor),
-                ),
-                const Icon(Icons.expand_more),
-              ],
-            ),
-            itemBuilder: (context) => model.possibleUnits
-                .map((item) => PopupMenuItem(
-                      value: item,
-                      child: Text(item),
-                    ))
-                .toList(),
-            onSelected: (value) => model.setIngredientUnit(
+  @override
+  Widget build(BuildContext context) {
+    final AddRecipeViewModel model = Provider.of<AddRecipeViewModel>(context, listen: false);
+    return SizeTransition(
+      key: dataKey,
+      sizeFactor: CurvedAnimation(curve: Curves.fastOutSlowIn, parent: controller),
+      child: SizedBox(
+        child: Row(
+          key: ValueKey(widget.ingredients[widget.ingredientIndex].uid),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            widget.ingredientIndex + 1 == widget.ingredients.length
+                ? SizedBox(
+                    height: 40,
+                    width: 30,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: IconButton(
+                          onPressed: () async {
+                            model.addIngredient(widget.sectionIndex);
+                          },
+                          padding: const EdgeInsets.all(0),
+                          icon: Icon(Platform.isIOS ? CupertinoIcons.add : Icons.add),
+                          iconSize: 30),
+                    ),
+                  )
+                : hBigSpace,
+            Flexible(
+              flex: 2,
+              child: CustomTextFormField(
+                focusNode: _focusNode,
+                hintText: 'e.g., Flour',
+                initialValue: widget.ingredients[widget.ingredientIndex].title,
+                validator: (text) {
+                  if (text == null || text.trim().isEmpty) {
+                    return 'Enter an ingredient title.';
+                  }
+                  if (text.length < 2 || text.length > 20) {
+                    return 'The text has to be between two and twenty characters.';
+                  }
+                  return null;
+                },
+                onChanged: model.setIngredientTitle,
                 sectionIndex: widget.sectionIndex,
                 ingredientIndex: widget.ingredientIndex,
-                ingredientUnit: value.toString()),
-          ),
-          IconButton(
-              splashRadius: widget.ingredients.length <= 1 ? 1 : 35,
-              onPressed: widget.ingredients.length <= 1
-                  ? () {}
-                  : () => model.removeIngredient(
-                      widget.sectionIndex, widget.ingredientIndex),
-              padding: const EdgeInsets.all(0),
-              icon: widget.ingredients.length <= 1
-                  ? const SizedBox()
-                  : Icon(Platform.isIOS
-                      ? CupertinoIcons.delete
-                      : Icons.delete_outline)),
-        ],
+              ),
+            ),
+            hTinySpace,
+            Flexible(
+              flex: 1,
+              child: CustomTextFormField(
+                keyboardType: TextInputType.number,
+                hintText: '0',
+                initialValue: widget.ingredients[widget.ingredientIndex].amount == 0 ? '' : widget.ingredients[widget.ingredientIndex].amount.toString(),
+                validator: (text) {
+                  if (text == null || text.trim().isEmpty || text.trim().length > 5 || double.tryParse(text) == null) {
+                    return 'Err';
+                  }
+
+                  return null;
+                },
+                onChanged: model.setIngredientAmount,
+                sectionIndex: widget.sectionIndex,
+                ingredientIndex: widget.ingredientIndex,
+              ),
+            ),
+            hSmallSpace,
+            PopupMenuButton(
+              initialValue: widget.ingredients[widget.ingredientIndex].unit ?? 'Unit',
+              child: Row(
+                children: [
+                  Text(
+                    widget.ingredients[widget.ingredientIndex].unit ?? 'Unit',
+                    style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
+                  ),
+                  const Icon(Icons.expand_more),
+                ],
+              ),
+              itemBuilder: (context) => model.possibleUnits
+                  .map((item) => PopupMenuItem(
+                        value: item,
+                        child: Text(item),
+                      ))
+                  .toList(),
+              onSelected: (value) => model.setIngredientUnit(sectionIndex: widget.sectionIndex, ingredientIndex: widget.ingredientIndex, ingredientUnit: value.toString()),
+            ),
+            IconButton(
+                splashRadius: widget.ingredients.length <= 1 ? 1 : 35,
+                onPressed: widget.ingredients.length <= 1
+                    ? () {}
+                    : () {
+                        controller.reverse().then((_) {
+                          model.removeIngredient(widget.sectionIndex, widget.ingredientIndex);
+                        });
+                      },
+                padding: const EdgeInsets.all(0),
+                icon: widget.ingredients.length <= 1 ? const SizedBox() : Icon(Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline)),
+          ],
+        ),
       ),
     );
   }

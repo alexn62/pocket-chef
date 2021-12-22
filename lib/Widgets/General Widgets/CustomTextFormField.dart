@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final FocusNode? focusNode;
   final Color? fillColor;
   final TextEditingController? controller;
   final String? hintText;
@@ -17,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool autofocus;
   final Widget? prefixIcon;
   const CustomTextFormField({
+    this.focusNode,
     this.fillColor,
     this.controller,
     this.hintText,
@@ -38,6 +40,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       autofocus: autofocus,
       controller: controller,
       onFieldSubmitted: onFieldSubmitted,
