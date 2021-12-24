@@ -168,7 +168,8 @@ class SettingsComponent extends StatelessWidget {
           vRegularSpace,
           Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.08),
+                  color:
+                      Theme.of(context).colorScheme.tertiary.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(15)),
               child: Column(
                   children: items
@@ -179,7 +180,8 @@ class SettingsComponent extends StatelessWidget {
                                 item != items.last
                                     ? Divider(
                                         color: Theme.of(context)
-                                            .primaryColor
+                                            .colorScheme
+                                            .tertiary
                                             .withOpacity(0.3),
                                         height: 0,
                                         thickness: 0,

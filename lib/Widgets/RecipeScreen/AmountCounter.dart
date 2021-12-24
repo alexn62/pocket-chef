@@ -21,7 +21,7 @@ class AmountCounter extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).primaryColor, width: 0.5),
-          color: Theme.of(context).primaryColor.withOpacity(0.1),
+          color: Theme.of(context).primaryColor.withOpacity(0.05),
           borderRadius: BorderRadius.circular(45),
         ),
         child: Row(
@@ -32,8 +32,11 @@ class AmountCounter extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               padding: const EdgeInsets.all(0),
               onPressed: decrease,
-              icon: Icon(Platform.isIOS ? CupertinoIcons.minus : Icons.remove,
-                  color: Theme.of(context).primaryColor, size: 17,),
+              icon: Icon(
+                Platform.isIOS ? CupertinoIcons.minus : Icons.remove,
+                color: Theme.of(context).primaryColor,
+                size: 17,
+              ),
             ),
             SizedBox(
               width: 30,
@@ -48,10 +51,8 @@ class AmountCounter extends StatelessWidget {
             IconButton(
               visualDensity: VisualDensity.compact,
               padding: const EdgeInsets.all(0),
-
               onPressed: increase,
               icon: Icon(
-                
                 Platform.isIOS ? CupertinoIcons.add : Icons.add,
                 color: Theme.of(context).primaryColor,
                 size: 17,

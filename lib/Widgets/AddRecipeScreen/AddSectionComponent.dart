@@ -52,7 +52,7 @@ class _AddSectionComponentState extends State<AddSectionComponent>
           bottom: 0,
         ),
         decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            color: Theme.of(context).colorScheme.tertiary.withOpacity(0.05),
             borderRadius: BorderRadius.circular(15)),
         child: Column(
           children: [

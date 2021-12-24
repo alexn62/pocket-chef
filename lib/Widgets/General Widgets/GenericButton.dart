@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Constants/Themes.dart';
 
 class GenericButton extends StatelessWidget {
   final Function()? onLongPress;
@@ -48,18 +49,22 @@ class GenericButton extends StatelessWidget {
                   : customWidth,
       decoration: BoxDecoration(
         color: positive
-            ? Theme.of(context).colorScheme.tertiary
+            ? goodColor
             : danger
                 ? Theme.of(context).colorScheme.error
                 : invertColors
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).backgroundColor,
+                    ? Theme.of(context).backgroundColor
+                    : Theme.of(context).brightness == Brightness.light
+                        ? Theme.of(context).colorScheme.tertiary
+                        : Theme.of(context).primaryColor,
         border: Border.all(
             color: positive
-                ? Theme.of(context).colorScheme.tertiary
+                ? goodColor
                 : danger
                     ? Theme.of(context).colorScheme.error
-                    : Theme.of(context).primaryColor),
+                    : Theme.of(context).brightness == Brightness.light
+                        ? Theme.of(context).colorScheme.tertiary
+                        : Theme.of(context).primaryColor),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Material(
@@ -77,7 +82,7 @@ class GenericButton extends StatelessWidget {
                       style: TextStyle(
                           color: positive || danger
                               ? Colors.white
-                              : !invertColors
+                              : invertColors
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).backgroundColor,
                           fontSize: fontsize),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
+import 'package:personal_recipes/Constants/Themes.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 
 class AppleGoogleButton extends StatelessWidget {
@@ -19,7 +20,8 @@ class AppleGoogleButton extends StatelessWidget {
         height: 35,
         decoration: BoxDecoration(
             color: platform == AppleGoogle.Apple ? Colors.black : Colors.white,
-            borderRadius: BorderRadius.circular(5)),
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: backgroundColorDark)),
         child: Center(
             child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

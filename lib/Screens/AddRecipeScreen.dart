@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
+import 'package:personal_recipes/Constants/Themes.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/Services/AdService.dart';
@@ -167,7 +168,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                           Platform.isIOS
                               ? CupertinoIcons.check_mark
                               : Icons.check,
-                          color: Theme.of(context).colorScheme.tertiary,
+                          color: goodColor,
                         ))
                   ],
                 ),
@@ -235,8 +236,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                 padding: const EdgeInsets.all(15),
                                 decoration: BoxDecoration(
                                     color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.1),
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(0.05),
                                     borderRadius: BorderRadius.circular(15)),
                                 child: Row(
                                   children: [
@@ -346,8 +348,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                     horizontal: 15, vertical: 0),
                                 decoration: BoxDecoration(
                                     color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.1),
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(0.05),
                                     borderRadius: BorderRadius.circular(15)),
                                 child: ListTileTheme(
                                   dense: true,
@@ -392,8 +395,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                     vertical: 0, horizontal: 15),
                                 decoration: BoxDecoration(
                                     color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.1),
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(0.05),
                                     borderRadius: BorderRadius.circular(15)),
                                 child: AddAdvancedComponent(
                                   deleteTag: model.deleteTag,

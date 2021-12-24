@@ -27,7 +27,6 @@ class SearchFiltersComponents extends StatefulWidget {
 
 class _SearchFiltersComponentsState extends State<SearchFiltersComponents>
     with TickerProviderStateMixin {
-  
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -58,7 +57,6 @@ class _SearchFiltersComponentsState extends State<SearchFiltersComponents>
                           widget.toggleAddTag();
                         },
                         title: '+',
-                        invertColors: true,
                         shrink: true,
                         fontsize: 15,
                       ),

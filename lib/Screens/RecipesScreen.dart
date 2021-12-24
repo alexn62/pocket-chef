@@ -126,8 +126,9 @@ class _RecipesScreenState extends State<RecipesScreen>
                                 Expanded(
                                   child: CustomTextFormField(
                                     fillColor: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.1),
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(0.05),
                                     hintText: 'Search',
                                     prefixIcon: Icon(
                                         Platform.isIOS

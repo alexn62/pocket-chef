@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Constants/Themes.dart';
 
 class TagItem extends StatelessWidget {
   final void Function(String tagKey) toggleTag;
@@ -29,9 +30,16 @@ class TagItem extends StatelessWidget {
         height: 32,
         width: textPainter.size.width + 22,
         decoration: BoxDecoration(
+          color: selected
+              ? Theme.of(context).brightness == Brightness.light
+                  ? Theme.of(context).colorScheme.tertiary.withOpacity(0.1)
+                  : goodColor.withOpacity(0.1)
+              : Colors.transparent,
           border: Border.all(
             color: selected
-                ? Theme.of(context).colorScheme.tertiary
+                ? Theme.of(context).brightness == Brightness.light
+                    ? Theme.of(context).colorScheme.tertiary
+                    : goodColor
                 : Theme.of(context).primaryColor,
           ),
           borderRadius: BorderRadius.circular(5),
@@ -44,7 +52,9 @@ class TagItem extends StatelessWidget {
             style: TextStyle(
                 fontSize: 13,
                 color: selected
-                    ? Theme.of(context).colorScheme.tertiary
+                    ? Theme.of(context).brightness == Brightness.light
+                        ? Theme.of(context).colorScheme.tertiary
+                        : goodColor
                     : Theme.of(context).primaryColor),
           ),
         ),

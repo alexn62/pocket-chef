@@ -25,7 +25,6 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
   late GlobalKey<FormState> _addNewTagFormKey;
   @override
   void initState() {
-    print('init called');
     _addNewTagFormKey = GlobalKey<FormState>();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_focusNode);
@@ -68,8 +67,9 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
                           child: CustomTextFormField(
                             focusNode: _focusNode,
                             // autofocus: true,
-                            fillColor:
-                                Theme.of(context).primaryColor.withOpacity(0.1),
+                            fillColor: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.05),
                             onFieldSubmitted: (_) {
                               if (_addNewTagFormKey.currentState!.validate()) {
                                 widget.addTag(newTag);

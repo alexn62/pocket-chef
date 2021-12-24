@@ -43,11 +43,8 @@ class AddAdvancedComponent extends StatelessWidget {
                       toggleTag: toggleTag,
                     ),
                   GenericButton(
-                    onTap: () {
-                      toggleAddTag();
-                    },
+                    onTap: () => toggleAddTag(),
                     title: '+',
-                    invertColors: true,
                     shrink: true,
                     fontsize: 15,
                   ),

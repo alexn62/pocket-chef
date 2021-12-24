@@ -70,7 +70,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                               CustomTextFormField(
                                   fillColor: Theme.of(context)
                                       .primaryColor
-                                      .withOpacity(0.1),
+                                      .withOpacity(0.05),
                                   onFieldSubmitted: (_) =>
                                       model.forgotPassword(model.email),
                                   onChanged: model.setEmail),
@@ -87,7 +87,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                               GenericButton(
                                 title: 'Login',
                                 onTap: model.navigateToLoginScreen,
-                                invertColors: true,
                                 stretch: true,
                               ),
                               vRegularSpace,

@@ -72,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                               CustomTextFormField(
                                 fillColor: Theme.of(context)
                                     .primaryColor
-                                    .withOpacity(0.1),
+                                    .withOpacity(0.05),
                                 onChanged: model.setEmail,
                                 keyboardType: TextInputType.emailAddress,
                               ),
@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                               CustomTextFormField(
                                 fillColor: Theme.of(context)
                                     .primaryColor
-                                    .withOpacity(0.1),
+                                    .withOpacity(0.05),
                                 onFieldSubmitted: (_) =>
                                     model.loginEmailPassword(
                                         email: model.email,
@@ -157,7 +157,6 @@ class LoginScreen extends StatelessWidget {
                               GenericButton(
                                 title: 'Sign up',
                                 onTap: model.navigateToSignUpScreen,
-                                invertColors: true,
                                 stretch: true,
                               ),
                               vRegularSpace,

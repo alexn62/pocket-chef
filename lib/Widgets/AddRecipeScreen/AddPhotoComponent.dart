@@ -42,7 +42,7 @@ class AddPhotoComponent extends StatelessWidget {
             width: double.infinity,
             height: 120,
             decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                color: Theme.of(context).colorScheme.tertiary.withOpacity(0.05),
                 image: img == null && currentImage == null ||
                         status == LoadingStatus.Busy
                     ? null
