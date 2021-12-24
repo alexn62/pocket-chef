@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-const Color primaryColorLight = Color(0xFF5E5D54);
-const Color backgroundColorLight = Color(0xFFE3E3DA);
+const Color primaryColorLight = Colors.black;
+const Color backgroundColorLight = Color(0xFFECF0F3);
+const Color accentColor = Color(0xFF644BE3);
 
 const Color primaryColorDark = Color(0xFFC7CFC7);
 const Color backgroundColorDark = Color(0xFF0E1117);
@@ -73,10 +74,12 @@ ThemeData lightTheme = ThemeData(
         secondary: accentColorLight,
         tertiary: goodColor,
         error: errorColor),
+    // iconTheme: const IconThemeData(color: accentColor),
     iconTheme: const IconThemeData(color: primaryColorLight),
     appBarTheme: const AppBarTheme(
         elevation: 0,
         titleTextStyle: TextStyle(
+          // color: accentColor,
           color: primaryColorLight,
           fontSize: 17,
           fontWeight: FontWeight.w600,

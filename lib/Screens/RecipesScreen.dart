@@ -297,10 +297,10 @@ class _RecipesScreenState extends State<RecipesScreen>
                               ),
                       ],
                     )),
-                AddTagTextField(
-                    show: model.showAddTag,
-                    toggleAddTag: model.toggleAddTag,
-                    addTag: model.addTag)
+                model.showAddTag
+                    ? AddTagTextField(
+                        toggleAddTag: model.toggleAddTag, addTag: model.addTag)
+                    : const SizedBox()
               ],
             ),
           );

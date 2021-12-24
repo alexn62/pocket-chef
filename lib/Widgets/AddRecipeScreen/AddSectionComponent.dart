@@ -26,26 +26,34 @@ class AddSectionComponent extends StatefulWidget {
   State<AddSectionComponent> createState() => _AddSectionComponentState();
 }
 
-class _AddSectionComponentState extends State<AddSectionComponent> with SingleTickerProviderStateMixin {
+class _AddSectionComponentState extends State<AddSectionComponent>
+    with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
   @override
   void initState() {
-    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300))..forward();
+    controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300))
+      ..forward();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return SizeTransition(
-      sizeFactor: CurvedAnimation(curve: Curves.fastOutSlowIn, parent: controller),
+      sizeFactor:
+          CurvedAnimation(curve: Curves.fastOutSlowIn, parent: controller),
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 10,
+        padding: const EdgeInsets.only(
+          left: 15,
+          right: 15,
+          top: 10,
+          bottom: 0,
         ),
-        decoration: BoxDecoration(color: Theme.of(context).primaryColor.withOpacity(0.1), borderRadius: BorderRadius.circular(15)),
+        decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(15)),
         child: Column(
           children: [
             Row(
@@ -75,14 +83,16 @@ class _AddSectionComponentState extends State<AddSectionComponent> with SingleTi
                       });
                     },
                     padding: const EdgeInsets.all(0),
-                    icon: Icon(Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline)),
+                    icon: Icon(Platform.isIOS
+                        ? CupertinoIcons.delete
+                        : Icons.delete_outline)),
               ],
             ),
             ListTileTheme(
               dense: true,
               child: ExpansionTile(
                   initiallyExpanded: true,
-                  tilePadding: const EdgeInsets.only(left: 30, right: 12),
+                  tilePadding: const EdgeInsets.only(left: 0, right: 12),
                   title: const Text(
                     'Ingredients',
                     style: (TextStyle(fontSize: 17)),

@@ -16,17 +16,17 @@ import 'dart:math' as math;
 import 'package:stacked_services/stacked_services.dart';
 
 class AddRecipeViewModel extends BaseViewModel {
-    //----------SERVICES----------//
+  //----------SERVICES----------//
   final RecipesService _recipesService = locator<RecipesService>();
   final AuthService _authService = locator<AuthService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
-    //----------------------------//
-
+  //----------------------------//
 
   User get currentUser => _authService.firebaseAuth.currentUser!;
 
-  final List<String> possibleUnits = 'ml kg cups tsp tbsp oz g count mg'.split(' ');
+  final List<String> possibleUnits =
+      'ml kg cups tsp tbsp oz g count mg'.split(' ');
 
   void initialize({Recipe? recipe}) async {
     if (recipe == null) {
@@ -106,9 +106,12 @@ class AddRecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void addIngredient(int i) {
+  void addIngredient(int i, {bool focusOnBuild = false}) {
     _recipe.sections[i].ingredients.add(Ingredient(
-        uid: math.Random().nextInt(99999).toString(), title: '', amount: 0.0));
+        uid: math.Random().nextInt(99999).toString(),
+        title: '',
+        amount: 0.0,
+        focusOnBuild: focusOnBuild));
     notifyListeners();
   }
 

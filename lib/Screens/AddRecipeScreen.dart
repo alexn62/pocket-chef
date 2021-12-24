@@ -44,13 +44,16 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   void initState() {
     _formKey = GlobalKey<FormState>();
     locator<AdService>().createInterstitialAd();
-    
+
     super.initState();
   }
- void _jumpToTop() {
-    _controller.jumpTo(0,
-       );
+
+  void _jumpToTop() {
+    _controller.jumpTo(
+      0,
+    );
   }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -61,8 +64,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-    _jumpToTop();
-      
+      _jumpToTop();
     });
     super.build(context);
     final GeneralServices _generalServices =
@@ -406,11 +408,12 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                         ),
                       ),
                     ),
-                    AddTagTextField(
-                      show: model.showAddTag,
-                      toggleAddTag: model.toggleAddTag,
-                      addTag: model.addTag,
-                    ),
+                    model.showAddTag
+                        ? AddTagTextField(
+                            toggleAddTag: model.toggleAddTag,
+                            addTag: model.addTag,
+                          )
+                        : const SizedBox()
                   ],
                 ),
               ),
@@ -421,5 +424,4 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
       ),
     );
   }
-
 }
