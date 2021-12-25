@@ -80,7 +80,10 @@ class AddPhotoComponent extends StatelessWidget {
                         height: img == null && currentImage == null ? 0 : 60,
                         duration: const Duration(milliseconds: 200),
                         child: FloatingActionButton(
-                          backgroundColor: Theme.of(context).backgroundColor,
+                          backgroundColor:
+                              Theme.of(context).brightness == Brightness.dark
+                                  ? Theme.of(context).backgroundColor
+                                  : Theme.of(context).colorScheme.tertiary,
                           child: img == null && currentImage == null
                               ? null
                               : FittedBox(
@@ -89,7 +92,10 @@ class AddPhotoComponent extends StatelessWidget {
                                     Platform.isIOS
                                         ? CupertinoIcons.delete
                                         : Icons.delete_outline,
-                                    color: Theme.of(context).primaryColor,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Theme.of(context).primaryColor
+                                        : Theme.of(context).backgroundColor,
                                   ),
                                 ),
                           onPressed: status == LoadingStatus.Busy

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Themes.dart';
 
 class GenericButton extends StatelessWidget {
+  final bool rounded;
   final Function()? onLongPress;
   final double fontsize;
   final bool loading;
@@ -16,6 +17,7 @@ class GenericButton extends StatelessWidget {
   final bool positive;
   const GenericButton(
       {Key? key,
+      this.rounded = false,
       this.fontsize = 15,
       this.loading = false,
       this.stretch = false,
@@ -65,7 +67,7 @@ class GenericButton extends StatelessWidget {
                     : Theme.of(context).brightness == Brightness.light
                         ? Theme.of(context).colorScheme.tertiary
                         : Theme.of(context).primaryColor),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(rounded ? 16 : 5),
       ),
       child: Material(
         type: MaterialType.transparency,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
-import 'package:personal_recipes/Widgets/AddRecipeScreen/AddIngredientComponent.dart';
 
 import 'CustomTextFormField.dart';
 import 'GenericButton.dart';

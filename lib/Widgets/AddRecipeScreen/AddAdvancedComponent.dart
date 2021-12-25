@@ -46,6 +46,7 @@ class AddAdvancedComponent extends StatelessWidget {
                     onTap: () => toggleAddTag(),
                     title: '+',
                     shrink: true,
+                    rounded: true,
                     fontsize: 15,
                   ),
                 ]),

@@ -42,7 +42,7 @@ class TagItem extends StatelessWidget {
                     : goodColor
                 : Theme.of(context).primaryColor,
           ),
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Center(
           child: Text(

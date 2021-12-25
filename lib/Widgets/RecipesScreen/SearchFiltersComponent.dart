@@ -58,6 +58,7 @@ class _SearchFiltersComponentsState extends State<SearchFiltersComponents>
                         },
                         title: '+',
                         shrink: true,
+                        rounded: true,
                         fontsize: 15,
                       ),
                     ]),

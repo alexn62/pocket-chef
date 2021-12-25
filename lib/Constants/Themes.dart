@@ -19,7 +19,7 @@ ThemeData darkTheme = ThemeData(
     colorScheme: ThemeData.dark().colorScheme.copyWith(
           primary: primaryColorDark,
           secondary: accentColorDark,
-          tertiary: primaryColorDark.withOpacity(0.05),
+          tertiary: primaryColorDark,
           error: errorColor,
         ),
     iconTheme: const IconThemeData(color: primaryColorDark),

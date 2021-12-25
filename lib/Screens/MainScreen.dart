@@ -43,12 +43,13 @@ class _MainScreenState extends State<MainScreen> {
           ),
           child: BottomNavigationBar(
             elevation: 0,
-            selectedItemColor: Theme.of(context).primaryColor,
+            selectedItemColor: Theme.of(context).colorScheme.tertiary,
             unselectedItemColor:
-                Theme.of(context).primaryColor.withOpacity(0.8),
-            backgroundColor: Colors.transparent,
+                Theme.of(context).colorScheme.tertiary.withOpacity(0.8),
+            backgroundColor:
+                Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
             selectedLabelStyle: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.tertiary,
             ),
             currentIndex: model.index,
             onTap: (val) {
@@ -65,8 +66,11 @@ class _MainScreenState extends State<MainScreen> {
                   child: Icon(
                       Platform.isIOS ? CupertinoIcons.book : Icons.menu_book,
                       color: model.index == 0
-                          ? Theme.of(context).primaryColor
-                          : Theme.of(context).primaryColor.withOpacity(0.8),
+                          ? Theme.of(context).colorScheme.tertiary
+                          : Theme.of(context)
+                              .colorScheme
+                              .tertiary
+                              .withOpacity(0.8),
                       size: model.index == 0 ? 24 : 18),
                 ),
               ),
@@ -76,8 +80,11 @@ class _MainScreenState extends State<MainScreen> {
                 icon: Icon(
                     Platform.isIOS ? CupertinoIcons.add : Icons.add_sharp,
                     color: model.index == 1
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).primaryColor.withOpacity(0.8),
+                        ? Theme.of(context).colorScheme.tertiary
+                        : Theme.of(context)
+                            .colorScheme
+                            .tertiary
+                            .withOpacity(0.8),
                     size: model.index == 1 ? 24 : 18),
               ),
             ],
