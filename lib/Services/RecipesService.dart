@@ -26,11 +26,9 @@ class RecipesService {
           .map<Recipe>((recipe) => Recipe.fromFirestore(recipe))
           .toList()
         ..sort((a, b) => b.favorite ? 1 : -1);
-    } on FirebaseException {
+    } on FirebaseException catch (e) {
       _dialogService.showDialog(
-          title: 'Error',
-          description:
-              'Please make sure all of the ingredients have a valid unit.');
+          title: 'Error', description: handleFirebaseError(e));
       return null;
     }
   }

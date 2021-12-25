@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:personal_recipes/Models/Instruction.dart';
+import 'dart:math' as math;
 
 import 'Section.dart';
 
@@ -7,7 +9,7 @@ class Recipe {
   String? authorId;
   String? uid;
   String? title;
-  String? instructions;
+  List<Instruction> instructions;
   List<Section> sections;
   bool favorite;
   String? photoUrl;
@@ -19,7 +21,7 @@ class Recipe {
     this.authorId,
     this.uid,
     required this.title,
-    this.instructions,
+    required this.instructions,
     required this.sections,
     this.favorite = false,
     this.photoUrl,
@@ -38,7 +40,10 @@ class Recipe {
         serves = (doc.data() as Map<String, dynamic>)['serves'] ?? 1,
         authorId = (doc.data() as Map<String, dynamic>)['authorId'],
         title = (doc.data() as Map<String, dynamic>)['title'],
-        instructions = (doc.data() as Map<String, dynamic>)['instructions'],
+        instructions = (doc.data() as Map<String, dynamic>)['instructions']
+            .map<Instruction>((e) => Instruction(
+                description: e, uid: math.Random().nextInt(99999).toString()))
+            .toList(),
         sections = (doc.data() as Map<String, dynamic>)['sections']
             .map<Section>((doc) => Section.fromJSON(doc))
             .toList(),
@@ -60,7 +65,7 @@ class Recipe {
         'authorId': authorId,
         'serves': serves,
         'title': title,
-        'instructions': instructions,
+        'instructions': instructions.map((e) => e.description).toList(),
         'sections': sections
             .map<Map<String, dynamic>>((section) => section.toJson())
             .toList(),

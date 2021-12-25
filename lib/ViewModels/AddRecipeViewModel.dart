@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
+import 'package:personal_recipes/Models/Instruction.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
 import 'package:personal_recipes/Services/AuthService.dart';
@@ -35,7 +36,9 @@ class AddRecipeViewModel extends BaseViewModel {
           title: null,
           serves: null,
           sections: [],
-          instructions: null,
+          instructions: [
+            Instruction(description: 'description')
+          ],
           tags: {
             'Snack': false,
             'Breakfast': false,
@@ -155,8 +158,22 @@ class AddRecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setInstructions(String? newInstructions) {
-    _recipe.instructions = newInstructions?.trim();
+  void setInstructions(int step, String? newInstructions) {
+    _recipe.instructions[step].description = newInstructions!.trim();
+    notifyListeners();
+  }
+
+  void addInstructionStep() {
+    _recipe.instructions.add(Instruction(
+      focusOnBuild: true,
+      description: '',
+      uid: math.Random().nextInt(99999).toString(),
+    ));
+    notifyListeners();
+  }
+
+  void deleteInstructionsStep(int index) {
+    _recipe.instructions.removeAt(index);
     notifyListeners();
   }
 

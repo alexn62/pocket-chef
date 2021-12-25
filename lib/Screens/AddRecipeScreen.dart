@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -20,6 +19,8 @@ import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndi
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../Widgets/AddRecipeScreen/AddInstructionComponent.dart';
+import '../Widgets/AddRecipeScreen/AddNewInstructionStepComponent.dart';
 import '../locator.dart';
 
 class AddRecipeScreen extends StatefulWidget {
@@ -35,7 +36,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   final ScrollController _controller = ScrollController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _servesController = TextEditingController();
-  final TextEditingController _instructionsController = TextEditingController();
   late GlobalKey<FormState> _formKey;
 
   @override
@@ -148,7 +148,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                               );
                               _titleController.text = '';
                               _servesController.text = '';
-                              _instructionsController.text = '';
                               Provider.of<GeneralServices>(context,
                                       listen: false)
                                   .setNewRecipeAdded(true);
@@ -360,31 +359,24 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                     title: const Text('Instructions',
                                         style: TextStyle(fontSize: 17)),
                                     children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 15),
-                                        child: CustomTextFormField(
-                                          controller: widget.recipe == null
-                                              ? _instructionsController
-                                              : null,
-                                          keyboardType: TextInputType.multiline,
-                                          minLines: 3,
-                                          maxLines: null,
-                                          initialValue: widget.recipe != null
-                                              ? model.recipe.instructions
-                                              : null,
-                                          validator: (text) {
-                                            if (text == null) {
-                                              return 'Value cannot be null';
-                                            }
-                                            if (text.length > 2000) {
-                                              return 'The instructions must not be longer than 2000 characters.';
-                                            }
-                                            return null;
-                                          },
-                                          onChanged: model.setInstructions,
-                                        ),
-                                      ),
+                                      for (int i = 0;
+                                          i < model.recipe.instructions.length;
+                                          i++)
+                                        AddInstructionComponent(
+                                            initialText: widget.recipe
+                                                ?.instructions[i].description,
+                                            instruction:
+                                                model.recipe.instructions[i],
+                                            key: ValueKey(model
+                                                .recipe.instructions[i].uid),
+                                            changeInstruction:
+                                                model.setInstructions,
+                                            deleteInstructionsStep:
+                                                model.deleteInstructionsStep,
+                                            step: i),
+                                      AddNewInstructionStepComponent(
+                                          addInstructionStep:
+                                              model.addInstructionStep),
                                     ],
                                   ),
                                 ),
