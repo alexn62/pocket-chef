@@ -7,6 +7,7 @@ import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
+import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../locator.dart';
@@ -43,7 +44,8 @@ class RecipesService {
           String? downloadUrl =
               await _photoService.uploadImageToFirebase(recipeId, image);
           recipe.photoUrl = downloadUrl;
-          updateRecipe(recipe, null);
+          recipe.uid = recipeId;
+          updateRecipe(recipe, null, false, false);
         }
       } on FirebaseException catch (e) {
         throw CustomError(handleFirebaseError(e));
@@ -54,19 +56,29 @@ class RecipesService {
     }
   }
 
-  Future<void> updateRecipe(Recipe recipe, File? image) async {
+  Future<Recipe> updateRecipe(
+      Recipe recipe, File? image, bool shouldRemove, bool dontUpdate) async {
     try {
-      if (image != null) {
-        String? downloadUrl =
-            await _photoService.uploadImageToFirebase(recipe.uid!, image);
-        recipe.photoUrl = downloadUrl;
+      if (shouldRemove) {
+        await deleteImageFromDatabase(recipe);
+        recipe.photoUrl = null;
+      } else if (!dontUpdate) {
+        if (image != null) {
+          if (recipe.photoUrl != null) {
+            await CachedNetworkImage.evictFromCache(recipe.photoUrl!);
+          }
+
+          String? downloadUrl =
+              await _photoService.uploadImageToFirebase(recipe.uid!, image);
+          recipe.photoUrl = downloadUrl;
+        }
       }
       await _api.updateRecipe(
         recipe,
       );
-    } on FirebaseException {
-      throw const CustomError(
-          'An error occurred. Please try again later or contact support.');
+      return recipe;
+    } on FirebaseException catch (e) {
+      throw CustomError(handleFirebaseError(e));
     }
   }
 
@@ -95,6 +107,6 @@ class RecipesService {
     await CachedNetworkImage.evictFromCache(recipe.photoUrl!);
     await _photoService.removeImage(recipe.uid!);
     recipe.photoUrl = null;
-    await updateRecipe(recipe, null);
+    await updateRecipe(recipe, null, false, false);
   }
 }

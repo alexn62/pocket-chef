@@ -1,6 +1,6 @@
 import 'package:personal_recipes/Enums/Enum.dart';
+import 'package:personal_recipes/Models/Instruction.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
-import 'package:personal_recipes/Models/Section.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:personal_recipes/Constants/Routes.dart' as routes;
@@ -18,11 +18,11 @@ class RecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  late List<Section> _sections;
-  List<Section> get sections => _sections;
-
   void initialize() {
-    _sections = recipe.sections.map((section) => section).toList();
+    for (Instruction instr in recipe.instructions) {
+      instr.done = false;
+    }
+    notifyListeners();
   }
 
   ServingSize _size = ServingSize.Regular;
@@ -70,13 +70,14 @@ class RecipeViewModel extends BaseViewModel {
   navigateToRecipe(Recipe recipe) async {
     var result = await _navigationService.navigateTo(routes.AddRecipeRoute,
         arguments: recipe);
+
     if (result != null) {
       if (result.runtimeType == Recipe) {
-        setRecipe(result as Recipe);
+        setRecipe(recipe);
       }
     } else {
       _recipe!.photoUrl = null;
-      notifyListeners();
+      // notifyListeners();
     }
   }
 }

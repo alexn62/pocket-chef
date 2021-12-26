@@ -18,4 +18,9 @@ class Instruction {
         description = instruction['description'],
         done = false,
         focusOnBuild = false;
+
+  Map<String, dynamic> toJson() => {
+        'uid': uid,
+        'description': description,
+      };
 }

@@ -52,6 +52,7 @@ class _AddInstructionComponentState extends State<AddInstructionComponent>
   @override
   void dispose() {
     controller.dispose();
+    _instructionController.dispose();
     super.dispose();
   }
 

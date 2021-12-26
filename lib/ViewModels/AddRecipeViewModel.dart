@@ -1,5 +1,7 @@
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
@@ -13,8 +15,10 @@ import 'package:personal_recipes/Services/RecipesService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:personal_recipes/locator.dart';
 import 'dart:math' as math;
-
+import 'package:path_provider/path_provider.dart';
 import 'package:stacked_services/stacked_services.dart';
+
+import '../Constants/Helpers.dart';
 
 class AddRecipeViewModel extends BaseViewModel {
   //----------SERVICES----------//
@@ -29,6 +33,14 @@ class AddRecipeViewModel extends BaseViewModel {
   final List<String> possibleUnits =
       'ml kg cups tsp tbsp oz g count mg'.split(' ');
 
+  late Recipe? _recipePointer;
+  _setRecipePointer(Recipe newRecipePointer) {
+    _recipePointer = newRecipePointer;
+    notifyListeners();
+  }
+
+  bool? currentPhotoExists;
+  bool? newPhotoAdded;
   void initialize({Recipe? recipe}) async {
     if (recipe == null) {
       _recipe = Recipe(
@@ -37,7 +49,7 @@ class AddRecipeViewModel extends BaseViewModel {
           serves: null,
           sections: [],
           instructions: [
-            Instruction(description: 'description')
+            Instruction(description: '')
           ],
           tags: {
             'Snack': false,
@@ -47,10 +59,15 @@ class AddRecipeViewModel extends BaseViewModel {
             'Dessert': false,
             'Drink': false,
           });
-      _setNewImage(null);
+      setNewImage(null);
       addSection();
     } else {
-      _recipe = recipe;
+      _setRecipePointer(recipe);
+      _recipe = Recipe.fromJson(recipe.toJson());
+      if (_recipe.photoUrl != null) {
+        setTempImage(_recipe.photoUrl!);
+        currentPhotoExists = true;
+      }
     }
   }
 
@@ -70,11 +87,24 @@ class AddRecipeViewModel extends BaseViewModel {
     }
   }
 
-  Future<bool> updateRecipe(Recipe recipe, File? image) async {
+  Future<bool> updateRecipe({
+    required Recipe recipe,
+    required File? image,
+  }) async {
     setLoadingStatus(LoadingStatus.Busy);
     try {
-      await _recipesService.updateRecipe(recipe, image);
-      _navigationService.back(result: recipe);
+      print('cpe: $currentPhotoExists');
+      print('npa: $newPhotoAdded');
+      Recipe updatedRecipe = await _recipesService.updateRecipe(
+          recipe,
+          image,
+          image == null && recipe.photoUrl != null,
+          currentPhotoExists == true && newPhotoAdded != false);
+      updateRecipeHelper(_recipePointer!, updatedRecipe);
+      setNewImage(null);
+      await DefaultCacheManager().emptyCache();
+
+      _navigationService.back(result: updatedRecipe);
       setLoadingStatus(LoadingStatus.Idle);
       return true;
     } on CustomError catch (e) {
@@ -105,7 +135,9 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void removeSection(int i) {
+    print(recipe.sections.length);
     _recipe.sections.removeAt(i);
+    print(recipe.sections.length);
     notifyListeners();
   }
 
@@ -119,7 +151,9 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void removeIngredient(int i, int j) {
+    print(recipe.sections[i].ingredients.length);
     _recipe.sections[i].ingredients.removeAt(j);
+    print(recipe.sections[i].ingredients.length);
     notifyListeners();
   }
 
@@ -189,11 +223,25 @@ class AddRecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  Future<void> setTempImage(
+    String url,
+  ) async {
+    setPhotoLoadingStatus(LoadingStatus.Busy);
+    final http.Response responseData = await http.get(Uri.parse(url));
+    var uint8list = responseData.bodyBytes;
+    File temp = await DefaultCacheManager().putFile(
+      url,
+      uint8list,
+    );
+    setNewImage(temp);
+    setPhotoLoadingStatus(LoadingStatus.Idle);
+  }
+
   final ImagePicker _picker = ImagePicker();
 
   File? _img;
   File? get img => _img;
-  _setNewImage(File? newImg) {
+  setNewImage(File? newImg) {
     _img = newImg;
     notifyListeners();
   }
@@ -208,7 +256,8 @@ class AddRecipeViewModel extends BaseViewModel {
       return;
     } else {
       final path = image.path;
-      _setNewImage(File(path));
+      setNewImage(File(path));
+      newPhotoAdded = true;
       setPhotoLoadingStatus(LoadingStatus.Idle);
     }
   }
@@ -221,11 +270,10 @@ class AddRecipeViewModel extends BaseViewModel {
         recipe.photoUrl = null;
         setPhotoLoadingStatus(LoadingStatus.Idle);
       } else if (tempImage != null) {
-        _setNewImage(null);
+        setNewImage(null);
       }
-    } on CustomError {
-      _dialogService.showDialog(
-          title: 'Error', description: 'Error deleting the image');
+    } on CustomError catch (e) {
+      _dialogService.showDialog(title: 'Error', description: e.message);
     }
   }
 

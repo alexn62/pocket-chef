@@ -9,7 +9,7 @@ import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.d
 class AddSectionComponent extends StatefulWidget {
   final String title;
   final Function(String title, int index) setSectionTitle;
-  final Function() removeSection;
+  final Function(int index) removeSection;
   final List<Ingredient> ingredients;
   const AddSectionComponent({
     Key? key,
@@ -77,10 +77,9 @@ class _AddSectionComponentState extends State<AddSectionComponent>
                   ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      controller.reverse().then((_) {
-                        () => widget.removeSection();
-                      });
+                    onPressed: () async {
+                      await controller.reverse();
+                      await widget.removeSection(widget.sectionIndex);
                     },
                     padding: const EdgeInsets.all(0),
                     icon: Icon(Platform.isIOS

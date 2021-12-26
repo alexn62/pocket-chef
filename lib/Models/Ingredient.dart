@@ -24,5 +24,6 @@ class Ingredient {
         'title': title,
         'unit': unit,
         'amount': amount,
+        'focusOnBuild': focusOnBuild
       };
 }

@@ -29,10 +29,10 @@ class RecipesViewModel extends BaseViewModel {
   }
 
   Future<void> getRecipesByUserId(String userId) async {
-    
     try {
       setLoadingStatus(LoadingStatus.Busy);
-      List<Recipe>? newRecipes = await _recipesService.getRecipesByUserId(userId);
+      List<Recipe>? newRecipes =
+          await _recipesService.getRecipesByUserId(userId);
       if (newRecipes != null) {
         setRecipes(newRecipes);
       }
@@ -44,20 +44,25 @@ class RecipesViewModel extends BaseViewModel {
   }
 
   Future<void> setFavoriteByRecipeId(String uid, bool favorite) async {
-    List<Recipe> recipes = _recipes.where((element) => element.uid == uid).toList();
+    List<Recipe> recipes =
+        _recipes.where((element) => element.uid == uid).toList();
     if (recipes.isEmpty) {
-      _dialogService.showDialog(title: 'Error', description: 'Recipe not found.');
+      _dialogService.showDialog(
+          title: 'Error', description: 'Recipe not found.');
       return;
     }
     if (recipes.length > 1) {
-      _dialogService.showDialog(title: 'Error', description: 'Duplicate recipes found. Please remove one of the two.');
+      _dialogService.showDialog(
+          title: 'Error',
+          description:
+              'Duplicate recipes found. Please remove one of the two.');
       return;
     }
     Recipe recipe = recipes[0];
     recipe.favorite = favorite;
     notifyListeners();
     try {
-      await _recipesService.updateRecipe(recipe, null);
+      await _recipesService.updateRecipe(recipe, null, false, true);
     } on CustomError catch (e) {
       recipe.favorite = !favorite;
       notifyListeners();
@@ -77,13 +82,15 @@ class RecipesViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> deleteRecipes(Iterable<Recipe> recipesToDelete, {bool confirm = true}) async {
+  Future<void> deleteRecipes(Iterable<Recipe> recipesToDelete,
+      {bool confirm = true}) async {
     if (confirm == false) {
       _deleteSingleRecipe(recipesToDelete.first);
     } else {
       DialogResponse<dynamic>? response = await _dialogService.showDialog(
           title: 'Warning',
-          description: 'Are you sure you want to delete ${recipesToDelete.length} recipe${recipesToDelete.length != 1 ? 's' : ''} forever?',
+          description:
+              'Are you sure you want to delete ${recipesToDelete.length} recipe${recipesToDelete.length != 1 ? 's' : ''} forever?',
           buttonTitle: 'Cancel',
           cancelTitle: 'Delete',
           barrierDismissible: true);
@@ -151,30 +158,48 @@ class RecipesViewModel extends BaseViewModel {
         _addNewFilter(newFilter);
       }
     }
-  // NO FILTERS ARE SET TO TRUE AND NO SEARCH QUERY IS ENTERED => SET FOUND RECIPES TO NULL => SHOW ALL RECIPES
-    if (filters.entries.any((entry) => entry.value == true) == false && _searchQuery == '') {
+    // NO FILTERS ARE SET TO TRUE AND NO SEARCH QUERY IS ENTERED => SET FOUND RECIPES TO NULL => SHOW ALL RECIPES
+    if (filters.entries.any((entry) => entry.value == true) == false &&
+        _searchQuery == '') {
       foundRecipes = null;
-  // AT LEAST ONE FILTER IS SET => SET FOUND RECIPES TO EMPTY
+      // AT LEAST ONE FILTER IS SET => SET FOUND RECIPES TO EMPTY
     } else if (filters.entries.any((entry) => entry.value == true) == true) {
       foundRecipes = [];
       for (Recipe recipe in recipes) {
         bool add = true;
-        List<Iterable<String>> filtersAndTags = [filters.keys, recipe.tags.keys];
-        // IF A RECIPE DOES NOT HAVE TAGS IN COMMON WITH THE SET FILTERS 
+        List<Iterable<String>> filtersAndTags = [
+          filters.keys,
+          recipe.tags.keys
+        ];
+        // IF A RECIPE DOES NOT HAVE TAGS IN COMMON WITH THE SET FILTERS
         // OR THE ENTERED SEARCH QUERY IS NOT FOUND IN THE RECIPE TITLE OR NO SEARCH QUERY IS SET
-          // CONTINUE WITH NEXT RECIPE
+        // CONTINUE WITH NEXT RECIPE
         // IF THERE ARE OVERLAPPING TAGS AND FILTERS OR THE SEARCH QUERY IS INCLUDED IN THE RECIPE TITLE
-          //...
-        if (filtersAndTags.fold<Set>(filtersAndTags.first.toSet(), (a, b) => a.intersection(b.toSet())).isEmpty ||
-            (_searchQuery == '' ? false : !recipe.title!.toLowerCase().contains(_searchQuery.toLowerCase()))) {
+        //...
+        if (filtersAndTags
+                .fold<Set>(filtersAndTags.first.toSet(),
+                    (a, b) => a.intersection(b.toSet()))
+                .isEmpty ||
+            (_searchQuery == ''
+                ? false
+                : !recipe.title!
+                    .toLowerCase()
+                    .contains(_searchQuery.toLowerCase()))) {
           continue;
         }
         for (String filter in filters.keys) {
-        // ... GO OVER EVERY FILTER THAT IS SET
-        // IF THE TAG IS INCLUDED BUT IS SET TO FALSE => DON'T ADD
-        // IF THE FILTER IS NOT INCLUDED => DON'T ADD
-          if (recipe.tags.keys.map((e) => e.toLowerCase()).contains(filter.toLowerCase()) && recipe.tags[filter] == false && filters[filter] == true ||
-              !recipe.tags.keys.map((e) => e.toLowerCase()).contains(filter.toLowerCase()) && filters[filter] == true) {
+          // ... GO OVER EVERY FILTER THAT IS SET
+          // IF THE TAG IS INCLUDED BUT IS SET TO FALSE => DON'T ADD
+          // IF THE FILTER IS NOT INCLUDED => DON'T ADD
+          if (recipe.tags.keys
+                      .map((e) => e.toLowerCase())
+                      .contains(filter.toLowerCase()) &&
+                  recipe.tags[filter] == false &&
+                  filters[filter] == true ||
+              !recipe.tags.keys
+                      .map((e) => e.toLowerCase())
+                      .contains(filter.toLowerCase()) &&
+                  filters[filter] == true) {
             add = false;
             break;
           }
@@ -184,10 +209,13 @@ class RecipesViewModel extends BaseViewModel {
           foundRecipes!.add(recipe);
         }
       }
-
-    } else if (filters.entries.any((entry) => entry.value == true) == false && _searchQuery != '') {
+    } else if (filters.entries.any((entry) => entry.value == true) == false &&
+        _searchQuery != '') {
       // IF ONLY A SEARCH QUERY IS SET AND NO FILTERS => SET FOUND RECIPES TO THOSE RECIPES THAT INCLUDE THE QUERY IN THE TITLE
-      foundRecipes = recipes.where((recipe) => recipe.title!.toLowerCase().contains(_searchQuery.toLowerCase())).toList();
+      foundRecipes = recipes
+          .where((recipe) =>
+              recipe.title!.toLowerCase().contains(_searchQuery.toLowerCase()))
+          .toList();
     }
     notifyListeners();
   }

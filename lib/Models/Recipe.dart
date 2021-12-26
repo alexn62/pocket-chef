@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personal_recipes/Models/Instruction.dart';
-import 'dart:math' as math;
 
 import 'Section.dart';
 
@@ -41,8 +40,7 @@ class Recipe {
         authorId = (doc.data() as Map<String, dynamic>)['authorId'],
         title = (doc.data() as Map<String, dynamic>)['title'],
         instructions = (doc.data() as Map<String, dynamic>)['instructions']
-            .map<Instruction>((e) => Instruction(
-                description: e, uid: math.Random().nextInt(99999).toString()))
+            .map<Instruction>((doc) => Instruction.fromJSON(doc))
             .toList(),
         sections = (doc.data() as Map<String, dynamic>)['sections']
             .map<Section>((doc) => Section.fromJSON(doc))
@@ -61,11 +59,37 @@ class Recipe {
             : Map<String, bool>.from(
                 (doc.data() as Map<String, dynamic>)['tags']);
 
+  Recipe.fromJson(Map<String, dynamic> recipe)
+      : uid = recipe['uid'],
+        serves = recipe['serves'] ?? 1,
+        authorId = recipe['authorId'],
+        title = recipe['title'],
+        instructions = recipe['instructions']
+            .map<Instruction>((doc) => Instruction.fromJSON(doc))
+            .toList(),
+        sections = recipe['sections']
+            .map<Section>((doc) => Section.fromJSON(doc))
+            .toList(),
+        favorite = recipe['favorite'] ?? false,
+        photoUrl = recipe['photoUrl'],
+        selected = false,
+        tags = recipe['tags'] == null
+            ? {
+                'Snack': false,
+                'Breakfast': false,
+                'Lunch': false,
+                'Dinner': false,
+                'Dessert': false,
+              }
+            : Map<String, bool>.from(recipe['tags']);
+
   Map<String, dynamic> toJson() => {
+        'uid': uid,
         'authorId': authorId,
         'serves': serves,
         'title': title,
-        'instructions': instructions.map((e) => e.description).toList(),
+        'instructions':
+            instructions.map<Map<String, dynamic>>((e) => e.toJson()).toList(),
         'sections': sections
             .map<Map<String, dynamic>>((section) => section.toJson())
             .toList(),

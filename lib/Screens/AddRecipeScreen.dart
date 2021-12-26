@@ -37,7 +37,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _servesController = TextEditingController();
   late GlobalKey<FormState> _formKey;
-
+  Recipe? oldRecipe;
   @override
   bool get wantKeepAlive => true;
 
@@ -45,7 +45,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   void initState() {
     _formKey = GlobalKey<FormState>();
     locator<AdService>().createInterstitialAd();
-
+    oldRecipe =
+        widget.recipe == null ? null : Recipe.fromJson(widget.recipe!.toJson());
     super.initState();
   }
 
@@ -64,6 +65,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
 
   @override
   Widget build(BuildContext context) {
+    print('built');
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
       _jumpToTop();
     });
@@ -85,10 +87,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
           if (response == null || !response.confirmed) {
             return false;
           } else {
-            locator<NavigationService>().back(
-                result: Provider.of<AddRecipeViewModel>(context, listen: false)
-                    .recipe
-                    .photoUrl);
+            locator<NavigationService>().back(result: oldRecipe);
+
             return true;
           }
         },
@@ -110,8 +110,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                         if (response == null || !response.confirmed) {
                           return;
                         } else {
-                          locator<NavigationService>()
-                              .back(result: model.recipe.photoUrl);
+                          locator<NavigationService>().back(result: oldRecipe);
+
                           return;
                         }
                       }
@@ -153,7 +153,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                   .setNewRecipeAdded(true);
                             } else {
                               result = await model.updateRecipe(
-                                  model.recipe, model.img);
+                                  recipe: model.recipe, image: model.img);
                             }
                             if (result && _generalServices.timer == null ||
                                 _generalServices.timer != null &&
@@ -195,10 +195,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                       AppBar().preferredSize.height),
                               AddPhotoComponent(
                                 status: model.photoLoadingStatus,
-                                currentImage: model.recipe.photoUrl,
                                 img: model.img,
-                                deleteImage: () => model.deleteImage(
-                                    tempImage: model.img, recipe: model.recipe),
+                                deleteTemp: () => model.setNewImage(null),
                                 getImage: model.getImage,
                               ),
                               vSmallSpace,
@@ -329,8 +327,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                         (entry) => AddSectionComponent(
                                           setSectionTitle:
                                               model.setSectionTitle,
-                                          removeSection: () =>
-                                              model.removeSection(entry.key),
+                                          removeSection: model.removeSection,
                                           title: entry.value.title,
                                           sectionIndex: entry.key,
                                           ingredients: model.recipe

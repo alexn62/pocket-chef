@@ -24,16 +24,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GeneralServices>.value(
-        value: locator<GeneralServices>(),
-        child: Consumer<GeneralServices>(builder: (context, model, child) {
+      value: locator<GeneralServices>(),
+      child: Consumer<GeneralServices>(
+        builder: (context, model, child) {
           return GetMaterialApp(
-              navigatorKey: StackedService.navigatorKey,
-              debugShowCheckedModeBanner: false,
-              onGenerateRoute: router.generateRoute,
-              themeMode: model.themeMode,
-              darkTheme: darkTheme,
-              theme: lightTheme,
-              home: const LandingScreen());
-        }));
+            navigatorKey: StackedService.navigatorKey,
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: router.generateRoute,
+            themeMode: model.themeMode,
+            darkTheme: darkTheme,
+            theme: lightTheme,
+            home: const LandingScreen(),
+          );
+        },
+      ),
+    );
   }
 }

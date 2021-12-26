@@ -25,12 +25,19 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
+  late Map<String, dynamic> oldRecipe;
+
   bool cookingMode = false;
   void toggleCookingMode() {
     setState(() {
       cookingMode = !cookingMode;
-      print('cooking mode set to $cookingMode');
     });
+  }
+
+  @override
+  void initState() {
+    oldRecipe = widget.recipe.toJson();
+    super.initState();
   }
 
   @override
@@ -61,12 +68,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     Theme.of(context).backgroundColor.withOpacity(2 / 3),
                 elevation: 0,
                 title: Text(
-                  widget.recipe.title!,
+                  model.recipe.title!,
                 ),
                 actions: [
                   IconButton(
                       padding: const EdgeInsets.all(0),
-                      onPressed: () => model.navigateToRecipe(widget.recipe),
+                      onPressed: () {
+                        model.navigateToRecipe(model.recipe);
+                      },
                       icon: Icon(
                           Platform.isIOS ? CupertinoIcons.pencil : Icons.edit))
                 ],
@@ -109,7 +118,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     ),
                   ),
                   vRegularSpace,
-                  ...model.sections
+                  ...model.recipe.sections
                       .map<SectionComponent>(
                         (section) => SectionComponent(
                             sizeValue: model.getSize,

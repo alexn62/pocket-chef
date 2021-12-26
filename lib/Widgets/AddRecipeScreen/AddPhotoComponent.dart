@@ -1,21 +1,17 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 
-class AddPhotoComponent extends StatelessWidget {
-  final String? currentImage;
+class AddPhotoComponent extends StatefulWidget {
+  final Function() deleteTemp;
   final LoadingStatus status;
   final Function() getImage;
-  final Function() deleteImage;
-
   final File? img;
   const AddPhotoComponent({
-    required this.currentImage,
-    required this.deleteImage,
+    required this.deleteTemp,
     required this.getImage,
     required this.status,
     this.img,
@@ -23,15 +19,22 @@ class AddPhotoComponent extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<AddPhotoComponent> createState() => _AddPhotoComponentState();
+}
+
+class _AddPhotoComponentState extends State<AddPhotoComponent> {
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: status == LoadingStatus.Busy || img != null || currentImage != null
+      onTap: widget.status == LoadingStatus.Busy
           ? () {}
-          : getImage,
+          : () async {
+              await widget.getImage();
+            },
       child: DottedBorder(
         radius: const Radius.circular(15),
         borderType: BorderType.RRect,
-        color: img != null || currentImage != null
+        color: widget.img != null
             ? Colors.transparent
             : Theme.of(context).primaryColor,
         strokeWidth: 1,
@@ -43,24 +46,16 @@ class AddPhotoComponent extends StatelessWidget {
             height: 120,
             decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.tertiary.withOpacity(0.05),
-                image: img == null && currentImage == null ||
-                        status == LoadingStatus.Busy
+                image: widget.img == null || widget.status == LoadingStatus.Busy
                     ? null
-                    : img != null
-                        ? DecorationImage(
-                            image: FileImage(img!), fit: BoxFit.cover)
-                        : currentImage != null
-                            ? DecorationImage(
-                                image: CachedNetworkImageProvider(currentImage!,
-                                    errorListener: () {}),
-                                fit: BoxFit.cover)
-                            : null),
+                    : DecorationImage(
+                        image: FileImage(widget.img!), fit: BoxFit.cover)),
             child: Stack(
               children: [
                 Center(
-                  child: status == LoadingStatus.Busy
+                  child: widget.status == LoadingStatus.Busy
                       ? const CircularProgressIndicator.adaptive()
-                      : img != null || currentImage != null
+                      : widget.img != null
                           ? const SizedBox()
                           : Icon(
                               Platform.isIOS
@@ -77,14 +72,14 @@ class AddPhotoComponent extends StatelessWidget {
                     width: 60,
                     child: Center(
                       child: AnimatedContainer(
-                        height: img == null && currentImage == null ? 0 : 60,
+                        height: widget.img == null ? 0 : 60,
                         duration: const Duration(milliseconds: 200),
                         child: FloatingActionButton(
                           backgroundColor:
                               Theme.of(context).brightness == Brightness.dark
                                   ? Theme.of(context).backgroundColor
                                   : Theme.of(context).colorScheme.tertiary,
-                          child: img == null && currentImage == null
+                          child: widget.img == null
                               ? null
                               : FittedBox(
                                   fit: BoxFit.contain,
@@ -98,9 +93,9 @@ class AddPhotoComponent extends StatelessWidget {
                                         : Theme.of(context).backgroundColor,
                                   ),
                                 ),
-                          onPressed: status == LoadingStatus.Busy
+                          onPressed: widget.status == LoadingStatus.Busy
                               ? () {}
-                              : deleteImage,
+                              : widget.deleteTemp,
                         ),
                       ),
                     ),

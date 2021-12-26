@@ -7,6 +7,7 @@ class PhotoService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
   Future<String?> uploadImageToFirebase(String recipeId, File image) async {
+    print('add photo, recipe id: $recipeId');
     try {
       Reference ref = _storage.ref('/recipePhotos/$recipeId');
       TaskSnapshot upload = await ref.putFile(image);
@@ -21,6 +22,7 @@ class PhotoService {
       Reference ref = _storage.ref('/recipePhotos/$recipeId');
       await ref.delete();
     } on FirebaseException catch (e) {
+      print(e.code);
       throw CustomError(e.message ?? 'An error occurred deleting the image.');
     }
   }

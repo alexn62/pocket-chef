@@ -77,7 +77,7 @@ class _RecipesListItemState extends State<RecipesListItem> {
             ? Theme.of(context).primaryColor.withOpacity(0.2)
             : Colors.transparent,
         title: Text(
-          widget.recipe.title!,
+          widget.recipe.title ?? 'err',
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
         trailing: IconButton(
