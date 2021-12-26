@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 
-class AddNewInstructionStepComponent extends StatelessWidget {
+class AddNewInstructionStepComponent extends StatefulWidget {
   final void Function() addInstructionStep;
   const AddNewInstructionStepComponent({
     required this.addInstructionStep,
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<AddNewInstructionStepComponent> createState() =>
+      _AddNewInstructionStepComponentState();
+}
+
+class _AddNewInstructionStepComponentState
+    extends State<AddNewInstructionStepComponent> {
+  void ensureVisible() {
+    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +76,10 @@ class AddNewInstructionStepComponent extends StatelessWidget {
             child: Center(
                 child: IconButton(
               padding: EdgeInsets.zero,
-              onPressed: addInstructionStep,
+              onPressed: () {
+                widget.addInstructionStep();
+                ensureVisible();
+              },
               icon: Icon(
                 Icons.add,
                 color: Theme.of(context).colorScheme.tertiary,

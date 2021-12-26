@@ -29,6 +29,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
   void toggleCookingMode() {
     setState(() {
       cookingMode = !cookingMode;
+      print('cooking mode set to $cookingMode');
     });
   }
 

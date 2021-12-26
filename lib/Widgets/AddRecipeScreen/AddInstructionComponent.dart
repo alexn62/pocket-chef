@@ -110,7 +110,6 @@ class _AddInstructionComponentState extends State<AddInstructionComponent>
                 ],
               ),
             ),
-            hSmallSpace,
             IconButton(
                 onPressed: () {
                   controller.reverse().then((_) {
