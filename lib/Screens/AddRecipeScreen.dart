@@ -387,7 +387,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                               toggleTag: model.setTagStatus,
                             ),
                           ),
-                          const SafeArea(child: SizedBox())
+                          const SafeArea(child: blankSpace)
                         ],
                       ),
                     ),
@@ -400,7 +400,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                     toggleAddTag: model.toggleAddTag,
                     addTag: model.addTag,
                   )
-                : const SizedBox(),
+                : blankSpace,
             FullScreenLoadingIndicator(model.loadingStatus)
           ],
         ),

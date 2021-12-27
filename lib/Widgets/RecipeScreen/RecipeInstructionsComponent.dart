@@ -62,6 +62,6 @@ class InstructionsComponent extends StatelessWidget {
                 )
             ],
           )
-        : const SizedBox();
+        : blankSpace;
   }
 }

@@ -28,7 +28,7 @@ class SignUpScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(
-                                child: SizedBox(),
+                                child: blankSpace,
                               ),
                               Align(
                                 alignment: Alignment.center,
@@ -61,7 +61,7 @@ class SignUpScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Expanded(child: SizedBox()),
+                              const Expanded(child: blankSpace),
                               const Text(
                                 'Email',
                                 style: TextStyle(
@@ -150,7 +150,7 @@ class SignUpScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Expanded(child: SizedBox()),
+                              const Expanded(child: blankSpace),
                               const Center(
                                   child: Text('Already have an account?')),
                               vSmallSpace,

@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:personal_recipes/Models/Recipe.dart';
-import 'package:personal_recipes/Services/AdService.dart';
-import 'package:personal_recipes/Services/GeneralServices.dart';
-import 'package:personal_recipes/ViewModels/RecipesViewModel.dart';
 import 'package:provider/provider.dart';
 
+import '../../Models/Recipe.dart';
+import '../../Services/AdService.dart';
+import '../../Services/GeneralServices.dart';
+import '../../ViewModels/RecipesViewModel.dart';
 import '../../locator.dart';
 
 class RecipesListItem extends StatefulWidget {

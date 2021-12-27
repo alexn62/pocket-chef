@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 
+import '../../Constants/Spacing.dart';
+
 class FullScreenLoadingIndicator extends StatelessWidget {
   final LoadingStatus loadingStatus;
   const FullScreenLoadingIndicator(this.loadingStatus, {Key? key})
@@ -8,7 +10,7 @@ class FullScreenLoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return loadingStatus != LoadingStatus.Busy
-        ? const SizedBox()
+        ? blankSpace
         : Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,

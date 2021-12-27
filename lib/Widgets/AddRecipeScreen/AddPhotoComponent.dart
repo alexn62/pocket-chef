@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 
+import '../../Constants/Spacing.dart';
+
 class AddPhotoComponent extends StatefulWidget {
   final Function() deleteTemp;
   final LoadingStatus status;
@@ -49,7 +51,7 @@ class _AddPhotoComponentState extends State<AddPhotoComponent> {
               child: widget.status == LoadingStatus.Busy
                   ? const CircularProgressIndicator.adaptive()
                   : widget.img != null
-                      ? const SizedBox()
+                      ? blankSpace
                       : Icon(
                           Platform.isIOS ? CupertinoIcons.photo : Icons.photo,
                           color: Theme.of(context).colorScheme.tertiary),

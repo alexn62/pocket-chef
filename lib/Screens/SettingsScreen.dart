@@ -49,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             const SafeArea(
-                              child: SizedBox(),
+                              child: blankSpace,
                             ),
                             SettingsComponent(
                                 title: 'General Settings',
@@ -186,10 +186,10 @@ class SettingsComponent extends StatelessWidget {
                                         height: 0,
                                         thickness: 0,
                                       )
-                                    : const SizedBox()
+                                    : blankSpace
                               ],
                             )
-                          : const SizedBox())
+                          : blankSpace)
                       .toList())),
         ],
       ),

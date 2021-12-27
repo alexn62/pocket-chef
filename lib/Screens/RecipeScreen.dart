@@ -45,7 +45,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   parent: AlwaysScrollableScrollPhysics()),
               shrinkWrap: true,
               children: [
-                model.recipe.photoUrl != null ? const SizedBox() : vSmallSpace,
+                model.recipe.photoUrl != null ? blankSpace : vSmallSpace,
                 RecipePhotoComponent(
                   photoUrl: model.recipe.photoUrl,
                 ),
@@ -72,7 +72,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
               ? CookingModeCarousel(
                   toggle: model.toggleCookingMode,
                   items: model.recipe.instructions)
-              : const SizedBox(),
+              : blankSpace,
         ],
       ),
     );

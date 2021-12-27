@@ -28,6 +28,6 @@ class RecipePhotoComponent extends StatelessWidget {
               vRegularSpace,
             ],
           )
-        : const SizedBox();
+        : blankSpace;
   }
 }

@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/Constants/Spacing.dart';
+
+import '../../Constants/Spacing.dart';
 
 class EmptyRecipesPlaceholder extends StatelessWidget {
   const EmptyRecipesPlaceholder({
@@ -14,7 +15,7 @@ class EmptyRecipesPlaceholder extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Expanded(
-          child: SizedBox(),
+          child: blankSpace,
         ),
         Align(
           alignment: Alignment.center,
@@ -33,23 +34,21 @@ class EmptyRecipesPlaceholder extends StatelessWidget {
               const Text(
                 'Tap the + icon below to add your first recipe!',
               ),
-              
             ],
           ),
         ),
         const Expanded(
-          child: SizedBox(),
+          child: blankSpace,
         ),
         Row(
           children: [
             const Expanded(
               flex: 3,
-              child: SizedBox(),
+              child: blankSpace,
             ),
             Expanded(
               flex: 4,
               child: Center(
-                // color: Colors.red,
                 child: Transform.rotate(
                   angle: pi * 1.1,
                   child: Image.asset(

@@ -36,7 +36,7 @@ class RecipeMultiplierComponent extends StatelessWidget {
                   increase: increaseAmount,
                   decrease: decreaseAmount,
                   amount: amount),
-              const Expanded(child: SizedBox()),
+              const Expanded(child: blankSpace),
             ],
           ),
         ),

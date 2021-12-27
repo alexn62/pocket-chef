@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(
-                                child: SizedBox(),
+                                child: blankSpace,
                               ),
                               Align(
                                 alignment: Alignment.center,
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                               const Expanded(
-                                child: SizedBox(),
+                                child: blankSpace,
                               ),
                               const Text(
                                 'Email',
@@ -150,7 +150,7 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Expanded(child: SizedBox()),
+                              const Expanded(child: blankSpace),
                               const Center(
                                   child: Text('Don\'t have an account yet?')),
                               vSmallSpace,

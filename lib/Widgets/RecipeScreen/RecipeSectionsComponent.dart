@@ -19,7 +19,7 @@ class RecipeSectionsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        sections.isNotEmpty ? vRegularSpace : const SizedBox(),
+        sections.isNotEmpty ? vRegularSpace : blankSpace,
         ...sections
             .map<SectionComponent>(
               (section) => SectionComponent(

@@ -90,7 +90,7 @@ class _AddNewInstructionStepComponentState
               ),
             )),
           ),
-          const Expanded(child: SizedBox()),
+          const Expanded(child: blankSpace),
           hBigSpace,
           hTinySpace
         ],

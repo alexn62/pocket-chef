@@ -237,4 +237,11 @@ class RecipesViewModel extends BaseViewModel {
   void setNewTag(String newNewTag) {
     _newTag = newNewTag;
   }
+
+  bool _expandFilters = false;
+  bool get expandFilters => _expandFilters;
+  void setExpandFilters() {
+    _expandFilters = !expandFilters;
+    notifyListeners();
+  }
 }

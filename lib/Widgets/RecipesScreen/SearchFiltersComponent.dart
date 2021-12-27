@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/Widgets/General%20Widgets/AddTagItem.dart';
 
+import '../General Widgets/AddTagItem.dart';
 import '../General Widgets/GenericButton.dart';
 
 class SearchFiltersComponents extends StatefulWidget {

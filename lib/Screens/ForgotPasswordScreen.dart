@@ -27,7 +27,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(
-                                child: SizedBox(),
+                                child: blankSpace,
                               ),
                               Align(
                                 alignment: Alignment.center,
@@ -57,7 +57,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 ),
                               ),
                               const Expanded(
-                                child: SizedBox(),
+                                child: blankSpace,
                               ),
                               Text(
                                 'Email',
@@ -81,7 +81,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 positive: true,
                                 stretch: true,
                               ),
-                              const Expanded(child: SizedBox()),
+                              const Expanded(child: blankSpace),
                               const Center(child: Text('Login instead?')),
                               vSmallSpace,
                               GenericButton(

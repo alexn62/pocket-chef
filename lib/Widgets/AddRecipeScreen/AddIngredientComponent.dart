@@ -172,7 +172,7 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
                       },
                 padding: const EdgeInsets.all(0),
                 icon: widget.ingredients.length <= 1
-                    ? const SizedBox()
+                    ? blankSpace
                     : Icon(Platform.isIOS
                         ? CupertinoIcons.delete
                         : Icons.delete_outline)),

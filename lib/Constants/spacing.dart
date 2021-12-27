@@ -8,3 +8,4 @@ const SizedBox vTinySpace = SizedBox(height: 5);
 const SizedBox vSmallSpace = SizedBox(height: 10);
 const SizedBox vRegularSpace = SizedBox(height: 15);
 const SizedBox vBigSpace = SizedBox(height: 30);
+const SizedBox blankSpace = SizedBox();
