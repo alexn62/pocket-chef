@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +14,6 @@ import 'package:personal_recipes/Services/RecipesService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:personal_recipes/locator.dart';
 import 'dart:math' as math;
-import 'package:path_provider/path_provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../Constants/Helpers.dart';
@@ -41,6 +39,7 @@ class AddRecipeViewModel extends BaseViewModel {
 
   bool? currentPhotoExists;
   bool? newPhotoAdded;
+
   void initialize({Recipe? recipe}) async {
     if (recipe == null) {
       _recipe = Recipe(
@@ -48,9 +47,7 @@ class AddRecipeViewModel extends BaseViewModel {
           title: null,
           serves: null,
           sections: [],
-          instructions: [
-            Instruction(description: '')
-          ],
+          instructions: [],
           tags: {
             'Snack': false,
             'Breakfast': false,
@@ -93,13 +90,11 @@ class AddRecipeViewModel extends BaseViewModel {
   }) async {
     setLoadingStatus(LoadingStatus.Busy);
     try {
-      print('cpe: $currentPhotoExists');
-      print('npa: $newPhotoAdded');
       Recipe updatedRecipe = await _recipesService.updateRecipe(
           recipe,
           image,
           image == null && recipe.photoUrl != null,
-          currentPhotoExists == true && newPhotoAdded != false);
+          currentPhotoExists == true && newPhotoAdded != true);
       updateRecipeHelper(_recipePointer!, updatedRecipe);
       setNewImage(null);
       await DefaultCacheManager().emptyCache();
@@ -135,9 +130,7 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void removeSection(int i) {
-    print(recipe.sections.length);
     _recipe.sections.removeAt(i);
-    print(recipe.sections.length);
     notifyListeners();
   }
 
@@ -151,9 +144,7 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void removeIngredient(int i, int j) {
-    print(recipe.sections[i].ingredients.length);
     _recipe.sections[i].ingredients.removeAt(j);
-    print(recipe.sections[i].ingredients.length);
     notifyListeners();
   }
 

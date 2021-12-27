@@ -12,7 +12,6 @@ import 'package:personal_recipes/Services/GeneralServices.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
 import 'package:personal_recipes/Widgets/AddRecipeScreen/AddSectionComponent.dart';
 import 'package:personal_recipes/Widgets/AddRecipeScreen/AddAdvancedComponent.dart';
-import 'package:personal_recipes/Widgets/AddRecipeScreen/AddPhotoComponent.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/AddTagTextField.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndicator.dart';
@@ -21,6 +20,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../Widgets/AddRecipeScreen/AddInstructionComponent.dart';
 import '../Widgets/AddRecipeScreen/AddNewInstructionStepComponent.dart';
+import '../Widgets/AddRecipeScreen/AddPhotoComponent.dart';
 import '../locator.dart';
 
 class AddRecipeScreen extends StatefulWidget {
@@ -65,7 +65,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
 
   @override
   Widget build(BuildContext context) {
-    print('built');
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
       _jumpToTop();
     });
@@ -267,6 +266,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                     Flexible(
                                       flex: 1,
                                       child: CustomTextFormField(
+                                        keyboardType: TextInputType.number,
                                         controller: widget.recipe == null
                                             ? _servesController
                                             : null,

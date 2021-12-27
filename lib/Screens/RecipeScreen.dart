@@ -48,10 +48,42 @@ class _RecipeScreenState extends State<RecipeScreen> {
       builder: (context, model, child) => Stack(
         children: [
           Scaffold(
-              floatingActionButton: FloatingActionButton(
-                  onPressed: toggleCookingMode,
-                  backgroundColor: Theme.of(context).colorScheme.tertiary,
-                  child: const Icon(Icons.ac_unit_outlined)),
+              floatingActionButton: GestureDetector(
+                onTap: toggleCookingMode,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 30),
+                  height: 45,
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(
+                          spreadRadius: 5, blurRadius: 5, color: Colors.black12)
+                    ],
+                    borderRadius: BorderRadius.circular(22.5),
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                  child: Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.ac_unit_outlined,
+                          color: Theme.of(context).backgroundColor,
+                        ),
+                        hSmallSpace,
+                        Text(
+                          'Cooking mode',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).backgroundColor),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               extendBodyBehindAppBar: true,
               backgroundColor: Theme.of(context).backgroundColor,
               appBar: AppBar(
@@ -138,12 +170,50 @@ class _RecipeScreenState extends State<RecipeScreen> {
                             for (int i = 0;
                                 i < model.recipe.instructions.length;
                                 i++)
-                              Padding(
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 15),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(.05),
+                                    borderRadius: BorderRadius.circular(15)),
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 5),
-                                child: Text(
-                                  '${i + 1}. ${model.recipe.instructions[i].description}',
-                                  style: const TextStyle(fontSize: 15),
+                                    horizontal: 10, vertical: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 32,
+                                      width: 32,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary),
+                                        borderRadius:
+                                            BorderRadius.circular(32 / 2),
+                                      ),
+                                      child: Center(
+                                        child: Text((i + 1).toString(),
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .tertiary,
+                                                fontSize: 17)),
+                                      ),
+                                    ),
+                                    hSmallSpace,
+                                    Expanded(
+                                      child: Text(
+                                        model
+                                            .recipe.instructions[i].description,
+                                        softWrap: true,
+                                        style: const TextStyle(fontSize: 15),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               )
                           ],

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
@@ -34,21 +37,21 @@ class _AddNewInstructionStepComponentState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 34,
-            width: 34,
+            height: 31,
+            width: 31,
             child: Stack(
               clipBehavior: Clip.hardEdge,
               children: [
                 Positioned(
-                  bottom: 15.5,
-                  left: 17,
+                  bottom: 14,
+                  left: 15.5,
                   child: Container(
                     height: 35,
                     width: 35,
                     decoration: BoxDecoration(
                         border: Border.all(
                             color: Theme.of(context).colorScheme.tertiary),
-                        borderRadius: BorderRadius.circular(17.5),
+                        borderRadius: BorderRadius.circular(16),
                         color: Colors.transparent),
                   ),
                 )
@@ -59,7 +62,7 @@ class _AddNewInstructionStepComponentState
             child: Column(
               children: [
                 const SizedBox(
-                  height: 17.5,
+                  height: 16,
                 ),
                 Container(
                     height: 1, color: Theme.of(context).colorScheme.tertiary),
@@ -67,11 +70,11 @@ class _AddNewInstructionStepComponentState
             ),
           ),
           Container(
-            height: 35,
-            width: 35,
+            height: 32,
+            width: 32,
             decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).colorScheme.tertiary),
-              borderRadius: BorderRadius.circular(35 / 2),
+              color: Theme.of(context).colorScheme.tertiary,
+              borderRadius: BorderRadius.circular(32 / 2),
             ),
             child: Center(
                 child: IconButton(
@@ -81,8 +84,9 @@ class _AddNewInstructionStepComponentState
                 ensureVisible();
               },
               icon: Icon(
-                Icons.add,
-                color: Theme.of(context).colorScheme.tertiary,
+                Platform.isIOS ? CupertinoIcons.add : Icons.add,
+                size: 16,
+                color: Theme.of(context).backgroundColor,
               ),
             )),
           ),

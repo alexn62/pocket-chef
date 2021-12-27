@@ -7,7 +7,6 @@ import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
-import 'package:personal_recipes/Services/AuthService.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../locator.dart';

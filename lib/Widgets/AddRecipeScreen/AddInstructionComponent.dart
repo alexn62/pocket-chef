@@ -71,12 +71,12 @@ class _AddInstructionComponentState extends State<AddInstructionComponent>
                       width: 1, color: Theme.of(context).colorScheme.tertiary),
                 ),
                 Container(
-                  height: 35,
-                  width: 35,
+                  height: 32,
+                  width: 32,
                   decoration: BoxDecoration(
                     border: Border.all(
                         color: Theme.of(context).colorScheme.tertiary),
-                    borderRadius: BorderRadius.circular(35 / 2),
+                    borderRadius: BorderRadius.circular(32 / 2),
                   ),
                   child: Center(
                     child: Text((widget.step + 1).toString(),
@@ -97,6 +97,14 @@ class _AddInstructionComponentState extends State<AddInstructionComponent>
                 children: [
                   vRegularSpace,
                   CustomTextFormField(
+                      keyboardType: TextInputType.multiline,
+                      validator: (text) {
+                        if (text!.trim().length < 2 ||
+                            text.trim().length > 1000) {
+                          return 'An instruction has to be between two and 1000 characters.';
+                        }
+                        return null;
+                      },
                       controller: widget.initialText == null
                           ? _instructionController
                           : null,

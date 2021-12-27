@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../Services/AuthService.dart';
 import 'package:personal_recipes/ViewModels/BaseViewModel.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import '../Enums/Enum.dart';
 import '../Models/CustomError.dart';
 import '../locator.dart';
@@ -32,7 +32,10 @@ class SettingsViewModel extends BaseViewModel {
       setLoadingStatus(LoadingStatus.Busy);
       await _authService.forgotPassword(email);
       setLoadingStatus(LoadingStatus.Idle);
-      _dialogService.showDialog(title: 'Message', description: 'We sent the instructions to reset your password to your email.');
+      _dialogService.showDialog(
+          title: 'Message',
+          description:
+              'We sent the instructions to reset your password to your email.');
     } on CustomError catch (e) {
       setLoadingStatus(LoadingStatus.Idle);
       _dialogService.showDialog(title: 'Error', description: e.message);
@@ -47,16 +50,28 @@ class SettingsViewModel extends BaseViewModel {
     if (currentUser == null) return;
     try {
       DialogResponse<dynamic>? response = await _dialogService.showDialog(
-          title: 'Warning', description: 'Are you sure you want to permanently delete your account? All recipes will be lost.', buttonTitle: 'Cancel', cancelTitle: 'Delete', barrierDismissible: true);
+          title: 'Warning',
+          description:
+              'Are you sure you want to permanently delete your account? All recipes will be lost.',
+          buttonTitle: 'Cancel',
+          cancelTitle: 'Delete',
+          barrierDismissible: true);
       if (response == null || response.confirmed) {
         return;
       } else {
-       await _authService.deleteUser(currentUser!);
+        await _authService.deleteUser(currentUser!);
       }
     } on CustomError catch (e) {
-      DialogResponse? response =
-          await _dialogService.showDialog(title: 'Error', description: e.message, barrierDismissible: true, cancelTitle: e.message == 'Please reauthenticate to proceed' ? 'Cancel' : null);
-      if (e.message == 'Please reauthenticate to proceed' && response != null && response.confirmed) {
+      DialogResponse? response = await _dialogService.showDialog(
+          title: 'Error',
+          description: e.message,
+          barrierDismissible: true,
+          cancelTitle: e.message == 'Please reauthenticate to proceed'
+              ? 'Cancel'
+              : null);
+      if (e.message == 'Please reauthenticate to proceed' &&
+          response != null &&
+          response.confirmed) {
         logout();
       }
     }
