@@ -125,16 +125,24 @@ class _RecipesScreenState extends State<RecipesScreen>
                               children: [
                                 Expanded(
                                   child: CustomTextFormField(
+                                    isDense: true,
+                                    rounded: true,
                                     fillColor: Theme.of(context)
                                         .colorScheme
                                         .tertiary
                                         .withOpacity(0.05),
                                     hintText: 'Search',
-                                    prefixIcon: Icon(
+                                    prefixIcon: Container(
+                                      margin: const EdgeInsets.only(left: 5),
+                                      child: Icon(
                                         Platform.isIOS
                                             ? CupertinoIcons.search
                                             : Icons.search,
-                                        color: Theme.of(context).primaryColor),
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.5),
+                                      ),
+                                    ),
                                     onChanged: model.searchRecipes,
                                   ),
                                 ),

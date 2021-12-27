@@ -25,6 +25,13 @@ class RecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  bool _cookingMode = false;
+  bool get cookingMode => _cookingMode;
+  void toggleCookingMode() {
+    _cookingMode = !cookingMode;
+    notifyListeners();
+  }
+
   ServingSize _size = ServingSize.Regular;
   ServingSize get size => _size;
   void setSize(ServingSize newSize) {
@@ -77,7 +84,6 @@ class RecipeViewModel extends BaseViewModel {
       }
     } else {
       _recipe!.photoUrl = null;
-      // notifyListeners();
     }
   }
 }

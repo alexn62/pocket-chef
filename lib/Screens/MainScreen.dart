@@ -45,9 +45,9 @@ class _MainScreenState extends State<MainScreen> {
             elevation: 0,
             selectedItemColor: Theme.of(context).colorScheme.tertiary,
             unselectedItemColor:
-                Theme.of(context).colorScheme.tertiary.withOpacity(0.8),
+                Theme.of(context).colorScheme.tertiary.withOpacity(0.67),
             backgroundColor:
-                Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
+                Theme.of(context).colorScheme.tertiary.withOpacity(0.05),
             selectedLabelStyle: TextStyle(
               color: Theme.of(context).colorScheme.tertiary,
             ),
@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
             onTap: (val) {
               WidgetsBinding.instance!.focusManager.primaryFocus?.unfocus();
               _pageController.animateToPage(val,
-                  duration: const Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 100),
                   curve: Curves.easeInOut);
             },
             items: [
@@ -70,8 +70,8 @@ class _MainScreenState extends State<MainScreen> {
                           : Theme.of(context)
                               .colorScheme
                               .tertiary
-                              .withOpacity(0.8),
-                      size: model.index == 0 ? 24 : 18),
+                              .withOpacity(0.67),
+                      size: 18),
                 ),
               ),
               BottomNavigationBarItem(
@@ -85,7 +85,7 @@ class _MainScreenState extends State<MainScreen> {
                             .colorScheme
                             .tertiary
                             .withOpacity(0.8),
-                    size: model.index == 1 ? 24 : 18),
+                    size: 18),
               ),
             ],
           ),

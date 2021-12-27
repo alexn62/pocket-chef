@@ -65,7 +65,6 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
                           key: _addNewTagFormKey,
                           child: CustomTextFormField(
                             focusNode: _focusNode,
-                            // autofocus: true,
                             fillColor: Theme.of(context)
                                 .primaryColor
                                 .withOpacity(0.05),
@@ -104,7 +103,7 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
                             }
                           },
                           title: 'Add tag',
-                          invertColors: true,
+                          // invertColors: true,
                           shrink: true),
                     ],
                   ),

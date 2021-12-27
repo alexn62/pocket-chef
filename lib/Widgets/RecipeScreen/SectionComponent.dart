@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/Constants/Spacing.dart';
-import 'package:personal_recipes/Models/Ingredient.dart';
 
+import '../../Constants/Spacing.dart';
+import '../../Models/Ingredient.dart';
 import 'DividerWithTitle.dart';
 import 'IngredientComponent.dart';
 

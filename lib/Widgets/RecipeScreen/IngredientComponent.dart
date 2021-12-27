@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_recipes/constants/spacing.dart';
+
+import '../../Constants/Spacing.dart';
 
 class IngredientComponent extends StatelessWidget {
   final int totalAmount;

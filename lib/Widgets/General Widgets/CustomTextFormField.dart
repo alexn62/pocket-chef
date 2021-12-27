@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final bool isDense;
+  final bool rounded;
   final FocusNode? focusNode;
   final Color? fillColor;
   final TextEditingController? controller;
@@ -18,6 +20,8 @@ class CustomTextFormField extends StatelessWidget {
   final bool autofocus;
   final Widget? prefixIcon;
   const CustomTextFormField({
+    this.isDense = false,
+    this.rounded = false,
     this.focusNode,
     this.fillColor,
     this.controller,
@@ -56,6 +60,27 @@ class CustomTextFormField extends StatelessWidget {
               ? onChanged(text, sectionIndex)
               : onChanged(text, sectionIndex, ingredientIndex),
       decoration: InputDecoration(
+        prefixIconConstraints: const BoxConstraints(
+          minWidth: 50,
+          minHeight: 40,
+        ),
+        isDense: isDense,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(rounded ? 30 : 10),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(rounded ? 30 : 10),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(rounded ? 30 : 10),
+          borderSide: BorderSide(color: Theme.of(context).errorColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(rounded ? 30 : 10),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
         fillColor: fillColor,
         prefixIcon: prefixIcon,
         hintText: hintText,

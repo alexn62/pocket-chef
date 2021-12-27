@@ -126,9 +126,10 @@ class _AddInstructionComponentState extends State<AddInstructionComponent>
                   });
                 },
                 padding: const EdgeInsets.all(0),
-                icon: Icon(Platform.isIOS
-                    ? CupertinoIcons.delete
-                    : Icons.delete_outline)),
+                icon: Icon(
+                  Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline,
+                  color: Theme.of(context).primaryColor.withOpacity(0.75),
+                )),
           ],
         ),
       ),
