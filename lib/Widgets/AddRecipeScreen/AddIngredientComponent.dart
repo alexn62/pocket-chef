@@ -136,30 +136,84 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
               ),
             ),
             hSmallSpace,
-            PopupMenuButton(
-              initialValue:
-                  widget.ingredients[widget.ingredientIndex].unit ?? 'Unit',
-              child: Row(
-                children: [
-                  Text(
-                    widget.ingredients[widget.ingredientIndex].unit ?? 'Unit',
-                    style: TextStyle(
-                        fontSize: 16, color: Theme.of(context).primaryColor),
+            Platform.isIOS
+                ? GestureDetector(
+                    child: Row(
+                      children: [
+                        Text(
+                          model.recipe.sections[widget.sectionIndex]
+                                  .ingredients[widget.ingredientIndex].unit ??
+                              'Unit',
+                          style: const TextStyle(fontSize: 17),
+                        ),
+                        hTinySpace,
+                        const Icon(Icons.expand_more)
+                      ],
+                    ),
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext builder) {
+                            return Container(
+                              height: MediaQuery.of(context)
+                                      .copyWith()
+                                      .size
+                                      .height /
+                                  3,
+                              child: Expanded(
+                                child: CupertinoPicker(
+                                  itemExtent: 50,
+                                  onSelectedItemChanged: (value) =>
+                                      model.setIngredientUnit(
+                                          sectionIndex: widget.sectionIndex,
+                                          ingredientIndex:
+                                              widget.ingredientIndex,
+                                          ingredientUnit:
+                                              model.possibleUnits[value]),
+                                  children: model.possibleUnits
+                                      .map((e) => Center(
+                                            child: Text(
+                                              e,
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                            ),
+                                          ))
+                                      .toList(),
+                                  looping: true,
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                  )
+                : PopupMenuButton(
+                    initialValue:
+                        widget.ingredients[widget.ingredientIndex].unit ??
+                            'Unit',
+                    child: Row(
+                      children: [
+                        Text(
+                          widget.ingredients[widget.ingredientIndex].unit ??
+                              'Unit',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).primaryColor),
+                        ),
+                        const Icon(Icons.expand_more),
+                      ],
+                    ),
+                    itemBuilder: (context) => model.possibleUnits
+                        .map((item) => PopupMenuItem(
+                              value: item,
+                              child: Text(item),
+                            ))
+                        .toList(),
+                    onSelected: (value) => model.setIngredientUnit(
+                        sectionIndex: widget.sectionIndex,
+                        ingredientIndex: widget.ingredientIndex,
+                        ingredientUnit: value.toString()),
                   ),
-                  const Icon(Icons.expand_more),
-                ],
-              ),
-              itemBuilder: (context) => model.possibleUnits
-                  .map((item) => PopupMenuItem(
-                        value: item,
-                        child: Text(item),
-                      ))
-                  .toList(),
-              onSelected: (value) => model.setIngredientUnit(
-                  sectionIndex: widget.sectionIndex,
-                  ingredientIndex: widget.ingredientIndex,
-                  ingredientUnit: value.toString()),
-            ),
             IconButton(
                 splashRadius: widget.ingredients.length <= 1 ? 1 : 35,
                 onPressed: widget.ingredients.length <= 1

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final bool isDense;
   final bool rounded;
   final FocusNode? focusNode;
   final Color? fillColor;
@@ -20,7 +19,6 @@ class CustomTextFormField extends StatelessWidget {
   final bool autofocus;
   final Widget? prefixIcon;
   const CustomTextFormField({
-    this.isDense = false,
     this.rounded = false,
     this.focusNode,
     this.fillColor,
@@ -64,7 +62,7 @@ class CustomTextFormField extends StatelessWidget {
           minWidth: 50,
           minHeight: 40,
         ),
-        isDense: isDense,
+        isDense: true,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(rounded ? 30 : 10),
           borderSide: const BorderSide(color: Colors.transparent),

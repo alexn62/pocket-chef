@@ -39,7 +39,9 @@ class _AddPhotoComponentState extends State<AddPhotoComponent> {
             borderRadius: BorderRadius.circular(15),
             border: widget.img != null
                 ? null
-                : Border.all(color: Theme.of(context).colorScheme.tertiary),
+                : Border.all(
+                    color:
+                        Theme.of(context).colorScheme.tertiary.withOpacity(.5)),
             color: Theme.of(context).colorScheme.tertiary.withOpacity(0.05),
             image: widget.img == null || widget.status == LoadingStatus.Busy
                 ? null
@@ -54,7 +56,10 @@ class _AddPhotoComponentState extends State<AddPhotoComponent> {
                       ? blankSpace
                       : Icon(
                           Platform.isIOS ? CupertinoIcons.photo : Icons.photo,
-                          color: Theme.of(context).colorScheme.tertiary),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .tertiary
+                              .withOpacity(.5)),
             ),
             Positioned(
               right: 5,

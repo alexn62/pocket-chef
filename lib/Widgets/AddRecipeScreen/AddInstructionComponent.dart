@@ -97,24 +97,25 @@ class _AddInstructionComponentState extends State<AddInstructionComponent>
                 children: [
                   vRegularSpace,
                   CustomTextFormField(
-                      keyboardType: TextInputType.multiline,
-                      validator: (text) {
-                        if (text!.trim().length < 2 ||
-                            text.trim().length > 1000) {
-                          return 'An instruction has to be between two and 1000 characters.';
-                        }
-                        return null;
-                      },
-                      controller: widget.initialText == null
-                          ? _instructionController
-                          : null,
-                      initialValue: widget.initialText,
-                      focusNode:
-                          widget.instruction.focusOnBuild ? _focusNode : null,
-                      minLines: 2,
-                      maxLines: 6,
-                      onChanged: (text) =>
-                          widget.changeInstruction(widget.step, text)),
+                    keyboardType: TextInputType.multiline,
+                    validator: (text) {
+                      if (text!.trim().length < 2 ||
+                          text.trim().length > 1000) {
+                        return 'An instruction has to be between two and 1000 characters.';
+                      }
+                      return null;
+                    },
+                    controller: widget.initialText == null
+                        ? _instructionController
+                        : null,
+                    initialValue: widget.initialText,
+                    focusNode:
+                        widget.instruction.focusOnBuild ? _focusNode : null,
+                    minLines: 3,
+                    maxLines: 6,
+                    onChanged: (text) =>
+                        widget.changeInstruction(widget.step, text),
+                  ),
                   vRegularSpace,
                 ],
               ),

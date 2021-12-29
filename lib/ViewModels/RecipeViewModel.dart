@@ -57,6 +57,13 @@ class RecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  toggleDone(Instruction instruction) {
+    Instruction item =
+        recipe.instructions.firstWhere((element) => element == instruction);
+    item.done = !item.done;
+    notifyListeners();
+  }
+
   double get getSize {
     switch (size) {
       case ServingSize.Regular:

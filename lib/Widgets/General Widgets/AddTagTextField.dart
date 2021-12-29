@@ -52,22 +52,21 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
+                    color:
+                        Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
                     border: Border(
                         top:
                             BorderSide(color: Theme.of(context).primaryColor))),
                 child: Center(
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Form(
                           key: _addNewTagFormKey,
                           child: CustomTextFormField(
                             focusNode: _focusNode,
-                            fillColor: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(0.05),
+                            fillColor: Theme.of(context).backgroundColor,
                             onFieldSubmitted: (_) {
                               if (_addNewTagFormKey.currentState!.validate()) {
                                 widget.addTag(newTag);

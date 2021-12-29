@@ -33,9 +33,11 @@ class _RecipeScreenState extends State<RecipeScreen> {
           Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
             extendBodyBehindAppBar: true,
-            floatingActionButton: CookingModeButton(
-              toggleCookingMode: model.toggleCookingMode,
-            ),
+            floatingActionButton: model.recipe.instructions.isNotEmpty
+                ? CookingModeButton(
+                    toggleCookingMode: model.toggleCookingMode,
+                  )
+                : null,
             appBar: RecipeScreenAppBar(
               title: model.recipe.title!,
               navigateToRecipe: () => model.navigateToRecipe(model.recipe),
@@ -50,11 +52,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   photoUrl: model.recipe.photoUrl,
                 ),
                 RecipeMultiplierComponent(
-                  amount: model.amount,
-                  decreaseAmount: model.decreaseAmount,
-                  increaseAmount: model.increaseAmount,
-                  serves: model.recipe.serves!,
-                ),
+                    amount: model.amount,
+                    decreaseAmount: model.decreaseAmount,
+                    increaseAmount: model.increaseAmount,
+                    serves: model.recipe.serves!),
                 RecipeSectionsComponent(
                   amount: model.amount,
                   sections: model.recipe.sections,
@@ -71,7 +72,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
           model.cookingMode
               ? CookingModeCarousel(
                   toggle: model.toggleCookingMode,
-                  items: model.recipe.instructions)
+                  items: model.recipe.instructions,
+                  toggleDone: model.toggleDone,
+                )
               : blankSpace,
         ],
       ),

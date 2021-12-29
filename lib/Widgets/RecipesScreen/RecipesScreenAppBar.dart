@@ -68,7 +68,6 @@ class RecipesAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Expanded(
                   child: CustomTextFormField(
-                    isDense: true,
                     rounded: true,
                     fillColor: Theme.of(context)
                         .colorScheme
