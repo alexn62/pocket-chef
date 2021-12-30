@@ -22,6 +22,7 @@ class RecipeViewModel extends BaseViewModel {
     for (Instruction instr in recipe.instructions) {
       instr.done = false;
     }
+    _amount = _recipe?.serves ?? 1;
     notifyListeners();
   }
 
@@ -39,7 +40,7 @@ class RecipeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  int _amount = 1;
+  late int _amount;
   int get amount => _amount;
   void increaseAmount() {
     if (amount > 99) {
@@ -62,23 +63,6 @@ class RecipeViewModel extends BaseViewModel {
         recipe.instructions.firstWhere((element) => element == instruction);
     item.done = !item.done;
     notifyListeners();
-  }
-
-  double get getSize {
-    switch (size) {
-      case ServingSize.Regular:
-        {
-          return 1;
-        }
-      case ServingSize.Small:
-        {
-          return 2 / 3;
-        }
-      case ServingSize.Large:
-        {
-          return 4 / 3;
-        }
-    }
   }
 
   navigateToRecipe(Recipe recipe) async {

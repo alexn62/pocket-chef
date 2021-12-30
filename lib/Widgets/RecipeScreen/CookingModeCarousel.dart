@@ -28,9 +28,11 @@ class _CookingModeCarouselState extends State<CookingModeCarousel>
   late AnimationController _blurController;
   final Tween<double> _blurTweenX = Tween(begin: 0, end: 7);
   final Tween<double> _blurTweenY = Tween(begin: 0, end: -7);
+  final Tween<double> _white = Tween(begin: 0, end: 0.03);
 
   late Animation<double> _blurX;
   late Animation<double> _blurY;
+  late Animation<double> _whiteAnimation;
 
   @override
   void initState() {
@@ -38,6 +40,7 @@ class _CookingModeCarouselState extends State<CookingModeCarousel>
         vsync: this, duration: const Duration(milliseconds: 300));
     _blurX = _blurTweenX.animate(_blurController);
     _blurY = _blurTweenY.animate(_blurController);
+    _whiteAnimation = _white.animate(_blurController);
 
     _blurController.forward();
     _blurController.addListener(() {
@@ -51,9 +54,15 @@ class _CookingModeCarouselState extends State<CookingModeCarousel>
   }
 
   @override
+  void dispose() {
+    _blurController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white.withOpacity(_whiteAnimation.value),
       body: ClipRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: _blurX.value, sigmaY: _blurY.value),
@@ -101,9 +110,7 @@ class _CookingModeCarouselState extends State<CookingModeCarousel>
                                         BoxShadow(
                                             blurRadius: 15,
                                             spreadRadius: 3,
-                                            color: Theme.of(context)
-                                                .primaryColor
-                                                .withOpacity(0.2))
+                                            color: Colors.black26)
                                       ]),
                                   child: Column(
                                     children: [

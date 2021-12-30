@@ -352,8 +352,13 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                       i < model.recipe.instructions.length;
                                       i++)
                                     AddInstructionComponent(
-                                        initialText: widget.recipe
-                                            ?.instructions[i].description,
+                                        insertInstructionStep:
+                                            model.addInstructionStep,
+                                        isLastItem: i ==
+                                            model.recipe.instructions.length -
+                                                1,
+                                        initialText: model
+                                            .recipe.instructions[i].description,
                                         instruction:
                                             model.recipe.instructions[i],
                                         key: ValueKey(

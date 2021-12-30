@@ -18,11 +18,10 @@ class InstructionsComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const DividerWithTitle(title: 'Instructions'),
-              vSmallSpace,
               for (int i = 0; i < instructions.length; i++)
                 Container(
                   margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                      const EdgeInsets.only(bottom: 10, left: 15, right: 15),
                   decoration: BoxDecoration(
                       color: Theme.of(context)
                           .colorScheme

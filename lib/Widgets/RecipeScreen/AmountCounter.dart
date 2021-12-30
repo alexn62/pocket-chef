@@ -31,7 +31,6 @@ class AmountCounter extends StatelessWidget {
           children: [
             IconButton(
               visualDensity: VisualDensity.compact,
-              padding: const EdgeInsets.all(0),
               onPressed: decrease,
               icon: Icon(
                 Platform.isIOS ? CupertinoIcons.minus : Icons.remove,

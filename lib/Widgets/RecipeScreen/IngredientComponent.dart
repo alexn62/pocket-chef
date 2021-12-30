@@ -3,18 +3,16 @@ import 'package:flutter/material.dart';
 import '../../Constants/Spacing.dart';
 
 class IngredientComponent extends StatelessWidget {
-  final int totalAmount;
-  final double sizeValue;
+  final double amountPerServing;
   final String title;
-  final double amount;
+  final int totalServings;
   final String unit;
   const IngredientComponent({
     Key? key,
     required this.title,
-    required this.amount,
+    required this.amountPerServing,
+    required this.totalServings,
     required this.unit,
-    required this.totalAmount,
-    required this.sizeValue,
   }) : super(key: key);
 
   @override
@@ -30,7 +28,7 @@ class IngredientComponent extends StatelessWidget {
           child: Container(),
         ),
         Text(
-          '${getAmountAndUnit(amount * totalAmount * sizeValue, unit)}',
+          '${getAmountAndUnit(totalServings * amountPerServing, unit)}',
           style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15),
         ),
         hRegularSpace,

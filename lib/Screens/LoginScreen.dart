@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .secondary,
+                                            .tertiary,
                                         fontSize: 17,
                                       ),
                                     ),

@@ -6,13 +6,13 @@ import 'DividerWithTitle.dart';
 import 'IngredientComponent.dart';
 
 class SectionComponent extends StatelessWidget {
-  final int totalAmount;
-  final double sizeValue;
+  final int recipeServings;
+  final int totalServings;
   final List<Ingredient> ingredients;
   final String sectionTitle;
   const SectionComponent({
-    required this.totalAmount,
-    required this.sizeValue,
+    required this.recipeServings,
+    required this.totalServings,
     required this.ingredients,
     required this.sectionTitle,
     Key? key,
@@ -22,18 +22,16 @@ class SectionComponent extends StatelessWidget {
     return Column(
       children: [
         DividerWithTitle(title: sectionTitle),
-        vRegularSpace,
         ...ingredients
             .map<Column>(
               (ingredient) => Column(
                 children: [
                   IngredientComponent(
-                      totalAmount: totalAmount,
-                      sizeValue: sizeValue,
+                      totalServings: totalServings,
                       title: ingredient.title,
-                      amount: (ingredient.amount).toDouble(),
+                      amountPerServing:
+                          (ingredient.amount).toDouble() / recipeServings,
                       unit: ingredient.unit!),
-                  vRegularSpace
                 ],
               ),
             )

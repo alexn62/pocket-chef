@@ -47,19 +47,18 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   parent: AlwaysScrollableScrollPhysics()),
               shrinkWrap: true,
               children: [
-                model.recipe.photoUrl != null ? blankSpace : vSmallSpace,
                 RecipePhotoComponent(
                   photoUrl: model.recipe.photoUrl,
                 ),
                 RecipeMultiplierComponent(
-                    amount: model.amount,
-                    decreaseAmount: model.decreaseAmount,
-                    increaseAmount: model.increaseAmount,
-                    serves: model.recipe.serves!),
-                RecipeSectionsComponent(
                   amount: model.amount,
+                  decreaseAmount: model.decreaseAmount,
+                  increaseAmount: model.increaseAmount,
+                ),
+                RecipeSectionsComponent(
+                  recipeServings: model.recipe.serves!,
+                  totalServings: model.amount,
                   sections: model.recipe.sections,
-                  size: model.getSize,
                 ),
                 InstructionsComponent(
                   instructions: model.recipe.instructions,

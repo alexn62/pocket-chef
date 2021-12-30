@@ -151,16 +151,21 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
                       ],
                     ),
                     onTap: () {
-                      showModalBottomSheet(
+                      showCupertinoModalPopup(
                           context: context,
-                          builder: (BuildContext builder) {
-                            return Container(
-                              height: MediaQuery.of(context)
-                                      .copyWith()
-                                      .size
-                                      .height /
-                                  3,
-                              child: Expanded(
+                          builder: (ctx) =>
+
+                              // showModalBottomSheet(
+                              //     context: context,
+                              //     builder: (BuildContext builder) {
+                              //       return
+                              Container(
+                                color: Theme.of(context).backgroundColor,
+                                height: MediaQuery.of(context)
+                                        .copyWith()
+                                        .size
+                                        .height /
+                                    3,
                                 child: CupertinoPicker(
                                   itemExtent: 50,
                                   onSelectedItemChanged: (value) =>
@@ -182,9 +187,7 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
                                       .toList(),
                                   looping: true,
                                 ),
-                              ),
-                            );
-                          });
+                              ));
                     },
                   )
                 : PopupMenuButton(

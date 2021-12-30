@@ -11,24 +11,28 @@ class DividerWithTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        hRegularSpace,
-        Expanded(
-          child: Container(height: .3, color: Theme.of(context).primaryColor),
-        ),
-        hTinySpace,
-        Text(
-          title,
-          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 17),
-        ),
-        hTinySpace,
-        Expanded(
-          child: Container(height: .3, color: Theme.of(context).primaryColor),
-        ),
-        hRegularSpace,
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          hRegularSpace,
+          Expanded(
+            child: Container(height: .3, color: Theme.of(context).primaryColor),
+          ),
+          hTinySpace,
+          Text(
+            title,
+            style:
+                TextStyle(color: Theme.of(context).primaryColor, fontSize: 17),
+          ),
+          hTinySpace,
+          Expanded(
+            child: Container(height: .3, color: Theme.of(context).primaryColor),
+          ),
+          hRegularSpace,
+        ],
+      ),
     );
   }
 }

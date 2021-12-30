@@ -25,7 +25,6 @@ class RecipePhotoComponent extends StatelessWidget {
                   ),
                 ),
               ),
-              vRegularSpace,
             ],
           )
         : blankSpace;

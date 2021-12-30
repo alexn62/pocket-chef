@@ -48,63 +48,67 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
                     color: Colors.black54,
                     height: MediaQuery.of(context).size.height),
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                decoration: BoxDecoration(
+              Material(
+                color: Theme.of(context).backgroundColor,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  decoration: BoxDecoration(
                     color:
                         Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
                     border: Border(
-                        top:
-                            BorderSide(color: Theme.of(context).primaryColor))),
-                child: Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Form(
-                          key: _addNewTagFormKey,
-                          child: CustomTextFormField(
-                            focusNode: _focusNode,
-                            fillColor: Theme.of(context).backgroundColor,
-                            onFieldSubmitted: (_) {
+                        top: BorderSide(color: Theme.of(context).primaryColor)),
+                  ),
+                  child: Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Form(
+                            key: _addNewTagFormKey,
+                            child: CustomTextFormField(
+                              focusNode: _focusNode,
+                              fillColor: Theme.of(context).backgroundColor,
+                              onFieldSubmitted: (_) {
+                                if (_addNewTagFormKey.currentState!
+                                    .validate()) {
+                                  widget.addTag(newTag);
+                                }
+                              },
+                              maxLines: 1,
+                              onChanged: (val) {
+                                newTag = val;
+                              },
+                              validator: (text) {
+                                if (text == null) {
+                                  return 'Tag cannot be null';
+                                }
+                                if (text.trim().length < 3) {
+                                  return 'A tag must be longer than two characters.';
+                                }
+                                if (text.length > 2000) {
+                                  return 'A tag must not be longer than 20 characters.';
+                                }
+                                if (text.trim().contains(' ')) {
+                                  return 'A tag may not contain whitespaces';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                        hSmallSpace,
+                        GenericButton(
+                            onTap: () {
                               if (_addNewTagFormKey.currentState!.validate()) {
                                 widget.addTag(newTag);
                               }
                             },
-                            maxLines: 1,
-                            onChanged: (val) {
-                              newTag = val;
-                            },
-                            validator: (text) {
-                              if (text == null) {
-                                return 'Tag cannot be null';
-                              }
-                              if (text.trim().length < 3) {
-                                return 'A tag must be longer than two characters.';
-                              }
-                              if (text.length > 2000) {
-                                return 'A tag must not be longer than 20 characters.';
-                              }
-                              if (text.trim().contains(' ')) {
-                                return 'A tag may not contain whitespaces';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      hSmallSpace,
-                      GenericButton(
-                          onTap: () {
-                            if (_addNewTagFormKey.currentState!.validate()) {
-                              widget.addTag(newTag);
-                            }
-                          },
-                          title: 'Add tag',
-                          // invertColors: true,
-                          shrink: true),
-                    ],
+                            title: 'Add tag',
+                            // invertColors: true,
+                            shrink: true),
+                      ],
+                    ),
                   ),
                 ),
               ),
