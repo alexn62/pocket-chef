@@ -89,6 +89,7 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
             Flexible(
               flex: 2,
               child: CustomTextFormField(
+                textInputAction: TextInputAction.next,
                 focusNode:
                     widget.ingredients[widget.ingredientIndex].focusOnBuild
                         ? _focusNode
@@ -153,13 +154,7 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
                     onTap: () {
                       showCupertinoModalPopup(
                           context: context,
-                          builder: (ctx) =>
-
-                              // showModalBottomSheet(
-                              //     context: context,
-                              //     builder: (BuildContext builder) {
-                              //       return
-                              Container(
+                          builder: (ctx) => Container(
                                 color: Theme.of(context).backgroundColor,
                                 height: MediaQuery.of(context)
                                         .copyWith()

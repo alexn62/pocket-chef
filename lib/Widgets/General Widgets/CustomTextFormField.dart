@@ -18,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? initialValue;
   final bool autofocus;
   final Widget? prefixIcon;
+  final TextInputAction? textInputAction;
   const CustomTextFormField({
     this.rounded = false,
     this.focusNode,
@@ -36,12 +37,14 @@ class CustomTextFormField extends StatelessWidget {
     this.onFieldSubmitted,
     this.autofocus = false,
     this.prefixIcon,
+    this.textInputAction = TextInputAction.done,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textInputAction: textInputAction,
       focusNode: focusNode,
       autofocus: autofocus,
       controller: controller,

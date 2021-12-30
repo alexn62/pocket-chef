@@ -45,7 +45,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
             body: ListView(
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
-              shrinkWrap: true,
               children: [
                 RecipePhotoComponent(
                   photoUrl: model.recipe.photoUrl,

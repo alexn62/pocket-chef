@@ -239,6 +239,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                 Flexible(
                                   flex: 3,
                                   child: CustomTextFormField(
+                                    textInputAction: TextInputAction.next,
                                     controller: widget.recipe == null
                                         ? _titleController
                                         : null,

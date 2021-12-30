@@ -190,12 +190,13 @@ class AddRecipeViewModel extends BaseViewModel {
 
   void addInstructionStep({int? index}) {
     _recipe.instructions.insert(
-        index ?? _recipe.instructions.length,
-        Instruction(
-          focusOnBuild: true,
-          description: '',
-          uid: math.Random().nextInt(99999).toString(),
-        ));
+      index ?? _recipe.instructions.length,
+      Instruction(
+        focusOnBuild: true,
+        description: '',
+        uid: math.Random().nextInt(99999).toString(),
+      ),
+    );
     notifyListeners();
   }
 
