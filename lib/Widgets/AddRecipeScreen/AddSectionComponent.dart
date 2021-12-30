@@ -11,6 +11,7 @@ class AddSectionComponent extends StatefulWidget {
   final Function(String title, int index) setSectionTitle;
   final Function(int index) removeSection;
   final List<Ingredient> ingredients;
+  final int sectionIndex;
   const AddSectionComponent({
     Key? key,
     required this.sectionIndex,
@@ -19,8 +20,6 @@ class AddSectionComponent extends StatefulWidget {
     required this.removeSection,
     required this.ingredients,
   }) : super(key: key);
-
-  final int sectionIndex;
 
   @override
   State<AddSectionComponent> createState() => _AddSectionComponentState();
@@ -44,7 +43,7 @@ class _AddSectionComponentState extends State<AddSectionComponent>
       sizeFactor:
           CurvedAnimation(curve: Curves.fastOutSlowIn, parent: controller),
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
+        margin: EdgeInsets.only(top: widget.sectionIndex == 0 ? 5 : 10),
         padding: const EdgeInsets.only(
           left: 15,
           right: 15,

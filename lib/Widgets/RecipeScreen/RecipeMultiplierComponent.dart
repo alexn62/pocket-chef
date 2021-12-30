@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../Constants/Spacing.dart';
 import 'AmountCounter.dart';
 import 'DividerWithTitle.dart';
 

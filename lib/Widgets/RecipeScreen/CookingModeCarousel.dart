@@ -106,7 +106,7 @@ class _CookingModeCarouselState extends State<CookingModeCarousel>
                                   decoration: BoxDecoration(
                                       color: Theme.of(context).backgroundColor,
                                       borderRadius: BorderRadius.circular(15),
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                             blurRadius: 15,
                                             spreadRadius: 3,

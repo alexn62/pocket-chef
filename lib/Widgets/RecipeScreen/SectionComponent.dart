@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../Constants/Spacing.dart';
 import '../../Models/Ingredient.dart';
 import 'DividerWithTitle.dart';
 import 'IngredientComponent.dart';

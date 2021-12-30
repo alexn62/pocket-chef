@@ -20,39 +20,45 @@ class AddAdvancedComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<MapEntry<String, bool>> tagList = tags.entries.toList();
-    return ListTileTheme(
-      dense: true,
-      child: ExpansionTile(
-        expandedCrossAxisAlignment: CrossAxisAlignment.start,
-        tilePadding: const EdgeInsets.only(right: 12),
-        title: const Text('Tags', style: TextStyle(fontSize: 17)),
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: Wrap(
-                spacing: 5,
-                alignment: WrapAlignment.start,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                runSpacing: 5,
-                children: [
-                  for (int i = 0; i < tagList.length; i++)
-                    TagItem(
-                      deleteTag: deleteTag,
-                      selected: tagList[i].value,
-                      title: tagList[i].key,
-                      toggleTag: toggleTag,
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.tertiary.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(15)),
+      child: ListTileTheme(
+        dense: true,
+        child: ExpansionTile(
+          expandedCrossAxisAlignment: CrossAxisAlignment.start,
+          tilePadding: const EdgeInsets.only(right: 12),
+          title: const Text('Tags', style: TextStyle(fontSize: 17)),
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                  spacing: 5,
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  runSpacing: 5,
+                  children: [
+                    for (int i = 0; i < tagList.length; i++)
+                      TagItem(
+                        deleteTag: deleteTag,
+                        selected: tagList[i].value,
+                        title: tagList[i].key,
+                        toggleTag: toggleTag,
+                      ),
+                    GenericButton(
+                      onTap: () => toggleAddTag(),
+                      title: '+',
+                      shrink: true,
+                      rounded: true,
+                      fontsize: 15,
                     ),
-                  GenericButton(
-                    onTap: () => toggleAddTag(),
-                    title: '+',
-                    shrink: true,
-                    rounded: true,
-                    fontsize: 15,
-                  ),
-                ]),
-          ),
-          vSmallSpace,
-        ],
+                  ]),
+            ),
+            vSmallSpace,
+          ],
+        ),
       ),
     );
   }
