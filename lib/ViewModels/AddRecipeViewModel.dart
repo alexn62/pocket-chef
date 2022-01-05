@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
-import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/Models/Instruction.dart';
 import 'package:personal_recipes/Models/Recipe.dart';
 import 'package:personal_recipes/Models/Section.dart';
@@ -17,6 +16,7 @@ import 'dart:math' as math;
 import 'package:stacked_services/stacked_services.dart';
 
 import '../Constants/Helpers.dart';
+import '../Models/Ingredient.dart';
 
 class AddRecipeViewModel extends BaseViewModel {
   //----------SERVICES----------//

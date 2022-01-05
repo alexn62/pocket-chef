@@ -7,8 +7,6 @@ const Color accentColor = Color(0xFF644BE3);
 const Color primaryColorDark = Color(0xFFC7CFC7);
 const Color backgroundColorDark = Color(0xFF0E1117);
 
-const Color accentColorDark = Color(0xFF1F6FEB);
-const Color accentColorLight = Color(0xFF967E6B);
 const Color goodColor = Color(0xFF2EA043);
 const Color errorColor = Color(0xFFFF6961);
 
@@ -18,7 +16,6 @@ ThemeData darkTheme = ThemeData(
     backgroundColor: backgroundColorDark,
     colorScheme: ThemeData.dark().colorScheme.copyWith(
           primary: primaryColorDark,
-          secondary: accentColorDark,
           tertiary: primaryColorDark,
           error: errorColor,
         ),
@@ -71,7 +68,6 @@ ThemeData lightTheme = ThemeData(
     backgroundColor: backgroundColorLight,
     colorScheme: ThemeData.light().colorScheme.copyWith(
         primary: primaryColorLight,
-        secondary: accentColorLight,
         tertiary: accentColor,
         error: errorColor),
     iconTheme: const IconThemeData(color: primaryColorLight),

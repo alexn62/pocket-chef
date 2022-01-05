@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:personal_recipes/Constants/Themes.dart';
 import 'package:personal_recipes/Screens/LandingScreen.dart';
+import 'package:personal_recipes/Services/SnackbarSetup.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,6 +15,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
   await setupLocator();
+  setupSnackbarUi();
   await Firebase.initializeApp();
   await SharedPrefs.init();
   runApp(const MyApp());

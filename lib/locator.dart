@@ -22,6 +22,7 @@ setupLocator() {
   locator.registerLazySingleton(() => Api());
   // Services
   locator.registerLazySingleton(() => DialogService());
+  locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => SharedPrefs());
   locator.registerLazySingleton(() => GeneralServices());
