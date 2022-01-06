@@ -40,44 +40,61 @@ class _RecipesListItemState extends State<RecipesListItem> {
 
   @override
   Widget build(BuildContext context) {
-    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
+    final GeneralServices _generalServices =
+        Provider.of<GeneralServices>(context);
     final RecipesViewModel model = Provider.of<RecipesViewModel>(context);
     return Slidable(
-      endActionPane: ActionPane(extentRatio: 0.25, motion: const DrawerMotion(), children: [
-        SlidableAction(
-          onPressed: (ctx) => model.deleteRecipes([widget.recipe], confirm: false),
-          backgroundColor: Theme.of(context).colorScheme.error,
-          foregroundColor: Colors.white,
-          icon: Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline,
-          autoClose: true,
-        ),
-      ]),
+      endActionPane: ActionPane(
+          extentRatio: 0.25,
+          motion: const DrawerMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (ctx) =>
+                  model.deleteRecipes([widget.recipe], confirm: false),
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Colors.white,
+              icon:
+                  Platform.isIOS ? CupertinoIcons.delete : Icons.delete_outline,
+              autoClose: true,
+            ),
+          ]),
       child: ListTile(
         contentPadding: const EdgeInsets.only(right: 0, left: 15),
         key: ValueKey(widget.recipe.uid),
         onTap: model.recipes.where((e) => e.selected!).isNotEmpty
             ? () => model.selectTile(widget.recipe)
             : () {
-                if (_generalServices.timer == null || _generalServices.timer != null && !_generalServices.timer!.isActive) {
+                if (_generalServices.timer == null ||
+                    _generalServices.timer != null &&
+                        !_generalServices.timer!.isActive) {
                   _generalServices.setTimer();
                   locator<AdService>().showInterstitialAd();
                 }
                 model.navigateToRecipe(widget.recipe);
               },
         onLongPress: () => model.selectTile(widget.recipe),
-        tileColor: widget.recipe.selected! ? Theme.of(context).primaryColor.withOpacity(0.2) : Colors.transparent,
+        tileColor: widget.recipe.selected!
+            ? Theme.of(context).colorScheme.tertiary.withOpacity(0.1)
+            : Colors.transparent,
         title: Text(
           widget.recipe.title ?? 'err',
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
         trailing: IconButton(
-          onPressed: () => model.setFavoriteByRecipeId(widget.recipe.uid!, !widget.recipe.favorite),
+          onPressed: () => model.setFavoriteByRecipeId(
+              widget.recipe.uid!, !widget.recipe.favorite),
           icon: !widget.recipe.favorite
               ? Icon(
-                  Platform.isIOS ? CupertinoIcons.star : Icons.star_outline_rounded,
+                  Platform.isIOS
+                      ? CupertinoIcons.star
+                      : Icons.star_outline_rounded,
                   color: Theme.of(context).primaryColor,
                 )
-              : Icon(Platform.isIOS ? CupertinoIcons.star_fill : Icons.star_rounded, color: Colors.amber[600]),
+              : Icon(
+                  Platform.isIOS
+                      ? CupertinoIcons.star_fill
+                      : Icons.star_rounded,
+                  color: Colors.amber[600]),
         ),
       ),
     );

@@ -59,32 +59,48 @@ class ForgotPasswordScreen extends StatelessWidget {
                               const Expanded(
                                 child: blankSpace,
                               ),
-                              Text(
-                                'Email',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16,
+                              Container(
+                                padding: const EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(35 / 2),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(.05)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      ' Email',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    vSmallSpace,
+                                    CustomTextFormField(
+                                        fillColor:
+                                            Theme.of(context).backgroundColor,
+                                        onFieldSubmitted: (_) =>
+                                            model.forgotPassword(model.email),
+                                        onChanged: model.setEmail),
+                                  ],
                                 ),
                               ),
-                              vTinySpace,
-                              CustomTextFormField(
-                                  fillColor: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.05),
-                                  onFieldSubmitted: (_) =>
-                                      model.forgotPassword(model.email),
-                                  onChanged: model.setEmail),
                               vRegularSpace,
                               GenericButton(
                                 onTap: () => model.forgotPassword(model.email),
                                 title: 'Send',
                                 positive: true,
                                 stretch: true,
+                                rounded: true,
                               ),
                               const Expanded(child: blankSpace),
                               const Center(child: Text('Login instead?')),
                               vSmallSpace,
                               GenericButton(
+                                rounded: true,
+                                invertColors: true,
                                 title: 'Login',
                                 onTap: model.navigateToLoginScreen,
                                 stretch: true,

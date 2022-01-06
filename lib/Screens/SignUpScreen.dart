@@ -62,59 +62,72 @@ class SignUpScreen extends StatelessWidget {
                                 ),
                               ),
                               const Expanded(child: blankSpace),
-                              const Text(
-                                'Email',
-                                style: TextStyle(
-                                  fontSize: 16,
+                              Container(
+                                padding: const EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(35 / 2),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(.05)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      ' Email',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    vSmallSpace,
+                                    CustomTextFormField(
+                                      fillColor:
+                                          Theme.of(context).backgroundColor,
+                                      onChanged: model.setEmail,
+                                      keyboardType: TextInputType.emailAddress,
+                                    ),
+                                    vRegularSpace,
+                                    Text(
+                                      ' Password',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    vSmallSpace,
+                                    CustomTextFormField(
+                                      fillColor:
+                                          Theme.of(context).backgroundColor,
+                                      onChanged: model.setPassword,
+                                      password: true,
+                                    ),
+                                    vRegularSpace,
+                                    Text(
+                                      ' Confirm Password',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    vSmallSpace,
+                                    CustomTextFormField(
+                                      fillColor:
+                                          Theme.of(context).backgroundColor,
+                                      onFieldSubmitted: (_) =>
+                                          model.signUpEmailPassword(
+                                              email: model.email,
+                                              password: model.password,
+                                              confirmPassword:
+                                                  model.confirmPassword),
+                                      onChanged: model.setConfirmPassword,
+                                      password: true,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              vTinySpace,
-                              CustomTextFormField(
-                                fillColor: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.05),
-                                onChanged: model.setEmail,
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                              vSmallSpace,
-                              Text(
-                                'Password',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              vTinySpace,
-                              CustomTextFormField(
-                                fillColor: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.05),
-                                onChanged: model.setPassword,
-                                password: true,
-                              ),
-                              vSmallSpace,
-                              Text(
-                                'Confirm Password',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              vTinySpace,
-                              CustomTextFormField(
-                                fillColor: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.05),
-                                onFieldSubmitted: (_) =>
-                                    model.signUpEmailPassword(
-                                        email: model.email,
-                                        password: model.password,
-                                        confirmPassword: model.confirmPassword),
-                                onChanged: model.setConfirmPassword,
-                                password: true,
                               ),
                               vRegularSpace,
                               GenericButton(
+                                rounded: true,
                                 onTap: () => model.signUpEmailPassword(
                                     email: model.email,
                                     password: model.password,
@@ -155,6 +168,8 @@ class SignUpScreen extends StatelessWidget {
                                   child: Text('Already have an account?')),
                               vSmallSpace,
                               GenericButton(
+                                rounded: true,
+                                invertColors: true,
                                 title: 'Login',
                                 onTap: model.navigateToLoginScreen,
                                 stretch: true,

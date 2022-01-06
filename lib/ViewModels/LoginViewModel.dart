@@ -25,7 +25,8 @@ class LoginViewModel extends BaseViewModel {
     _password = newPassword;
   }
 
-  Future<void> loginEmailPassword({required String email, required String password}) async {
+  Future<void> loginEmailPassword(
+      {required String email, required String password}) async {
     try {
       setLoadingStatus(LoadingStatus.Busy);
       await _authService.loginWithEmail(email: email, password: password);
@@ -44,6 +45,10 @@ class LoginViewModel extends BaseViewModel {
     } on CustomError catch (e) {
       setLoadingStatus(LoadingStatus.Idle);
       _dialogService.showDialog(title: 'Error', description: e.message);
+    } catch (e) {
+      setLoadingStatus(LoadingStatus.Idle);
+      _dialogService.showDialog(
+          title: 'Error', description: 'An error occurred.');
     }
   }
 

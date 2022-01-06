@@ -15,8 +15,10 @@ class GenericButton extends StatelessWidget {
   final double customWidth;
   final bool danger;
   final bool positive;
+  final Color? color;
   const GenericButton(
       {Key? key,
+      this.color,
       this.rounded = false,
       this.fontsize = 15,
       this.loading = false,
@@ -50,15 +52,18 @@ class GenericButton extends StatelessWidget {
                   ? 100
                   : customWidth,
       decoration: BoxDecoration(
-        color: positive
-            ? goodColor
-            : danger
-                ? Theme.of(context).colorScheme.error
-                : invertColors
-                    ? Theme.of(context).backgroundColor
-                    : Theme.of(context).brightness == Brightness.light
-                        ? Theme.of(context).colorScheme.tertiary
-                        : Theme.of(context).primaryColor,
+        // ignore: prefer_if_null_operators
+        color: color == null
+            ? positive
+                ? goodColor
+                : danger
+                    ? Theme.of(context).colorScheme.error
+                    : invertColors
+                        ? Theme.of(context).backgroundColor
+                        : Theme.of(context).brightness == Brightness.light
+                            ? Theme.of(context).colorScheme.tertiary
+                            : Theme.of(context).primaryColor
+            : color,
         border: Border.all(
             color: positive
                 ? goodColor
@@ -85,7 +90,7 @@ class GenericButton extends StatelessWidget {
                           color: positive || danger
                               ? Colors.white
                               : invertColors
-                                  ? Theme.of(context).primaryColor
+                                  ? Theme.of(context).colorScheme.tertiary
                                   : Theme.of(context).backgroundColor,
                           fontSize: fontsize),
                     ),

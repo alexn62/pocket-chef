@@ -24,8 +24,11 @@ class AddSectionsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+        Container(
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+              borderRadius: BorderRadius.circular(15)),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +48,7 @@ class AddSectionsComponent extends StatelessWidget {
             ],
           ),
         ),
-        vTinySpace,
+        recipe.sections.isEmpty ? blankSpace : vTinySpace,
         Column(
           children: [
             ...recipe.sections

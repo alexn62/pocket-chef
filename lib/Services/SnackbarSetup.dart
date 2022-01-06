@@ -12,19 +12,18 @@ void setupSnackbarUi() {
   service.registerCustomSnackbarConfig(
     variant: SnackbarType.undo,
     config: SnackbarConfig(
-
-        backgroundColor: Colors.white,
-        messageColor: accentColor,
-        mainButtonTextColor: accentColor,
-        textColor: Colors.yellow,
-        borderRadius: 15,
-        boxShadows: const [BoxShadow(blurRadius: 15, spreadRadius: 5, color: Colors.black12)],
-        margin: const EdgeInsets.symmetric(
-          vertical: 15,
-          horizontal: 15,
-        ),
-        
-        
-        ),
+      backgroundColor: backgroundColorLight,
+      messageColor: primaryColorLight,
+      mainButtonTextColor: accentColor,
+      borderRadius: 15,
+      boxShadows: const [
+        BoxShadow(blurRadius: 15, spreadRadius: 5, color: Colors.black12)
+      ],
+      animationDuration: const Duration(milliseconds: 300),
+      margin: const EdgeInsets.symmetric(
+        vertical: 15,
+        horizontal: 15,
+      ),
+    ),
   );
 }

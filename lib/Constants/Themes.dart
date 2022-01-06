@@ -67,9 +67,7 @@ ThemeData lightTheme = ThemeData(
     primaryColor: primaryColorLight,
     backgroundColor: backgroundColorLight,
     colorScheme: ThemeData.light().colorScheme.copyWith(
-        primary: primaryColorLight,
-        tertiary: accentColor,
-        error: errorColor),
+        primary: primaryColorLight, tertiary: accentColor, error: errorColor),
     iconTheme: const IconThemeData(color: primaryColorLight),
     appBarTheme: const AppBarTheme(
         elevation: 0,

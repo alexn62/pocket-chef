@@ -57,7 +57,6 @@ class AddRecipeViewModel extends BaseViewModel {
             'Drink': false,
           });
       setNewImage(null);
-      addSection();
     } else {
       _setRecipePointer(recipe);
       _recipe = Recipe.fromJson(recipe.toJson());
