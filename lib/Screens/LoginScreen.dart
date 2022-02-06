@@ -41,11 +41,7 @@ class LoginScreen extends StatelessWidget {
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     vRegularSpace,
-                                    Image.asset('assets/icons/smiley.png',
-                                        height: 64,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .tertiary),
+                                    Image.asset('assets/icons/smiley.png', height: 64, color: Theme.of(context).colorScheme.tertiary),
                                     vRegularSpace,
                                     const Text(
                                       'welcome back',
@@ -62,83 +58,54 @@ class LoginScreen extends StatelessWidget {
                               const Expanded(
                                 child: blankSpace,
                               ),
-                              Container(
-                                padding: const EdgeInsets.all(15),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(35 / 2),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .tertiary
-                                        .withOpacity(.05)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      ' Email',
-                                      style: TextStyle(
-                                        fontSize: 17,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomTextFormField(
+                                    hintText: 'Email',
+                                    fillColor: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                    onChanged: model.setEmail,
+                                    keyboardType: TextInputType.emailAddress,
+                                  ),
+                                  vSmallSpace,
+                                  CustomTextFormField(
+                                    hintText: 'Password',
+                                    fillColor: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                    onFieldSubmitted: (_) => model.loginEmailPassword(email: model.email, password: model.password),
+                                    onChanged: model.setPassword,
+                                    password: true,
+                                  ),
+                                  vSmallSpace,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        // ' Password',
+                                        '',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 17,
+                                        ),
                                       ),
-                                    ),
-                                    vSmallSpace,
-                                    CustomTextFormField(
-                                      fillColor:
-                                          Theme.of(context).backgroundColor,
-                                      onChanged: model.setEmail,
-                                      keyboardType: TextInputType.emailAddress,
-                                    ),
-                                    vRegularSpace,
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          ' Password',
+                                      GestureDetector(
+                                        onTap: model.navigateToForgotPasswordScreen,
+                                        child: Text(
+                                          'Forgot password? ',
                                           style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 17,
+                                            color: Theme.of(context).colorScheme.tertiary,
+                                            fontSize: 15,
                                           ),
                                         ),
-                                        GestureDetector(
-                                          onTap: model
-                                              .navigateToForgotPasswordScreen,
-                                          child: Text(
-                                            'Forgot password? ',
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .tertiary,
-                                              fontSize: 17,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    vSmallSpace,
-                                    CustomTextFormField(
-                                      fillColor:
-                                          Theme.of(context).backgroundColor,
-                                      onFieldSubmitted: (_) =>
-                                          model.loginEmailPassword(
-                                              email: model.email,
-                                              password: model.password),
-                                      onChanged: model.setPassword,
-                                      password: true,
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              vRegularSpace,
+                              vSmallSpace,
                               GenericButton(
                                 positive: true,
-                                // color: Theme.of(context).brightness ==
-                                //         Brightness.dark
-                                //     ? Colors.white
-                                //     : null,
                                 rounded: true,
-                                onTap: () => model.loginEmailPassword(
-                                    email: model.email,
-                                    password: model.password),
+                                onTap: () => model.loginEmailPassword(email: model.email, password: model.password),
                                 title: 'Login',
                                 stretch: true,
                               ),
@@ -157,21 +124,16 @@ class LoginScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: AppleGoogleButton(
-                                        onTap: model.loginWithGoogle,
-                                        platform: AppleGoogle.Google),
+                                    child: AppleGoogleButton(onTap: model.loginWithGoogle, platform: AppleGoogle.Google),
                                   ),
                                   hSmallSpace,
                                   Expanded(
-                                    child: AppleGoogleButton(
-                                        onTap: () {},
-                                        platform: AppleGoogle.Apple),
+                                    child: AppleGoogleButton(onTap: () {}, platform: AppleGoogle.Apple),
                                   ),
                                 ],
                               ),
                               const Expanded(child: blankSpace),
-                              const Center(
-                                  child: Text('Don\'t have an account yet?')),
+                              const Center(child: Text('Don\'t have an account yet?')),
                               vSmallSpace,
                               GenericButton(
                                 invertColors: true,
@@ -180,7 +142,6 @@ class LoginScreen extends StatelessWidget {
                                 onTap: model.navigateToSignUpScreen,
                                 stretch: true,
                               ),
-                              vRegularSpace,
                             ],
                           ),
                         ),

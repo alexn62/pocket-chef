@@ -22,13 +22,9 @@ class RecipesService {
     try {
       QuerySnapshot data = await _api.getRecipesByUserId(userId);
 
-      return data.docs
-          .map<Recipe>((recipe) => Recipe.fromFirestore(recipe))
-          .toList()
-        ..sort((a, b) => b.favorite ? 1 : -1);
+      return data.docs.map<Recipe>((recipe) => Recipe.fromFirestore(recipe)).toList()..sort((a, b) => b.favorite ? 1 : -1);
     } on FirebaseException catch (e) {
-      _dialogService.showDialog(
-          title: 'Error', description: handleFirebaseError(e));
+      _dialogService.showDialog(title: 'Error', description: handleFirebaseError(e));
       return null;
     }
   }
@@ -40,8 +36,7 @@ class RecipesService {
         DocumentReference<Object?> result = await _api.addRecipe(recipe);
         String recipeId = result.id;
         if (image != null) {
-          String? downloadUrl =
-              await _photoService.uploadImageToFirebase(recipeId, image);
+          String? downloadUrl = await _photoService.uploadImageToFirebase(recipeId, image);
           recipe.photoUrl = downloadUrl;
           recipe.uid = recipeId;
           updateRecipe(recipe, null, false, false);
@@ -50,13 +45,11 @@ class RecipesService {
         throw CustomError(handleFirebaseError(e));
       }
     } else {
-      throw const CustomError(
-          'Please make sure all of the ingredients have a valid unit.');
+      throw const CustomError('Please make sure all of the ingredients have a valid unit.');
     }
   }
 
-  Future<Recipe> updateRecipe(
-      Recipe recipe, File? image, bool shouldRemove, bool dontUpdate) async {
+  Future<Recipe> updateRecipe(Recipe recipe, File? image, bool shouldRemove, bool dontUpdate) async {
     try {
       if (shouldRemove) {
         await deleteImageFromDatabase(recipe);
@@ -67,8 +60,7 @@ class RecipesService {
             await CachedNetworkImage.evictFromCache(recipe.photoUrl!);
           }
 
-          String? downloadUrl =
-              await _photoService.uploadImageToFirebase(recipe.uid!, image);
+          String? downloadUrl = await _photoService.uploadImageToFirebase(recipe.uid!, image);
           recipe.photoUrl = downloadUrl;
         }
       }
@@ -84,6 +76,9 @@ class RecipesService {
   Future<void> deleteRecipe(Recipe recipeToDelete) async {
     try {
       await _api.deleteRecipe(recipeToDelete);
+      if (recipeToDelete.photoUrl != null) {
+        await _photoService.removeImage(recipeToDelete.uid!);
+      }
     } on FirebaseException catch (e) {
       throw CustomError(handleFirebaseError(e));
     }
@@ -92,9 +87,7 @@ class RecipesService {
   bool _validateRecipe(Recipe recipe) {
     for (Section section in recipe.sections) {
       for (Ingredient ingredient in section.ingredients) {
-        if (ingredient.unit == null ||
-            ingredient.unit!.isEmpty ||
-            ingredient.unit == 'Unit') {
+        if (ingredient.unit == null || ingredient.unit!.isEmpty || ingredient.unit == 'Unit') {
           return false;
         }
       }

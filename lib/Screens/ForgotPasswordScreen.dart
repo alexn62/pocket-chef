@@ -59,34 +59,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                               const Expanded(
                                 child: blankSpace,
                               ),
-                              Container(
-                                padding: const EdgeInsets.all(15),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(35 / 2),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .tertiary
-                                        .withOpacity(.05)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      ' Email',
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    vSmallSpace,
-                                    CustomTextFormField(
-                                        fillColor:
-                                            Theme.of(context).backgroundColor,
-                                        onFieldSubmitted: (_) =>
-                                            model.forgotPassword(model.email),
-                                        onChanged: model.setEmail),
-                                  ],
-                                ),
-                              ),
+                              CustomTextFormField(
+                                hintText: 'Email',
+                                  fillColor:
+                                      Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                  onFieldSubmitted: (_) =>
+                                      model.forgotPassword(model.email),
+                                  onChanged: model.setEmail),
                               vRegularSpace,
                               GenericButton(
                                 onTap: () => model.forgotPassword(model.email),
@@ -105,7 +84,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 onTap: model.navigateToLoginScreen,
                                 stretch: true,
                               ),
-                              vRegularSpace,
                             ],
                           ),
                         ),

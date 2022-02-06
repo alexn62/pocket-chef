@@ -41,99 +41,55 @@ class SignUpScreen extends StatelessWidget {
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     vRegularSpace,
-                                    Image.asset(
-                                      'assets/icons/hug.png',
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                      height: 64,
-                                    ),
+                                    Image.asset('assets/icons/smiley.png', height: 64, color: Theme.of(context).colorScheme.tertiary),
                                     vRegularSpace,
                                     const Text(
-                                      'thanks for joining',
+                                      'welcome back',
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     vSmallSpace,
                                     const Text(
-                                      'please register to create your recipes',
+                                      'please login to view your recipes',
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ],
                                 ),
                               ),
-                              const Expanded(child: blankSpace),
-                              Container(
-                                padding: const EdgeInsets.all(15),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(35 / 2),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .tertiary
-                                        .withOpacity(.05)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      ' Email',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    vSmallSpace,
-                                    CustomTextFormField(
-                                      fillColor:
-                                          Theme.of(context).backgroundColor,
-                                      onChanged: model.setEmail,
-                                      keyboardType: TextInputType.emailAddress,
-                                    ),
-                                    vRegularSpace,
-                                    Text(
-                                      ' Password',
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    vSmallSpace,
-                                    CustomTextFormField(
-                                      fillColor:
-                                          Theme.of(context).backgroundColor,
-                                      onChanged: model.setPassword,
-                                      password: true,
-                                    ),
-                                    vRegularSpace,
-                                    Text(
-                                      ' Confirm Password',
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    vSmallSpace,
-                                    CustomTextFormField(
-                                      fillColor:
-                                          Theme.of(context).backgroundColor,
-                                      onFieldSubmitted: (_) =>
-                                          model.signUpEmailPassword(
-                                              email: model.email,
-                                              password: model.password,
-                                              confirmPassword:
-                                                  model.confirmPassword),
-                                      onChanged: model.setConfirmPassword,
-                                      password: true,
-                                    ),
-                                  ],
-                                ),
+                              const Expanded(
+                                child: blankSpace,
                               ),
-                              vRegularSpace,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomTextFormField(
+                                    hintText: 'Email',
+                                    fillColor: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                    onChanged: model.setEmail,
+                                    keyboardType: TextInputType.emailAddress,
+                                  ),
+                                  vSmallSpace,
+                                  CustomTextFormField(
+                                    hintText: 'Password',
+                                    fillColor: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                    onChanged: model.setPassword,
+                                    password: true,
+                                  ),
+                                  vSmallSpace,
+                                  CustomTextFormField(
+                                    hintText: 'Confirm Password',
+                                    fillColor: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                    onChanged: model.setConfirmPassword,
+                                    password: true,
+                                  ),
+                                  vSmallSpace,
+                                ],
+                              ),
+                              vSmallSpace,
                               GenericButton(
-                                rounded: true,
-                                onTap: () => model.signUpEmailPassword(
-                                    email: model.email,
-                                    password: model.password,
-                                    confirmPassword: model.confirmPassword),
-                                title: 'Sign up',
                                 positive: true,
+                                rounded: true,
+                                onTap: () => model.signUpEmailPassword(email: model.email, password: model.password, confirmPassword: model.confirmPassword),
+                                title: 'Sign Up',
                                 stretch: true,
                               ),
                               vRegularSpace,
@@ -151,32 +107,179 @@ class SignUpScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: AppleGoogleButton(
-                                        onTap: () {},
-                                        platform: AppleGoogle.Google),
+                                    child: AppleGoogleButton(onTap: () {}, platform: AppleGoogle.Google),
                                   ),
                                   hSmallSpace,
                                   Expanded(
-                                    child: AppleGoogleButton(
-                                        onTap: () {},
-                                        platform: AppleGoogle.Apple),
+                                    child: AppleGoogleButton(onTap: () {}, platform: AppleGoogle.Apple),
                                   ),
                                 ],
                               ),
                               const Expanded(child: blankSpace),
-                              const Center(
-                                  child: Text('Already have an account?')),
+                              const Center(child: Text('Already have an account?')),
                               vSmallSpace,
                               GenericButton(
-                                rounded: true,
                                 invertColors: true,
+                                rounded: true,
                                 title: 'Login',
                                 onTap: model.navigateToLoginScreen,
                                 stretch: true,
                               ),
-                              vRegularSpace,
                             ],
                           ),
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     const Expanded(
+                          //       child: blankSpace,
+                          //     ),
+                          //     Align(
+                          //       alignment: Alignment.center,
+                          //       child: Column(
+                          //         crossAxisAlignment: CrossAxisAlignment.center,
+                          //         mainAxisSize: MainAxisSize.min,
+                          //         children: [
+                          //           const Text(
+                          //             'hi',
+                          //             style: TextStyle(fontSize: 18),
+                          //           ),
+                          //           vRegularSpace,
+                          //           Image.asset(
+                          //             'assets/icons/hug.png',
+                          //             color: Theme.of(context)
+                          //                 .colorScheme
+                          //                 .tertiary,
+                          //             height: 64,
+                          //           ),
+                          //           vRegularSpace,
+                          //           const Text(
+                          //             'thanks for joining',
+                          //             style: TextStyle(fontSize: 18),
+                          //           ),
+                          //           vSmallSpace,
+                          //           const Text(
+                          //             'please register to create your recipes',
+                          //             style: TextStyle(fontSize: 18),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //     const Expanded(child: blankSpace),
+                          //     Container(
+                          //       padding: const EdgeInsets.all(15),
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(35 / 2),
+                          //           color: Theme.of(context)
+                          //               .colorScheme
+                          //               .tertiary
+                          //               .withOpacity(.05)),
+                          //       child: Column(
+                          //         crossAxisAlignment: CrossAxisAlignment.start,
+                          //         children: [
+                          //           const Text(
+                          //             ' Email',
+                          //             style: TextStyle(
+                          //               fontSize: 16,
+                          //             ),
+                          //           ),
+                          //           vSmallSpace,
+                          //           CustomTextFormField(
+                          //             fillColor:
+                          //                 Theme.of(context).backgroundColor,
+                          //             onChanged: model.setEmail,
+                          //             keyboardType: TextInputType.emailAddress,
+                          //           ),
+                          //           vRegularSpace,
+                          //           Text(
+                          //             ' Password',
+                          //             style: TextStyle(
+                          //               color: Theme.of(context).primaryColor,
+                          //               fontSize: 16,
+                          //             ),
+                          //           ),
+                          //           vSmallSpace,
+                          //           CustomTextFormField(
+                          //             fillColor:
+                          //                 Theme.of(context).backgroundColor,
+                          //             onChanged: model.setPassword,
+                          //             password: true,
+                          //           ),
+                          //           vRegularSpace,
+                          //           Text(
+                          //             ' Confirm Password',
+                          //             style: TextStyle(
+                          //               color: Theme.of(context).primaryColor,
+                          //               fontSize: 16,
+                          //             ),
+                          //           ),
+                          //           vSmallSpace,
+                          //           CustomTextFormField(
+                          //             fillColor:
+                          //                 Theme.of(context).backgroundColor,
+                          //             onFieldSubmitted: (_) =>
+                          //                 model.signUpEmailPassword(
+                          //                     email: model.email,
+                          //                     password: model.password,
+                          //                     confirmPassword:
+                          //                         model.confirmPassword),
+                          //             onChanged: model.setConfirmPassword,
+                          //             password: true,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //     vRegularSpace,
+                          //     GenericButton(
+                          //       rounded: true,
+                          //       onTap: () => model.signUpEmailPassword(
+                          //           email: model.email,
+                          //           password: model.password,
+                          //           confirmPassword: model.confirmPassword),
+                          //       title: 'Sign up',
+                          //       positive: true,
+                          //       stretch: true,
+                          //     ),
+                          //     vRegularSpace,
+                          //     Align(
+                          //       alignment: Alignment.center,
+                          //       child: Text(
+                          //         'Or continue with...',
+                          //         style: TextStyle(
+                          //           color: Theme.of(context).primaryColor,
+                          //           fontSize: 15,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     vRegularSpace,
+                          //     Row(
+                          //       children: [
+                          //         Expanded(
+                          //           child: AppleGoogleButton(
+                          //               onTap: () {},
+                          //               platform: AppleGoogle.Google),
+                          //         ),
+                          //         hSmallSpace,
+                          //         Expanded(
+                          //           child: AppleGoogleButton(
+                          //               onTap: () {},
+                          //               platform: AppleGoogle.Apple),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     const Expanded(child: blankSpace),
+                          //     const Center(
+                          //         child: Text('Already have an account?')),
+                          //     vSmallSpace,
+                          //     GenericButton(
+                          //       rounded: true,
+                          //       invertColors: true,
+                          //       title: 'Login',
+                          //       onTap: model.navigateToLoginScreen,
+                          //       stretch: true,
+                          //     ),
+                          //     vRegularSpace,
+                          //   ],
+                          // ),
                         ),
                       )),
                   FullScreenLoadingIndicator(model.loadingStatus),
