@@ -4,6 +4,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Models/CustomError.dart';
 import 'package:personal_recipes/Models/Instruction.dart';
@@ -29,7 +30,8 @@ class AddRecipeViewModel extends BaseViewModel {
 
   User get currentUser => _authService.firebaseAuth.currentUser!;
 
-  final List<String> possibleUnits = 'ml kg cups tsp tbsp oz g count mg'.split(' ');
+  final List<String> possibleUnits =
+      'ml kg cups tsp tbsp oz g count mg'.split(' ');
 
   late Recipe? _recipePointer;
   _setRecipePointer(Recipe newRecipePointer) {
@@ -42,14 +44,20 @@ class AddRecipeViewModel extends BaseViewModel {
 
   void initialize({Recipe? recipe}) async {
     if (recipe == null) {
-      _recipe = Recipe(authorId: currentUser.uid, title: null, serves: null, sections: [], instructions: [], tags: {
-        'Snack': false,
-        'Breakfast': false,
-        'Lunch': false,
-        'Dinner': false,
-        'Dessert': false,
-        'Drink': false,
-      });
+      _recipe = Recipe(
+          authorId: currentUser.uid,
+          title: null,
+          serves: null,
+          sections: [],
+          instructions: [],
+          tags: {
+            'Snack': false,
+            'Breakfast': false,
+            'Lunch': false,
+            'Dinner': false,
+            'Dessert': false,
+            'Drink': false,
+          });
       setNewImage(null);
     } else {
       _setRecipePointer(recipe);
@@ -65,7 +73,8 @@ class AddRecipeViewModel extends BaseViewModel {
     setLoadingStatus(LoadingStatus.Busy);
     try {
       await _recipesService.addRecipe(recipe, image);
-      _dialogService.showDialog(title: 'Success', description: 'Recipe added successfully!');
+      _dialogService.showDialog(
+          title: 'Success', description: 'Recipe added successfully!');
       initialize();
       setLoadingStatus(LoadingStatus.Idle);
       return true;
@@ -82,7 +91,11 @@ class AddRecipeViewModel extends BaseViewModel {
   }) async {
     setLoadingStatus(LoadingStatus.Busy);
     try {
-      Recipe updatedRecipe = await _recipesService.updateRecipe(recipe, image, image == null && recipe.photoUrl != null, currentPhotoExists == true && newPhotoAdded != true);
+      Recipe updatedRecipe = await _recipesService.updateRecipe(
+          recipe,
+          image,
+          image == null && recipe.photoUrl != null,
+          currentPhotoExists == true && newPhotoAdded != true);
       updateRecipeHelper(_recipePointer!, updatedRecipe);
       setNewImage(null);
       await DefaultCacheManager().emptyCache();
@@ -105,7 +118,15 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void addSection() {
-    _recipe.sections.add(Section(uid: math.Random().nextInt(99999).toString(), ingredients: [Ingredient(uid: math.Random().nextInt(99999).toString(), title: '', amount: 0.0)], title: ''));
+    _recipe.sections.add(Section(
+        uid: math.Random().nextInt(99999).toString(),
+        ingredients: [
+          Ingredient(
+              uid: math.Random().nextInt(99999).toString(),
+              title: '',
+              amount: 0.0)
+        ],
+        title: ''));
     notifyListeners();
   }
 
@@ -115,7 +136,11 @@ class AddRecipeViewModel extends BaseViewModel {
   }
 
   void addIngredient(int i, {bool focusOnBuild = false}) {
-    _recipe.sections[i].ingredients.add(Ingredient(uid: math.Random().nextInt(99999).toString(), title: '', amount: 0.0, focusOnBuild: focusOnBuild));
+    _recipe.sections[i].ingredients.add(Ingredient(
+        uid: math.Random().nextInt(99999).toString(),
+        title: '',
+        amount: 0.0,
+        focusOnBuild: focusOnBuild));
     notifyListeners();
   }
 
@@ -137,18 +162,25 @@ class AddRecipeViewModel extends BaseViewModel {
     _recipe.sections[index].title = newSectionTitle.trim();
   }
 
-  void setIngredientTitle(String ingredientTitle, int sectionIndex, int ingredientIndex) {
-    _recipe.sections[sectionIndex].ingredients[ingredientIndex].title = ingredientTitle.trim();
+  void setIngredientTitle(
+      String ingredientTitle, int sectionIndex, int ingredientIndex) {
+    _recipe.sections[sectionIndex].ingredients[ingredientIndex].title =
+        ingredientTitle.trim();
   }
 
-  void setIngredientAmount(String ingredientAmount, int sectionIndex, int ingredientIndex) {
+  void setIngredientAmount(
+      String ingredientAmount, int sectionIndex, int ingredientIndex) {
     double? amount = double.tryParse(ingredientAmount) ?? 0.0;
 
     _recipe.sections[sectionIndex].ingredients[ingredientIndex].amount = amount;
   }
 
-  void setIngredientUnit({required int sectionIndex, required int ingredientIndex, required String ingredientUnit}) {
-    _recipe.sections[sectionIndex].ingredients[ingredientIndex].unit = ingredientUnit.trim();
+  void setIngredientUnit(
+      {required int sectionIndex,
+      required int ingredientIndex,
+      required String ingredientUnit}) {
+    _recipe.sections[sectionIndex].ingredients[ingredientIndex].unit =
+        ingredientUnit.trim();
     notifyListeners();
   }
 
@@ -214,29 +246,36 @@ class AddRecipeViewModel extends BaseViewModel {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
     if (image == null) {
-      _dialogService.showDialog(title: 'Error', description: 'Error retrieving the image');
+      _dialogService.showDialog(
+          title: 'Error', description: 'Error retrieving the image');
       setPhotoLoadingStatus(LoadingStatus.Idle);
       return;
     } else {
       final path = image.path;
       File? file = File(path);
-      file = await testCompressAndGetFile(file, path);
+      final dir = await getTemporaryDirectory();
+      file = await compressAndGetFile(file, dir.absolute.path + "/temp.jpg");
+      if (file != null && await file.length() > 5000000) {
+        setNewImage(null);
+        setPhotoLoadingStatus(LoadingStatus.Idle);
+        _dialogService.showDialog(
+            title: 'Error', description: 'Please select a smaller image.');
+        return;
+      }
       setNewImage(file);
       newPhotoAdded = true;
       setPhotoLoadingStatus(LoadingStatus.Idle);
     }
   }
 
-  Future<File?> testCompressAndGetFile(File file, String targetPath) async {
+  Future<File?> compressAndGetFile(File file, String targetPath) async {
     var result = await FlutterImageCompress.compressAndGetFile(
       file.absolute.path,
       targetPath,
-      quality: 88,
-      rotate: 180,
+      minHeight: 480,
+      minWidth: 720,
+      quality: 50,
     );
-
-    print(file.lengthSync());
-    print(result?.lengthSync());
 
     return result;
   }

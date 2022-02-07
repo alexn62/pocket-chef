@@ -19,6 +19,7 @@ class RecipesViewModel extends BaseViewModel {
   final AuthService _authService = locator<AuthService>();
 //----------------------------//
   User get currentUser => _authService.firebaseAuth.currentUser!;
+  bool? get isOpen => _snackbarService.isSnackbarOpen;
 
   List<Recipe> _recipes = [];
   List<Recipe> get recipes => _recipes;
@@ -31,6 +32,9 @@ class RecipesViewModel extends BaseViewModel {
   }
 
   Future<void> getRecipesByUserId(String userId) async {
+    if (isOpen == true) {
+      return;
+    }
     try {
       setLoadingStatus(LoadingStatus.Busy);
       List<Recipe>? newRecipes =
@@ -86,6 +90,7 @@ class RecipesViewModel extends BaseViewModel {
 
   Future<bool> _undoDelete(Recipe recipe) async {
     bool undo = false;
+
     await _snackbarService.showCustomSnackBar(
       variant: SnackbarType.undo,
       message: 'You deleted ${recipe.title}',
