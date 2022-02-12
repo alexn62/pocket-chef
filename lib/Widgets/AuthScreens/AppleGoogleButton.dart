@@ -17,6 +17,7 @@ class AppleGoogleButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         height: 35,
         decoration: BoxDecoration(
             color: platform == AppleGoogle.Apple
@@ -25,7 +26,7 @@ class AppleGoogleButton extends StatelessWidget {
                     : Colors.white
                 : Colors.white,
             borderRadius: BorderRadius.circular(35 / 2),
-            border: Border.all(color: backgroundColorDark)),
+            border: Border.all(color: backgroundColorDark, width: 0.5)),
         child: Center(
             child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

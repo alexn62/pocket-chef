@@ -30,6 +30,7 @@ setupLocator() {
   locator.registerLazySingleton(() => RecipesService());
   locator.registerLazySingleton(() => PhotoService());
   locator.registerLazySingleton(() => AdService());
+
   // ViewModels
 
   locator.registerFactory(() => LandingScreenViewModel());

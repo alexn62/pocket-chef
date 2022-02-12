@@ -20,6 +20,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   Scaffold(
                       backgroundColor: Theme.of(context).backgroundColor,
                       body: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
                         child: Container(
                           height: MediaQuery.of(context).size.height,
                           padding: const EdgeInsets.all(15),
@@ -60,9 +61,11 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 child: blankSpace,
                               ),
                               CustomTextFormField(
-                                hintText: 'Email',
-                                  fillColor:
-                                      Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                  hintText: 'Email',
+                                  fillColor: Theme.of(context)
+                                      .colorScheme
+                                      .tertiary
+                                      .withOpacity(.05),
                                   onFieldSubmitted: (_) =>
                                       model.forgotPassword(model.email),
                                   onChanged: model.setEmail),

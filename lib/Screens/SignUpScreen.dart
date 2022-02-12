@@ -21,6 +21,7 @@ class SignUpScreen extends StatelessWidget {
                   Scaffold(
                       backgroundColor: Theme.of(context).backgroundColor,
                       body: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
                         child: Container(
                           height: MediaQuery.of(context).size.height,
                           padding: const EdgeInsets.all(15),
@@ -41,15 +42,21 @@ class SignUpScreen extends StatelessWidget {
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     vRegularSpace,
-                                    Image.asset('assets/icons/smiley.png', height: 64, color: Theme.of(context).colorScheme.tertiary),
+                                    Image.asset(
+                                      'assets/icons/hug.png',
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                      height: 64,
+                                    ),
                                     vRegularSpace,
                                     const Text(
-                                      'welcome back',
+                                      'thanks for joining',
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     vSmallSpace,
                                     const Text(
-                                      'please login to view your recipes',
+                                      'please register to create your recipes',
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ],
@@ -63,21 +70,30 @@ class SignUpScreen extends StatelessWidget {
                                 children: [
                                   CustomTextFormField(
                                     hintText: 'Email',
-                                    fillColor: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                    fillColor: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(.05),
                                     onChanged: model.setEmail,
                                     keyboardType: TextInputType.emailAddress,
                                   ),
                                   vSmallSpace,
                                   CustomTextFormField(
                                     hintText: 'Password',
-                                    fillColor: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                    fillColor: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(.05),
                                     onChanged: model.setPassword,
                                     password: true,
                                   ),
                                   vSmallSpace,
                                   CustomTextFormField(
                                     hintText: 'Confirm Password',
-                                    fillColor: Theme.of(context).colorScheme.tertiary.withOpacity(.05),
+                                    fillColor: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary
+                                        .withOpacity(.05),
                                     onChanged: model.setConfirmPassword,
                                     password: true,
                                   ),
@@ -88,35 +104,43 @@ class SignUpScreen extends StatelessWidget {
                               GenericButton(
                                 positive: true,
                                 rounded: true,
-                                onTap: () => model.signUpEmailPassword(email: model.email, password: model.password, confirmPassword: model.confirmPassword),
+                                onTap: () => model.signUpEmailPassword(
+                                    email: model.email,
+                                    password: model.password,
+                                    confirmPassword: model.confirmPassword),
                                 title: 'Sign Up',
                                 stretch: true,
                               ),
-                              vRegularSpace,
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Or continue with...',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              vRegularSpace,
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: AppleGoogleButton(onTap: () {}, platform: AppleGoogle.Google),
-                                  ),
-                                  hSmallSpace,
-                                  Expanded(
-                                    child: AppleGoogleButton(onTap: () {}, platform: AppleGoogle.Apple),
-                                  ),
-                                ],
-                              ),
+                              // vRegularSpace,
+                              // Align(
+                              //   alignment: Alignment.center,
+                              //   child: Text(
+                              //     'Or continue with...',
+                              //     style: TextStyle(
+                              //       color: Theme.of(context).primaryColor,
+                              //       fontSize: 15,
+                              //     ),
+                              //   ),
+                              // ),
+                              // vRegularSpace,
+                              // Row(
+                              //   children: [
+                              //     Expanded(
+                              //       child: AppleGoogleButton(
+                              //           onTap: () {},
+                              //           platform: AppleGoogle.Google),
+                              //     ),
+                              //     hSmallSpace,
+                              //     Expanded(
+                              //       child: AppleGoogleButton(
+                              //           onTap: () {},
+                              //           platform: AppleGoogle.Apple),
+                              //     ),
+                              //   ],
+                              // ),
                               const Expanded(child: blankSpace),
-                              const Center(child: Text('Already have an account?')),
+                              const Center(
+                                  child: Text('Already have an account?')),
                               vSmallSpace,
                               GenericButton(
                                 invertColors: true,

@@ -65,10 +65,10 @@ class SettingsScreen extends StatelessWidget {
                                       )),
                                 ]),
                             SettingsComponent(title: 'Account', items: [
-                              const ListTile(
-                                title: Text('Membership'),
-                                trailing: Text('Standard'),
-                              ),
+                              // const ListTile(
+                              //   title: Text('Membership'),
+                              //   trailing: Text('Standard'),
+                              // ),
                               model.currentUser != null &&
                                       model.currentUser!.email != null
                                   ? ListTile(
