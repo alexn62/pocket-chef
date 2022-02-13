@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/ViewModels/ForgotPasswordViewModel.dart';
@@ -87,6 +89,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 onTap: model.navigateToLoginScreen,
                                 stretch: true,
                               ),
+                              Platform.isIOS ? vRegularSpace : blankSpace
                             ],
                           ),
                         ),

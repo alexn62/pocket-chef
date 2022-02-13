@@ -1,9 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
-import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:personal_recipes/Screens/BaseView.dart';
 import 'package:personal_recipes/ViewModels/SignUpViewModel.dart';
-import 'package:personal_recipes/Widgets/AuthScreens/AppleGoogleButton.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndicator.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
@@ -149,6 +149,7 @@ class SignUpScreen extends StatelessWidget {
                                 onTap: model.navigateToLoginScreen,
                                 stretch: true,
                               ),
+                              Platform.isIOS ? vRegularSpace : blankSpace
                             ],
                           ),
                           // Column(

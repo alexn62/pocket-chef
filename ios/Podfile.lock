@@ -522,6 +522,14 @@ PODS:
   - path_provider_ios (0.0.1):
     - Flutter
   - PromisesObjC (2.0.0)
+  - Purchases (3.13.2):
+    - PurchasesCoreSwift (= 3.13.2)
+  - purchases_flutter (3.9.3):
+    - Flutter
+    - PurchasesHybridCommon (= 1.11.2)
+  - PurchasesCoreSwift (3.13.2)
+  - PurchasesHybridCommon (1.11.2):
+    - Purchases (= 3.13.2)
   - SDWebImage (5.12.3):
     - SDWebImage/Core (= 5.12.3)
   - SDWebImage/Core (5.12.3)
@@ -546,6 +554,7 @@ DEPENDENCIES:
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
@@ -576,6 +585,9 @@ SPEC REPOS:
     - Mantle
     - nanopb
     - PromisesObjC
+    - Purchases
+    - PurchasesCoreSwift
+    - PurchasesHybridCommon
     - SDWebImage
     - SDWebImageWebPCoder
 
@@ -602,6 +614,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
+  purchases_flutter:
+    :path: ".symlinks/plugins/purchases_flutter/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
@@ -636,7 +650,7 @@ SPEC CHECKSUMS:
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
-  image_picker: 9aa50e1d8cdacdbed739e925b7eea16d014367e6
+  image_picker: 0d37d1cb66231c2473a0e3ccb8d062d0c2b3d297
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
@@ -644,6 +658,10 @@ SPEC CHECKSUMS:
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  Purchases: 03200de9288724e77de435000d1828601e6b8e00
+  purchases_flutter: 0b70f7dff03a6bc5acd425f1b07bc511bfdee52b
+  PurchasesCoreSwift: 2ea4b33e5cece5c8a0751594ef7c6cbfcbd747a9
+  PurchasesHybridCommon: 56ef42d85c3e930d49aff4ac5fa027373d2e1bb8
   SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32

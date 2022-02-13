@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Enums/Enum.dart';
@@ -165,6 +167,7 @@ class LoginScreen extends StatelessWidget {
                                 onTap: model.navigateToSignUpScreen,
                                 stretch: true,
                               ),
+                              Platform.isIOS ? vRegularSpace : blankSpace
                             ],
                           ),
                         ),
