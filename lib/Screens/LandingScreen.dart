@@ -8,10 +8,11 @@ class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<LandingScreenViewModel>(
-      onModelReady: (model) => model.initialize(),
-      builder: (context, model, child) => const Scaffold(
-        body: Center(child: Text('Hi')),
-      ),
-    );
+        onModelReady: (model) => model.initialize(),
+        builder: (context, model, child) => const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            ));
   }
 }
