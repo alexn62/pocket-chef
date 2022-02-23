@@ -7,6 +7,8 @@ const Color accentColor = Color(0xFF644BE3);
 const Color primaryColorDark = Color(0xFFC7CFC7);
 const Color backgroundColorDark = Color(0xFF0E1117);
 
+const Color secondaryColor = Color(0xFFCAC5EA);
+const Color tertiaryColor = Color(0xFFEFEDFC);
 const Color goodColor = Color(0xFF2EA043);
 const Color errorColor = Color(0xFFFF6961);
 

@@ -106,6 +106,7 @@ class _AddInstructionComponentState extends State<AddInstructionComponent>
                       vRegularSpace,
                       CustomTextFormField(
                         keyboardType: TextInputType.multiline,
+                        textInputAction: null,
                         validator: (text) {
                           if (text!.trim().length < 2 ||
                               text.trim().length > 1000) {
@@ -120,7 +121,7 @@ class _AddInstructionComponentState extends State<AddInstructionComponent>
                         focusNode:
                             widget.instruction.focusOnBuild ? _focusNode : null,
                         minLines: 3,
-                        maxLines: 6,
+                        maxLines: null,
                         onChanged: (text) =>
                             widget.changeInstruction(widget.step, text),
                       ),

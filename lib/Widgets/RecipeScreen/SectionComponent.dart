@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_recipes/Constants/Spacing.dart';
 
 import '../../Models/Ingredient.dart';
 import 'DividerWithTitle.dart';
@@ -25,12 +26,14 @@ class SectionComponent extends StatelessWidget {
             .map<Column>(
               (ingredient) => Column(
                 children: [
+                  vTinySpace,
                   IngredientComponent(
                       totalServings: totalServings,
                       title: ingredient.title,
                       amountPerServing:
                           (ingredient.amount).toDouble() / recipeServings,
                       unit: ingredient.unit!),
+                  vTinySpace
                 ],
               ),
             )

@@ -12,6 +12,7 @@ import 'Services/GeneralServices.dart';
 import 'Services/PhotoService.dart';
 import 'ViewModels/ForgotPasswordViewModel.dart';
 import 'ViewModels/LoginViewModel.dart';
+import 'ViewModels/OnboardingViewModel.dart';
 import 'ViewModels/RecipeViewModel.dart';
 import 'ViewModels/RecipesViewModel.dart';
 import 'ViewModels/SettingsVIewModel.dart';
@@ -41,4 +42,5 @@ setupLocator() {
   locator.registerFactory(() => RecipesViewModel());
   locator.registerFactory(() => AddRecipeViewModel());
   locator.registerFactory(() => SettingsViewModel());
+  locator.registerFactory(() => OnboardingViewmodel());
 }
