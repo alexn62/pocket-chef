@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:personal_recipes/Constants/Themes.dart';
 import 'package:personal_recipes/Screens/LandingScreen.dart';
+import 'package:personal_recipes/Screens/OnboardingScreen.dart';
 import 'package:personal_recipes/Services/SnackbarSetup.dart';
 import 'package:personal_recipes/locator.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final GeneralServices _generalService = locator<GeneralServices>();
     return ChangeNotifierProvider<GeneralServices>.value(
       value: locator<GeneralServices>(),
       child: Consumer<GeneralServices>(
@@ -36,7 +38,9 @@ class MyApp extends StatelessWidget {
             themeMode: model.themeMode,
             darkTheme: darkTheme,
             theme: lightTheme,
-            home: const LandingScreen(),
+            home: _generalService.showOnboarding
+                ? const OnboardingScreen()
+                : const LandingScreen(),
           );
         },
       ),

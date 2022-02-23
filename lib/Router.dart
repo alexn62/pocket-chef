@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Screens/ForgotPasswordScreen.dart';
+import 'package:personal_recipes/Screens/LandingScreen.dart';
 import 'package:personal_recipes/Screens/LoginScreen.dart';
 import 'package:personal_recipes/Screens/MainScreen.dart';
 import 'package:personal_recipes/Screens/SettingsScreen.dart';
@@ -13,6 +14,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case routes.MainScreenRoute:
       return MaterialPageRoute(builder: (context) => const MainScreen());
+    case routes.LandingPageRoute:
+      return MaterialPageRoute(builder: (context) => const LandingScreen());
     case routes.LoginRoute:
       return MaterialPageRoute(builder: (context) => const LoginScreen());
     case routes.SignUpRoute:

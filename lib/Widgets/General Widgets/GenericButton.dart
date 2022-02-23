@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_if_null_operators
+
 import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Themes.dart';
 
@@ -16,6 +18,8 @@ class GenericButton extends StatelessWidget {
   final bool danger;
   final bool positive;
   final Color? color;
+  final Color? textColor;
+  final double height;
   const GenericButton(
       {Key? key,
       this.color,
@@ -31,6 +35,8 @@ class GenericButton extends StatelessWidget {
       this.danger = false,
       this.positive = false,
       this.onLongPress,
+      this.textColor,
+      this.height = 32,
       this.invertColors = false})
       : super(key: key);
 
@@ -43,7 +49,7 @@ class GenericButton extends StatelessWidget {
 
     return Container(
       margin: margin,
-      height: 32,
+      height: height,
       width: shrink
           ? textPainter.width + 22
           : stretch
@@ -52,7 +58,6 @@ class GenericButton extends StatelessWidget {
                   ? 100
                   : customWidth,
       decoration: BoxDecoration(
-        // ignore: prefer_if_null_operators
         color: color == null
             ? positive
                 ? goodColor
@@ -69,10 +74,8 @@ class GenericButton extends StatelessWidget {
                 ? goodColor
                 : danger
                     ? Theme.of(context).colorScheme.error
-                    : Theme.of(context).brightness == Brightness.light
-                        ? Theme.of(context).colorScheme.tertiary
-                        : Theme.of(context).primaryColor),
-        borderRadius: BorderRadius.circular(rounded ? 16 : 5),
+                    : Colors.transparent),
+        borderRadius: BorderRadius.circular(rounded ? height / 2 : 5),
       ),
       child: Material(
         type: MaterialType.transparency,
@@ -87,11 +90,13 @@ class GenericButton extends StatelessWidget {
                   : Text(
                       title,
                       style: TextStyle(
-                          color: positive || danger
-                              ? Colors.white
-                              : invertColors
-                                  ? Theme.of(context).colorScheme.tertiary
-                                  : Theme.of(context).backgroundColor,
+                          color: textColor != null
+                              ? textColor
+                              : positive || danger
+                                  ? Colors.white
+                                  : invertColors
+                                      ? Theme.of(context).colorScheme.tertiary
+                                      : Theme.of(context).backgroundColor,
                           fontSize: fontsize),
                     ),
             ),

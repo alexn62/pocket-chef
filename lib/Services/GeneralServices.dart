@@ -11,7 +11,8 @@ class GeneralServices extends ChangeNotifier {
   //----------------------------//
 
   ThemeMode get themeMode => _sharedPreferences.themeMode;
-  bool? get darkMode => _sharedPreferences.getDarkMode() ?? false;
+  bool get darkMode => _sharedPreferences.getDarkMode() ?? false;
+  bool get showOnboarding => _sharedPreferences.getOnboarding() ?? true;
 
   Timer? _timer;
   Timer? get timer => _timer;
@@ -23,6 +24,10 @@ class GeneralServices extends ChangeNotifier {
   Future<void> setDarkMode(bool value) async {
     await _sharedPreferences.setDarkMode(value);
     notifyListeners();
+  }
+
+  Future<void> setShowOnboarding(bool value) async {
+    await _sharedPreferences.setShowOnboarding(value);
   }
 
   int _index = 0;

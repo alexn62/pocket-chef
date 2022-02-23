@@ -54,6 +54,7 @@ dependencies:
   flutter_image_compress: ^1.1.0
   path_provider: ^2.0.8
   purchases_flutter: ^3.9.3
+  smooth_page_indicator: ^1.0.0+2
 
 dev_dependencies:
   flutter_test:

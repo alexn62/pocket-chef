@@ -61,7 +61,7 @@ class SettingsScreen extends StatelessWidget {
                                           await _generalServices
                                               .setDarkMode(value);
                                         },
-                                        value: _generalServices.darkMode!,
+                                        value: _generalServices.darkMode,
                                       )),
                                 ]),
                             SettingsComponent(title: 'Account', items: [

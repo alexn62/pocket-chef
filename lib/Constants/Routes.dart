@@ -7,3 +7,4 @@ const String RecipeRoute = 'Recipe';
 const String MainScreenRoute = 'MainScreen';
 const String SettingsRoute = 'Settings';
 const String AddRecipeRoute = 'AddRecipe';
+const String LandingPageRoute = 'LandingPageRoute';
