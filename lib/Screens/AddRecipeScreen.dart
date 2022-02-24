@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:personal_recipes/Enums/Enum.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -27,7 +28,8 @@ class AddRecipeScreen extends StatefulWidget {
   State<AddRecipeScreen> createState() => _AddRecipeScreenState();
 }
 
-class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAliveClientMixin<AddRecipeScreen> {
+class _AddRecipeScreenState extends State<AddRecipeScreen>
+    with AutomaticKeepAliveClientMixin<AddRecipeScreen> {
   final ScrollController _controller = ScrollController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _servesController = TextEditingController();
@@ -40,7 +42,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
   void initState() {
     _formKey = GlobalKey<FormState>();
     locator<AdService>().createInterstitialAd();
-    oldRecipe = widget.recipe == null ? null : Recipe.fromJson(widget.recipe!.toJson());
+    oldRecipe =
+        widget.recipe == null ? null : Recipe.fromJson(widget.recipe!.toJson());
     super.initState();
   }
 
@@ -63,32 +66,48 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
       _jumpToTop();
     });
     super.build(context);
-    final GeneralServices _generalServices = Provider.of<GeneralServices>(context);
+    final GeneralServices _generalServices =
+        Provider.of<GeneralServices>(context);
 
     return BaseView<AddRecipeViewModel>(
       onModelReady: (model) => model.initialize(recipe: widget.recipe),
       builder: (context, model, child) => WillPopScope(
-        onWillPop: () async {
-          DialogResponse<dynamic>? response =
-              await locator<DialogService>().showDialog(title: 'Warning', description: 'Are you sure you want to dismiss your changes and go back?', barrierDismissible: true, cancelTitle: 'Cancel');
-          if (response == null || !response.confirmed) {
-            return false;
-          } else {
-            locator<NavigationService>().back(result: oldRecipe);
+        onWillPop: model.photoLoadingStatus == LoadingStatus.Busy
+            ? () async {
+                return false;
+              }
+            : () async {
+                DialogResponse<dynamic>? response =
+                    await locator<DialogService>().showDialog(
+                        title: 'Warning',
+                        description:
+                            'Are you sure you want to dismiss your changes and go back?',
+                        barrierDismissible: true,
+                        cancelTitle: 'Cancel');
+                if (response == null || !response.confirmed) {
+                  return false;
+                } else {
+                  locator<NavigationService>().back(result: oldRecipe);
 
-            return true;
-          }
-        },
+                  return true;
+                }
+              },
         child: Stack(
           children: [
             GestureDetector(
-              onHorizontalDragUpdate: widget.recipe == null
+              onHorizontalDragUpdate: widget.recipe == null ||
+                      model.photoLoadingStatus == LoadingStatus.Busy
                   ? null
                   : (details) async {
                       int sensitivity = 10;
                       if (details.delta.dx > sensitivity) {
-                        DialogResponse<dynamic>? response = await locator<DialogService>()
-                            .showDialog(title: 'Warning', description: 'Are you sure you want to dismiss your changes and go back?', barrierDismissible: true, cancelTitle: 'Cancel');
+                        DialogResponse<dynamic>? response =
+                            await locator<DialogService>().showDialog(
+                                title: 'Warning',
+                                description:
+                                    'Are you sure you want to dismiss your changes and go back?',
+                                barrierDismissible: true,
+                                cancelTitle: 'Cancel');
                         if (response == null || !response.confirmed) {
                           return;
                         } else {
@@ -116,11 +135,15 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                         );
                         _titleController.text = '';
                         _servesController.text = '';
-                        Provider.of<GeneralServices>(context, listen: false).setNewRecipeAdded(true);
+                        Provider.of<GeneralServices>(context, listen: false)
+                            .setNewRecipeAdded(true);
                       } else {
-                        result = await model.updateRecipe(recipe: model.recipe, image: model.img);
+                        result = await model.updateRecipe(
+                            recipe: model.recipe, image: model.img);
                       }
-                      if (result && _generalServices.timer == null || _generalServices.timer != null && !_generalServices.timer!.isActive) {
+                      if (result && _generalServices.timer == null ||
+                          _generalServices.timer != null &&
+                              !_generalServices.timer!.isActive) {
                         _generalServices.setTimer();
                         locator<AdService>().showInterstitialAd();
                       }
@@ -135,7 +158,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                     left: 15,
                   ),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
                     controller: _controller,
                     child: Form(
                       key: _formKey,
@@ -143,7 +167,9 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          SizedBox(height: MediaQuery.of(context).padding.top + AppBar().preferredSize.height),
+                          SizedBox(
+                              height: MediaQuery.of(context).padding.top +
+                                  AppBar().preferredSize.height),
                           AddPhotoComponent(
                             status: model.photoLoadingStatus,
                             img: model.img,
@@ -169,7 +195,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                           vSmallSpace,
                           AddInstructionsComponent(
                               changeInstruction: model.setInstructions,
-                              deleteInstructionsStep: model.deleteInstructionsStep,
+                              deleteInstructionsStep:
+                                  model.deleteInstructionsStep,
                               insertInstructionStep: model.addInstructionStep,
                               instructions: model.recipe.instructions),
                           vSmallSpace,
@@ -179,7 +206,6 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> with AutomaticKeepAli
                             tags: model.recipe.tags,
                             toggleTag: model.setTagStatus,
                           ),
-                          
                           const SafeArea(
                             child: blankSpace,
                             top: false,

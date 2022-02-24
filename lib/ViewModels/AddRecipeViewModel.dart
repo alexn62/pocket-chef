@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
@@ -223,7 +224,7 @@ class AddRecipeViewModel extends BaseViewModel {
   ) async {
     setPhotoLoadingStatus(LoadingStatus.Busy);
     final http.Response responseData = await http.get(Uri.parse(url));
-    var uint8list = responseData.bodyBytes;
+    Uint8List uint8list = responseData.bodyBytes;
     File temp = await DefaultCacheManager().putFile(
       url,
       uint8list,
@@ -247,7 +248,7 @@ class AddRecipeViewModel extends BaseViewModel {
 
     if (image == null) {
       _dialogService.showDialog(
-          title: 'Error', description: 'Error retrieving the image');
+          title: 'Error', description: 'Error retrieving image');
       setPhotoLoadingStatus(LoadingStatus.Idle);
       return;
     } else {
