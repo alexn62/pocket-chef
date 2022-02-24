@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:personal_recipes/Constants/Spacing.dart';
 import 'package:personal_recipes/Models/Ingredient.dart';
 import 'package:personal_recipes/ViewModels/AddRecipeViewModel.dart';
+import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
 import 'package:provider/provider.dart';
 
 import '../General Widgets/CustomTextFormField.dart';
-
 
 class AddIngredientComponent extends StatefulWidget {
   const AddIngredientComponent({
@@ -153,6 +153,7 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
                       ],
                     ),
                     onTap: () {
+                      String tempUnit = model.possibleUnits.first;
                       showCupertinoModalPopup(
                           context: context,
                           builder: (ctx) => Container(
@@ -162,26 +163,59 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
                                         .size
                                         .height /
                                     3,
-                                child: CupertinoPicker(
-                                  itemExtent: 50,
-                                  onSelectedItemChanged: (value) =>
-                                      model.setIngredientUnit(
-                                          sectionIndex: widget.sectionIndex,
-                                          ingredientIndex:
-                                              widget.ingredientIndex,
-                                          ingredientUnit:
-                                              model.possibleUnits[value]),
-                                  children: model.possibleUnits
-                                      .map((e) => Center(
-                                            child: Text(
-                                              e,
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColor),
-                                            ),
-                                          ))
-                                      .toList(),
-                                  looping: true,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Material(
+                                            color: Colors.transparent,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(15),
+                                              child: Text(
+                                                'Select Unit',
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ),
+                                            )),
+                                        GenericButton(
+                                            margin: const EdgeInsets.all(15),
+                                            onTap: () {
+                                              model.setIngredientUnit(
+                                                  sectionIndex:
+                                                      widget.sectionIndex,
+                                                  ingredientIndex:
+                                                      widget.ingredientIndex,
+                                                  ingredientUnit: tempUnit);
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: 'Done'),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: CupertinoPicker(
+                                        itemExtent: 50,
+                                        useMagnifier: true,
+                                        onSelectedItemChanged: (index) {
+                                          tempUnit = model.possibleUnits[index];
+                                        },
+                                        children: model.possibleUnits
+                                            .map((e) => Center(
+                                                  child: Text(
+                                                    e,
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .primaryColor),
+                                                  ),
+                                                ))
+                                            .toList(),
+                                        looping: true,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ));
                     },
