@@ -123,32 +123,35 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                 backgroundColor: Theme.of(context).backgroundColor,
                 appBar: AddRecipeAppBar(
                   title: widget.recipe == null ? 'Add Recipe' : 'Edit Recipe',
-                  onAdd: () async {
-                    if (_formKey.currentState!.validate()) {
-                      FocusScope.of(context).unfocus();
+                  onAdd: model.photoLoadingStatus == LoadingStatus.Busy
+                      ? () {}
+                      : () async {
+                          if (_formKey.currentState!.validate()) {
+                            FocusScope.of(context).unfocus();
 
-                      late bool result;
-                      if (widget.recipe == null) {
-                        result = await model.addRecipe(
-                          model.recipe,
-                          model.img,
-                        );
-                        _titleController.text = '';
-                        _servesController.text = '';
-                        Provider.of<GeneralServices>(context, listen: false)
-                            .setNewRecipeAdded(true);
-                      } else {
-                        result = await model.updateRecipe(
-                            recipe: model.recipe, image: model.img);
-                      }
-                      if (result && _generalServices.timer == null ||
-                          _generalServices.timer != null &&
-                              !_generalServices.timer!.isActive) {
-                        _generalServices.setTimer();
-                        locator<AdService>().showInterstitialAd();
-                      }
-                    }
-                  },
+                            late bool result;
+                            if (widget.recipe == null) {
+                              result = await model.addRecipe(
+                                model.recipe,
+                                model.img,
+                              );
+                              _titleController.text = '';
+                              _servesController.text = '';
+                              Provider.of<GeneralServices>(context,
+                                      listen: false)
+                                  .setNewRecipeAdded(true);
+                            } else {
+                              result = await model.updateRecipe(
+                                  recipe: model.recipe, image: model.img);
+                            }
+                            if (result && _generalServices.timer == null ||
+                                _generalServices.timer != null &&
+                                    !_generalServices.timer!.isActive) {
+                              _generalServices.setTimer();
+                              locator<AdService>().showInterstitialAd();
+                            }
+                          }
+                        },
                 ),
                 body: Container(
                   height: MediaQuery.of(context).size.height,
