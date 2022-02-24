@@ -59,7 +59,22 @@ class SignUpViewModel extends BaseViewModel {
       _dialogService.showDialog(title: 'Error', description: e.message);
     }
   }
+
   // }
+  Future<void> signUpWithGoogle() async {
+    try {
+      setLoadingStatus(LoadingStatus.Busy);
+      await _authService.signInWithGoogle();
+      setLoadingStatus(LoadingStatus.Idle);
+    } on CustomError catch (e) {
+      setLoadingStatus(LoadingStatus.Idle);
+      _dialogService.showDialog(title: 'Error', description: e.message);
+    } catch (e) {
+      setLoadingStatus(LoadingStatus.Idle);
+      _dialogService.showDialog(
+          title: 'Error', description: 'An error occurred.');
+    }
+  }
 
   void navigateToLoginScreen() {
     _navigationService.replaceWith(

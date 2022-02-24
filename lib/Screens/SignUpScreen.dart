@@ -8,6 +8,9 @@ import 'package:personal_recipes/Widgets/General%20Widgets/CustomTextFormField.d
 import 'package:personal_recipes/Widgets/General%20Widgets/FullScreenLoadingIndicator.dart';
 import 'package:personal_recipes/Widgets/General%20Widgets/GenericButton.dart';
 
+import '../Enums/Enum.dart';
+import '../Widgets/AuthScreens/AppleGoogleButton.dart';
+
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -111,33 +114,32 @@ class SignUpScreen extends StatelessWidget {
                                 title: 'Sign Up',
                                 stretch: true,
                               ),
-                              // vRegularSpace,
-                              // Align(
-                              //   alignment: Alignment.center,
-                              //   child: Text(
-                              //     'Or continue with...',
-                              //     style: TextStyle(
-                              //       color: Theme.of(context).primaryColor,
-                              //       fontSize: 15,
-                              //     ),
-                              //   ),
-                              // ),
-                              // vRegularSpace,
-                              // Row(
-                              //   children: [
-                              //     Expanded(
-                              //       child: AppleGoogleButton(
-                              //           onTap: () {},
-                              //           platform: AppleGoogle.Google),
-                              //     ),
-                              //     hSmallSpace,
-                              //     Expanded(
-                              //       child: AppleGoogleButton(
-                              //           onTap: () {},
-                              //           platform: AppleGoogle.Apple),
-                              //     ),
-                              //   ],
-                              // ),
+                              vRegularSpace,
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Or continue with...',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              vRegularSpace,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  AppleGoogleButton(
+                                      onTap: model.signUpWithGoogle,
+                                      platform: AppleGoogle.Google),
+                                  // hSmallSpace,
+                                  // Expanded(
+                                  //   child: AppleGoogleButton(
+                                  //       onTap: () {},
+                                  //       platform: AppleGoogle.Apple),
+                                  // ),
+                                ],
+                              ),
                               const Expanded(child: blankSpace),
                               const Center(
                                   child: Text('Already have an account?')),
