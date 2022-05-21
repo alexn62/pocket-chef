@@ -1,6 +1,6 @@
 ### Pocket Chef - A Smart Recipe Manager built with Flutter
 
-
+<img src="./readme-images/PC-1.png" height="360px"><img/>
 
 This app is a continuation of my previously released app called 'Pizza Calc'.
 
