@@ -102,8 +102,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           vRegularSpace,
                           Text(
                             model.pages[model.index]['description'],
+                            maxLines: 3,
                             style: const TextStyle(
-                                fontSize: 17, color: accentColor),
+                                fontSize: 17,
+                                color: accentColor,
+                                overflow: TextOverflow.ellipsis),
                           ),
                         ],
                       ),

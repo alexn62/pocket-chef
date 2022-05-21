@@ -62,7 +62,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _jumpToTop();
     });
     super.build(context);

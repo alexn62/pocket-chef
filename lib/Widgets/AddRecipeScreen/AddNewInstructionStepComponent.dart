@@ -20,7 +20,7 @@ class AddNewInstructionStepComponent extends StatefulWidget {
 class _AddNewInstructionStepComponentState
     extends State<AddNewInstructionStepComponent> {
   void ensureVisible() {
-    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       Scrollable.ensureVisible(
         context,
         duration: const Duration(milliseconds: 400),

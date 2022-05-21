@@ -31,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
           const AddRecipeScreen()
         ],
         onPageChanged: (val) {
-          WidgetsBinding.instance!.focusManager.primaryFocus?.unfocus();
+          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
           model.setIndex(val);
         },
       ),
@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             currentIndex: model.index,
             onTap: (val) {
-              WidgetsBinding.instance!.focusManager.primaryFocus?.unfocus();
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
               _pageController.animateToPage(val,
                   duration: const Duration(milliseconds: 100),
                   curve: Curves.easeInOut);

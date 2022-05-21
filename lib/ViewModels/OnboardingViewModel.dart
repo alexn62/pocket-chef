@@ -49,7 +49,7 @@ class OnboardingViewmodel extends BaseViewModel {
       'image': 'assets/images/screen4.png',
       'title': 'Add and Edit Recipes',
       'description':
-          'Add a beautiful image, sections, ingredients, and step-by-step instructions.\nWant to refine a recipe?\nEdit anything you want, any time you want.'
+          'Add a beautiful image, sections, ingredients, and step-by-step instructions.'
     },
   ];
 

@@ -63,7 +63,7 @@ class _RecipesScreenState extends State<RecipesScreen>
         if (reload) {
           Provider.of<GeneralServices>(context, listen: false)
               .setNewRecipeAdded(false);
-          SchedulerBinding.instance!.addPostFrameCallback(
+          SchedulerBinding.instance.addPostFrameCallback(
             (timeStamp) async {
               await model.initialize(model.currentUser.uid);
             },

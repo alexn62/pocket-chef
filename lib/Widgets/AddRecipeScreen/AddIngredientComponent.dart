@@ -42,7 +42,7 @@ class _AddIngredientComponentState extends State<AddIngredientComponent>
 
   Future<void> getFocus() async {
     await Future.delayed(const Duration(milliseconds: 50));
-    WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
         (_) => FocusScope.of(context).requestFocus(_focusNode));
   }
 

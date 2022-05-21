@@ -25,7 +25,7 @@ class _AddTagTextFieldState extends State<AddTagTextField> {
   @override
   void initState() {
     _addNewTagFormKey = GlobalKey<FormState>();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_focusNode);
     });
     super.initState();

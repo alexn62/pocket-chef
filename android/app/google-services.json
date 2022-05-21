@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:772378025357:android:0ec55692940794a1eb31c4",
         "android_client_info": {
-          "package_name": "com.example.personal_recipes"
+          "package_name": "com.an.personal_recipes"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "772378025357-08fle68ea67v64e0fr4chbmnoedcca9a.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.personalRecipes"
+                "bundle_id": "com.an.personalRecipes"
               }
             }
           ]
